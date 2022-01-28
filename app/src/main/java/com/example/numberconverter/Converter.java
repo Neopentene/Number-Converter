@@ -27,6 +27,8 @@ import com.example.numberconverter.Numerals.RomanNumeral;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.util.Objects;
+
 public class Converter extends AppCompatActivity {
 
     private static final String[] inputConversionList = {"DEC", "HEX", "OCT", "BIN"};
@@ -92,20 +94,17 @@ public class Converter extends AppCompatActivity {
                 inputOption = s.toString();
 
                 if (inputOption.equals(outputOption)) {
-                    Toast.makeText(context, "Invalid Output Selection", Toast.LENGTH_SHORT).show();
-                    outputConversionAutoText.setText(outputConversionList[0], false);
-                    outputConversionLayout.setErrorEnabled(true);
                     outputConversionLayout.setError("Invalid");
                 }
                 else{
-                    outputConversionLayout.setErrorEnabled(false);
+                    outputConversionLayout.setError(null);
                 }
 
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putString("input", inputOption);
                 editor.apply();
 
-                setNumsObject(displayInput.getEditText().getText().toString());
+                setNumsObject(Objects.requireNonNull(displayInput.getEditText()).getText().toString());
 
                 changeOutputAdapter();
             }
@@ -127,12 +126,10 @@ public class Converter extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (inputOption.equals(s.toString())) {
-                    Toast.makeText(context, "Invalid Output Selection", Toast.LENGTH_SHORT).show();
-                    outputConversionLayout.setErrorEnabled(true);
                     outputConversionLayout.setError("Invalid");
                 }
                 else{
-                    outputConversionLayout.setErrorEnabled(false);
+                    outputConversionLayout.setError(null);
 
                     outputOption = s.toString();
                     SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -151,19 +148,19 @@ public class Converter extends AppCompatActivity {
     private void setNumsObject(String value) throws NullPointerException {
         switch (inputOption) {
             case "DEC":
-                displayInput.getEditText().setInputType(InputType.TYPE_CLASS_NUMBER);
+                Objects.requireNonNull(displayInput.getEditText()).setInputType(InputType.TYPE_CLASS_NUMBER);
                 numeral = new Decimal(value);
                 break;
             case "HEX":
-                displayInput.getEditText().setInputType(InputType.TYPE_CLASS_TEXT);
+                Objects.requireNonNull(displayInput.getEditText()).setInputType(InputType.TYPE_CLASS_TEXT);
                 numeral = new Hexadecimal(value);
                 break;
             case "OCT":
-                displayInput.getEditText().setInputType(InputType.TYPE_CLASS_NUMBER);
+                Objects.requireNonNull(displayInput.getEditText()).setInputType(InputType.TYPE_CLASS_NUMBER);
                 numeral = new Octal(value);
                 break;
             case "BIN":
-                displayInput.getEditText().setInputType(InputType.TYPE_CLASS_NUMBER);
+                Objects.requireNonNull(displayInput.getEditText()).setInputType(InputType.TYPE_CLASS_NUMBER);
                 numeral = new Binary(value);
                 break;
         }
@@ -182,18 +179,17 @@ public class Converter extends AppCompatActivity {
         int listItem = 0;
         String[] newList = list;
 
-        for (int i = 0; i < list.length; i++) {
-            if (list[i].equals(item)) {
+        for (String s : list)
+            if (s.equals(item)) {
                 itemFound = true;
                 break;
             }
-        }
 
         if (itemFound) {
             newList = new String[list.length - 1];
-            for (int i = 0; i < list.length; i++) {
-                if (!list[i].equals(item)) {
-                    newList[listItem] = list[i];
+            for (String s : list) {
+                if (!s.equals(item)) {
+                    newList[listItem] = s;
                     listItem++;
                 }
             }
@@ -202,39 +198,39 @@ public class Converter extends AppCompatActivity {
     }
 
     public void convert(View v) {
-        setNumsObject(displayInput.getEditText().getText().toString().trim());
+        setNumsObject(Objects.requireNonNull(displayInput.getEditText()).getText().toString().trim());
         try {
             if(inputOption.equals(outputOption))
                 throw new IllegalStateException();
 
             switch (outputOption) {
                 case "ROM":
-                    displayOutput.getEditText().setText(new RomanNumeral(numeral.toDec()).toRmn().toUpperCase());
+                    Objects.requireNonNull(displayOutput.getEditText()).setText(new RomanNumeral(numeral.toDec()).toRmn().toUpperCase());
                     break;
                 case "DEC":
-                    displayOutput.getEditText().setText(numeral.toDec().toUpperCase());
+                    Objects.requireNonNull(displayOutput.getEditText()).setText(numeral.toDec().toUpperCase());
                     break;
                 case "HEX":
-                    displayOutput.getEditText().setText(numeral.toHex().toUpperCase());
+                    Objects.requireNonNull(displayOutput.getEditText()).setText(numeral.toHex().toUpperCase());
                     break;
                 case "OCT":
-                    displayOutput.getEditText().setText(numeral.toOct().toUpperCase());
+                    Objects.requireNonNull(displayOutput.getEditText()).setText(numeral.toOct().toUpperCase());
                     break;
                 case "BIN":
-                    displayOutput.getEditText().setText(numeral.toBin().toUpperCase());
+                    Objects.requireNonNull(displayOutput.getEditText()).setText(numeral.toBin().toUpperCase());
                     break;
             }
         } catch (Exception e) {
             if (displayInput.getEditText().getText().toString().trim().equals(""))
                 Toast.makeText(context, "Input Empty", Toast.LENGTH_SHORT).show();
             else
-                Toast.makeText(context, "Invalid Input", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Invalid Output Selection", Toast.LENGTH_SHORT).show();
         }
     }
 
     public void copyOutput(View v) {
 
-        String output = displayOutput.getEditText().getText().toString();
+        String output = Objects.requireNonNull(displayOutput.getEditText()).getText().toString();
 
         if (!output.trim().isEmpty()) {
             ClipboardManager clipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
@@ -254,9 +250,6 @@ public class Converter extends AppCompatActivity {
         TextView description = aboutUsDialog.findViewById(R.id.Description);
         MaterialButton actionButton = aboutUsDialog.findViewById(R.id.actionButton);
 
-        View one= aboutUsDialog.findViewById(R.id.titleDivider);
-        //one.setVisibility(View.INVISIBLE);
-
         title.setText(R.string.about_us);
         title.setTextColor(getResources().getColor(R.color.dark_blue));
         title.setTypeface(null, Typeface.BOLD);
@@ -272,11 +265,6 @@ public class Converter extends AppCompatActivity {
         dialog.getWindow().setBackgroundDrawableResource(R.drawable.transparent_dialog);
         dialog.show();
 
-        actionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
+        actionButton.setOnClickListener(v1 -> dialog.dismiss());
     }
 }
