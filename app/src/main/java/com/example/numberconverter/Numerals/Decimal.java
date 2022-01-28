@@ -21,7 +21,4 @@ public class Decimal extends Numeral {
         return Integer.toOctalString(Integer.parseInt(decimal));
     }
 
-    public String toRMN(){
-        return Integer.toHexString(Integer.parseInt(decimal));
-    }
 }

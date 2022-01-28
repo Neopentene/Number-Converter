@@ -27,9 +27,4 @@ public class Numeral {
         return nums;
     }
 
-    public String toRMN() {
-        return nums;
-    }
-
-
 }
