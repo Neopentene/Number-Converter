@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">NumCo</string>
+    <string name="page_title">Number Converter</string>
+    <string name="hello_world">Hello World!</string>
+    <string name="input">Input</string>
+    <string name="output">Output</string>
+    <string name="enter_input">Enter Input</string>
+    <string name="converted_output">Converted Output</string>
+    <string name="about_us">About Us</string>
+    <string name="made_with">
+        Made together with 🤡 and 🧠 by
+        \n<br />
+        \n<br />Elkana Sampath
+        \n<br />Boris Misquitta
+        \n<br />Mitali Haldankar
+        \n<br />Aniruddha Khandekar
+        \n<br />Celestyn Kinny
+    </string>
+    <string name="ok">Ok</string>
+    <string name="no">No</string>
+    <string name="cancel">Cancel</string>
+    <string name="clear">Clear</string>
+    <string name="back">Back</string>
+</resources>
