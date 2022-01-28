@@ -49,7 +49,7 @@ public class RomanNumeral {
 
     }
 
-    private class DataStore {
+    private static class DataStore {
         private int value;
         private String romanValue;
 
