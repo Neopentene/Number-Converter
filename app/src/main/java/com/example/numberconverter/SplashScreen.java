@@ -28,7 +28,9 @@ public class SplashScreen extends AppCompatActivity {
 
     private void launchConverter(){
         Handler handler = new Handler(Looper.getMainLooper());
+
         ObjectAnimator.ofFloat(icon, View.ALPHA, 0f, 1f).setDuration(1500).start();
+
         handler.postDelayed(() -> {
             Intent intent = new Intent(context, Converter.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

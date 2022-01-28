@@ -21,7 +21,4 @@ public class Octal extends Numeral {
         return Integer.toString(Integer.parseInt(octal, 8));
     }
 
-    public String toRMN(){
-        return Integer.toHexString(Integer.parseInt(octal));
-    }
 }

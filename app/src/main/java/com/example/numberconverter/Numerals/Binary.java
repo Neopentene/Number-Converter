@@ -20,7 +20,4 @@ public class Binary extends Numeral {
         return Integer.toOctalString(Integer.parseInt(binary, 2));
     }
 
-    public String toRMN(){
-        return Integer.toHexString(Integer.parseInt(binary));
-    }
 }

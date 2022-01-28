@@ -20,7 +20,4 @@ public class Hexadecimal extends Numeral {
         return Integer.toOctalString(Integer.parseInt(hexadecimal, 16));
     }
 
-    public String toRMN(){
-        return Integer.toHexString(Integer.parseInt(hexadecimal));
-    }
 }
