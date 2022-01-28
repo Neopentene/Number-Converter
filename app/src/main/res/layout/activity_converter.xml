@@ -51,9 +51,9 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
         android:hint="@string/output"
-        android:textColorHint="@color/grey_hint">
+        android:textColorHint="@color/grey_hint"
+        app:errorEnabled="true">
 
         <AutoCompleteTextView
             android:id="@+id/OutputConversionDropdown"
@@ -95,7 +95,6 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
         android:layout_toEndOf="@id/OutputConversion"
         android:hint="@string/converted_output"
         app:hintTextColor="@color/grey_hint">
@@ -116,7 +115,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/OutputConversion"
         android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_margin="0dp">
 
 
         <LinearLayout
