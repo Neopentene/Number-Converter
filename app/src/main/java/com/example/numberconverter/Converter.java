@@ -69,10 +69,10 @@ public class Converter extends AppCompatActivity {
         sharedPreferences = context.getSharedPreferences("saved-options", MODE_PRIVATE);
 
         inputOption = sharedPreferences.getString("input", "DEC");
-        changeInputAdapter();
+        changeInputAdapter(null);
 
         outputOption = sharedPreferences.getString("output", "HEX");
-        changeOutputAdapter();
+        changeOutputAdapter(inputOption);
 
         setInputOnChangeListener();
         setOutputOnChangeListener();
@@ -106,7 +106,7 @@ public class Converter extends AppCompatActivity {
 
                 setNumsObject(Objects.requireNonNull(displayInput.getEditText()).getText().toString());
 
-                changeOutputAdapter();
+                changeOutputAdapter(inputOption);
             }
 
             @Override
@@ -166,12 +166,12 @@ public class Converter extends AppCompatActivity {
         }
     }
 
-    private void changeOutputAdapter() {
-        outputConversionAutoText.setAdapter(new ArrayAdapter<>(context, R.layout.support_simple_spinner_dropdown_item, removeListItem(outputConversionList, inputOption)));
+    private void changeOutputAdapter(String value) {
+        outputConversionAutoText.setAdapter(new ArrayAdapter<>(context, R.layout.support_simple_spinner_dropdown_item, removeListItem(outputConversionList, value)));
     }
 
-    private void changeInputAdapter() {
-        inputConversionAutoText.setAdapter(new ArrayAdapter<>(context, R.layout.support_simple_spinner_dropdown_item, removeListItem(inputConversionList, outputOption)));
+    private void changeInputAdapter(String value) {
+        inputConversionAutoText.setAdapter(new ArrayAdapter<>(context, R.layout.support_simple_spinner_dropdown_item, removeListItem(inputConversionList, value)));
     }
 
     private String[] removeListItem(String[] list, String item) {
