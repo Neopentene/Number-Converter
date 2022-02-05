@@ -2,6 +2,8 @@ package com.NumCo.numberconverter;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -18,6 +20,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.NumCo.numberconverter.CipherCreation.CipherPreferencesDialog;
 import com.NumCo.numberconverter.Numerals.Octal;
 import com.NumCo.numberconverter.Numerals.RomanNumeral;
 import com.NumCo.numberconverter.Numerals.Binary;
@@ -267,5 +270,17 @@ public class Converter extends AppCompatActivity {
         dialog.show();
 
         actionButton.setOnClickListener(v1 -> dialog.dismiss());
+    }
+
+    public void cipherPreferencesDialog(View v){
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        Fragment previousDialog = getSupportFragmentManager().findFragmentByTag("cipher preference dialog");
+        if (previousDialog != null)
+            fragmentTransaction.remove(previousDialog);
+
+        fragmentTransaction.addToBackStack(null);
+
+        CipherPreferencesDialog cipherPreferencesDialog = new CipherPreferencesDialog();
+        cipherPreferencesDialog.show(fragmentTransaction, "cipher preference dialog");
     }
 }

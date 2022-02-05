@@ -18,6 +18,11 @@ public class CipherDialogFragmentAdapter extends FragmentStateAdapter {
         super(fragmentManager, lifecycle);
     }
 
+    public CipherDialogFragmentAdapter(@NonNull FragmentActivity fragmentActivity, ArrayList<Fragment> cipherDialogFragments) {
+        super(fragmentActivity);
+        this.cipherDialogFragments = cipherDialogFragments;
+    }
+
     @NonNull
     @Override
     public Fragment createFragment(int position) {

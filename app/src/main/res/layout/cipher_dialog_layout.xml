@@ -3,41 +3,60 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:cardCornerRadius="8dp">
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:maxHeight="300dp"
+    app:cardCornerRadius="8dp"
+    android:background="@drawable/transparent_dialog_inset_15_35">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:weightSum="1">
 
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tabLayout"
+        <LinearLayout
+            android:id="@+id/cipherDialogTabLayoutWrapper"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:orientation="vertical"
+            android:layout_weight="0.95">
 
-            <com.google.android.material.tabs.TabItem
-                android:id="@+id/firstTab"
-                android:layout_width="wrap_content"
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tabLayout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-            <com.google.android.material.tabs.TabItem
-                android:id="@+id/secondTab"
+            <ScrollView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:scrollbars="vertical">
 
-        </com.google.android.material.tabs.TabLayout>
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/viewPager"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </ScrollView>
+        </LinearLayout>
 
-        <androidx.viewpager2.widget.ViewPager2
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tabLayout"
-            app:layout_constraintVertical_bias="0.666"
-            tools:layout_editor_absoluteX="0dp" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_height="wrap_content"
+            android:paddingLeft="6dp"
+            android:paddingRight="6dp"
+            android:layout_weight="0.05">
 
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/closeCipherPreferencesDialog"
+                style="@style/Widget.MaterialComponents.Button.TextButton.Dialog.Flush"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginRight="2dp"
+                android:layout_marginBottom="0dp" />
+        </LinearLayout>
+
+    </LinearLayout>
 
 </com.google.android.material.card.MaterialCardView>
