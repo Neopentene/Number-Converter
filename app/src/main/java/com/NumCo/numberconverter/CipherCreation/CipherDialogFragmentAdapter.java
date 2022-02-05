@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class CipherDialogFragmentAdapter extends FragmentStateAdapter {
 
-    private final ArrayList<Fragment> cipherDialogFragments = new ArrayList<>();
+    private ArrayList<Fragment> cipherDialogFragments = new ArrayList<>();
 
     public CipherDialogFragmentAdapter(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle) {
         super(fragmentManager, lifecycle);
@@ -31,5 +31,13 @@ public class CipherDialogFragmentAdapter extends FragmentStateAdapter {
 
     public void addCipherDialogFragment(Fragment dialogFragment) {
         cipherDialogFragments.add(dialogFragment);
+    }
+
+    public void setCipherDialogFragments(ArrayList<Fragment> cipherDialogFragments) {
+        this.cipherDialogFragments = cipherDialogFragments;
+    }
+
+    public ArrayList<Fragment> getCipherDialogFragments() {
+        return cipherDialogFragments;
     }
 }
