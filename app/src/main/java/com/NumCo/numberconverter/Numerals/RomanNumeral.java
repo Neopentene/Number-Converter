@@ -1,4 +1,4 @@
-package com.example.numberconverter.Numerals;
+package com.NumCo.numberconverter.Numerals;
 
 public class RomanNumeral {
     private int decimal;
@@ -9,7 +9,7 @@ public class RomanNumeral {
 
     public String toRmn() {
         StringBuilder str = new StringBuilder();
-        DataStore arr[] = new DataStore[19];
+        DataStore[] arr = new DataStore[19];
 
         arr[0] = new DataStore(1000000, "M̅");
         arr[1] = new DataStore(500000, "D̅");
@@ -33,7 +33,7 @@ public class RomanNumeral {
 
         int itr = 0;
 
-        DataStore temp = null;
+        DataStore temp;
         while (decimal != 0) {
             temp = arr[itr];
             if (decimal >= temp.value) {

@@ -1,4 +1,4 @@
-package com.example.numberconverter.Numerals;
+package com.NumCo.numberconverter.Numerals;
 
 public class Octal extends Numeral {
 

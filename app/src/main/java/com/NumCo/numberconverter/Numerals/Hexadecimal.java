@@ -1,4 +1,4 @@
-package com.example.numberconverter.Numerals;
+package com.NumCo.numberconverter.Numerals;
 
 public class Hexadecimal extends Numeral {
     private String hexadecimal;
@@ -9,7 +9,7 @@ public class Hexadecimal extends Numeral {
     }
 
     public String toDec(){
-        return new String("" + Integer.parseInt(hexadecimal, 16));
+        return "" + Integer.parseInt(hexadecimal, 16);
     }
 
     public String toBin(){
