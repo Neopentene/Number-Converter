@@ -16,9 +16,11 @@
         \n<br />Aniruddha Khandekar
         \n<br />Celestyn Kinny
     </string>
-    <string name="ok">Ok</string>
+    <string name="ok">OK</string>
     <string name="no">No</string>
     <string name="cancel">Cancel</string>
     <string name="clear">Clear</string>
     <string name="back">Back</string>
+    <string name="cipher_input">Cipher Input</string>
+    <string name="convert">Convert</string>
 </resources>
