@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Converter">
+    tools:context="com.NumCo.numberconverter.Converter">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/ToolbarLayout"
@@ -26,12 +26,11 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/ToolbarLayout"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        android:layout_below="@id/ToolbarLayout"
-        android:hint="@string/input"
         android:textColorHint="@color/grey_hint">
 
         <AutoCompleteTextView
@@ -39,6 +38,7 @@
             android:layout_width="122dp"
             android:layout_height="wrap_content"
             android:layout_margin="2dp"
+            android:hint="@string/input"
             android:inputType="none" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -51,7 +51,6 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:hint="@string/output"
         android:textColorHint="@color/grey_hint"
         app:errorEnabled="true">
 
@@ -60,6 +59,7 @@
             android:layout_width="122dp"
             android:layout_height="wrap_content"
             android:layout_margin="2dp"
+            android:hint="@string/output"
             android:inputType="none" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -75,13 +75,13 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:layout_toEndOf="@id/InputConversion"
-        android:hint="@string/enter_input"
         app:hintTextColor="@color/grey_hint">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="2dp"
+            android:hint="@string/enter_input"
             android:inputType="number" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -96,16 +96,15 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:layout_toEndOf="@id/OutputConversion"
-        android:hint="@string/converted_output"
         app:hintTextColor="@color/grey_hint">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="2dp"
-            android:editable="false"
             android:ellipsize="end"
             android:focusable="false"
+            android:hint="@string/converted_output"
             android:inputType="none" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -114,17 +113,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/OutputConversion"
+        android:layout_margin="0dp"
         android:gravity="center"
-        android:orientation="vertical"
-        android:layout_margin="0dp">
+        android:orientation="vertical">
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_gravity="center"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="horizontal">
+
             <ImageButton
                 android:id="@+id/copyOutput"
                 android:layout_width="wrap_content"
@@ -132,11 +132,13 @@
                 android:layout_margin="16dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:clickable="true"
+                android:focusable="true"
                 android:onClick="copyOutput"
-                android:padding="0dp"
 
+                android:padding="0dp"
                 app:srcCompat="@drawable/copy_icon_round"
-                tools:ignore="VectorDrawableCompat" />
+                tools:ignore="UsingOnClickInXml,VectorDrawableCompat" />
+
             <ImageButton
                 android:id="@+id/aboutUs"
                 android:layout_width="wrap_content"
@@ -144,10 +146,25 @@
                 android:layout_margin="16dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:clickable="true"
+                android:focusable="true"
                 android:onClick="aboutUsDialog"
-                android:padding="0dp"
 
+                android:padding="0dp"
                 app:srcCompat="@drawable/about_us_icon"
+                tools:ignore="VectorDrawableCompat" />
+
+            <ImageButton
+                android:id="@+id/cipherHelp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
+                android:onClick="aboutUsDialog"
+
+                android:padding="0dp"
+                app:srcCompat="@drawable/help_icon"
                 tools:ignore="VectorDrawableCompat" />
         </LinearLayout>
 
@@ -157,7 +174,15 @@
             android:layout_height="wrap_content"
             android:layout_margin="6dp"
             android:onClick="convert"
-            android:text="Convert" />
+            android:text="@string/convert" />
+
+        <Button
+            android:id="@+id/cipherInput"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="6dp"
+            android:onClick="convert"
+            android:text="@string/cipher_input" />
 
     </LinearLayout>
 

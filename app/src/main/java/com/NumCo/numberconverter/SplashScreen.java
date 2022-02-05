@@ -1,8 +1,9 @@
-package com.example.numberconverter;
+package com.NumCo.numberconverter;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.animation.ObjectAnimator;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,9 +12,12 @@ import android.os.Looper;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.example.numberconverter.R;
+
+@SuppressLint("CustomSplashScreen")
 public class SplashScreen extends AppCompatActivity {
 
-    private static Context context;
+    private Context context;
     private ImageView icon;
 
     @Override

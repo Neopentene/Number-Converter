@@ -1,4 +1,4 @@
-package com.example.numberconverter;
+package com.NumCo.numberconverter;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,12 +18,13 @@ import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.numberconverter.Numerals.Binary;
-import com.example.numberconverter.Numerals.Decimal;
-import com.example.numberconverter.Numerals.Hexadecimal;
-import com.example.numberconverter.Numerals.Numeral;
-import com.example.numberconverter.Numerals.Octal;
-import com.example.numberconverter.Numerals.RomanNumeral;
+import com.NumCo.numberconverter.Numerals.Octal;
+import com.NumCo.numberconverter.Numerals.RomanNumeral;
+import com.NumCo.numberconverter.Numerals.Binary;
+import com.NumCo.numberconverter.Numerals.Decimal;
+import com.NumCo.numberconverter.Numerals.Hexadecimal;
+import com.NumCo.numberconverter.Numerals.Numeral;
+import com.example.numberconverter.R;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
 

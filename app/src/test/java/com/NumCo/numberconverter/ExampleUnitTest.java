@@ -1,4 +1,4 @@
-package com.example.numberconverter;
+package com.NumCo.numberconverter;
 
 import org.junit.Test;
 
