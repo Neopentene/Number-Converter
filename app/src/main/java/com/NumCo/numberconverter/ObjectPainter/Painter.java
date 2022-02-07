@@ -206,6 +206,13 @@ public class Painter {
         return this;
     }
 
+    public Painter drawBitmap(float x, float y, Bitmap bitmap, int color){
+        paint.setColor(color);
+        canvas.drawBitmap(bitmap, x, y, paint);
+        resetColor();
+        return this;
+    }
+
     public Painter scale(float sx, float sy) {
         Bitmap oldMap = getBitmap();
         setBitmap(Bitmap.createBitmap((int) Math.ceil((double) oldMap.getWidth() * sx), (int) Math.ceil((double) oldMap.getHeight() * sy), oldMap.getConfig()));
