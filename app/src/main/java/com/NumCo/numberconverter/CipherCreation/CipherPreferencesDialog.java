@@ -114,6 +114,7 @@ public class CipherPreferencesDialog extends DialogFragment {
                         if (fragment.getView() != null) {
                             fragment.requireView().measure(fragment.requireView().getWidth(), fragment.requireView().getHeight());
                             maxMeasuredHeight = Math.max(maxMeasuredHeight, fragment.requireView().getMeasuredHeight());
+                            fragment.requireView().requestLayout();
                         }
                     }
 

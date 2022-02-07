@@ -15,8 +15,8 @@ public class CipherObjectBitmaps {
     public HashMap<String, BitmapObject> constantObjects = new HashMap<>();
     public short columns = 0;
 
-    public CipherObjectBitmaps() {
-        addConstantObjects();
+    public CipherObjectBitmaps(int color) {
+        addConstantObjects(color);
     }
 
     public CipherObjectBitmaps(short columns) {
@@ -36,30 +36,30 @@ public class CipherObjectBitmaps {
 
     }
 
-    private void addConstantObjects() {
+    private void addConstantObjects(int color) {
         constantObjects.put("DEC", new BitmapObject("DEC", new Painter(200, 150, Bitmap.Config.ARGB_8888)
-                .drawRoundedBorderAroundBitmap(30, 10, Color.BLACK)
-                .drawTextAtCenter("DEC", Typeface.create(Typeface.SERIF, Typeface.BOLD), 65, Color.BLACK)
+                .drawRoundedBorderAroundBitmap(30, 10, color)
+                .drawTextAtCenter("DEC", Typeface.create(Typeface.SERIF, Typeface.BOLD), 65, color)
                 .getBitmap()));
 
         constantObjects.put("ROM", new BitmapObject("ROM", new Painter(200, 150, Bitmap.Config.ARGB_8888)
-                .drawRoundedBorderAroundBitmap(30, 10, Color.BLACK)
-                .drawTextAtCenter("ROM", Typeface.create(Typeface.SERIF, Typeface.BOLD), 65, Color.BLACK)
+                .drawRoundedBorderAroundBitmap(30, 10, color)
+                .drawTextAtCenter("ROM", Typeface.create(Typeface.SERIF, Typeface.BOLD), 65, color)
                 .getBitmap()));
 
         constantObjects.put("HEX", new BitmapObject("HEX", new Painter(200, 150, Bitmap.Config.ARGB_8888)
-                .drawRoundedBorderAroundBitmap(30, 10, Color.BLACK)
-                .drawTextAtCenter("HEX", Typeface.create(Typeface.SERIF, Typeface.BOLD), 65, Color.BLACK)
+                .drawRoundedBorderAroundBitmap(30, 10, color)
+                .drawTextAtCenter("HEX", Typeface.create(Typeface.SERIF, Typeface.BOLD), 65, color)
                 .getBitmap()));
 
         constantObjects.put("OCT", new BitmapObject("OCT", new Painter(200, 150, Bitmap.Config.ARGB_8888)
-                .drawRoundedBorderAroundBitmap(30, 10, Color.BLACK)
-                .drawTextAtCenter("OCT", Typeface.create(Typeface.SERIF, Typeface.BOLD), 65, Color.BLACK)
+                .drawRoundedBorderAroundBitmap(30, 10, color)
+                .drawTextAtCenter("OCT", Typeface.create(Typeface.SERIF, Typeface.BOLD), 65, color)
                 .getBitmap()));
 
         constantObjects.put("BIN", new BitmapObject("BIN", new Painter(200, 150, Bitmap.Config.ARGB_8888)
-                .drawRoundedBorderAroundBitmap(30, 10, Color.BLACK)
-                .drawTextAtCenter("BIN", Typeface.create(Typeface.SERIF, Typeface.BOLD), 65, Color.BLACK)
+                .drawRoundedBorderAroundBitmap(30, 10, color)
+                .drawTextAtCenter("BIN", Typeface.create(Typeface.SERIF, Typeface.BOLD), 65, color)
                 .getBitmap()));
     }
 }

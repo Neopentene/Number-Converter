@@ -1,7 +1,6 @@
 package com.NumCo.numberconverter.CipherCreation;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -16,7 +15,6 @@ import com.NumCo.numberconverter.ObjectPainter.BitmapObject;
 import com.example.numberconverter.R;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ConstantObjectAdapter extends ArrayAdapter<BitmapObject> {
 
@@ -40,9 +38,14 @@ public class ConstantObjectAdapter extends ArrayAdapter<BitmapObject> {
         imageView.setImageBitmap(constantObjects.get(position).getBitmap());
         textView.setText(mContext.getResources().getIdentifier("help_" + constantObjects.get(position).getId(), "string", mContext.getPackageName()));
 
-        if(position == constantObjects.size() - 1)
+        if (position == constantObjects.size() - 1)
             divider.setVisibility(View.INVISIBLE);
 
         return view;
+    }
+
+    @Override
+    public boolean isEnabled(int position) {
+        return false;
     }
 }

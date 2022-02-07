@@ -31,12 +31,12 @@ import java.util.Objects;
 
 public class CipherHelpFragment extends Fragment {
     private final ConversionList conversionList = new ConversionList();
-    private final CipherObjectBitmaps cipherObjectBitmaps = new CipherObjectBitmaps();
+    private final CipherObjectBitmaps cipherObjectBitmaps = new CipherObjectBitmaps(Color.GRAY);
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         View view = inflater.inflate(R.layout.fragment_cipher_help, container, false);
         ListView listView = view.findViewById(R.id.cipherHelpFirstListView);
 
@@ -46,8 +46,8 @@ public class CipherHelpFragment extends Fragment {
         ArrayList<BitmapObject> objects = new ArrayList<>();
         objects.add(cipherObjectBitmaps.constantObjects.get(selectedOutput));
 
-        for (String string: conversionList.allConversionOptions) {
-            if(!string.equals(selectedOutput))
+        for (String string : conversionList.allConversionOptions) {
+            if (!string.equals(selectedOutput))
                 objects.add(cipherObjectBitmaps.constantObjects.get(string));
         }
 

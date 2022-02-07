@@ -16,7 +16,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:descendantFocusability="beforeDescendants"
-            android:divider="@color/teal"
-            android:focusable="false" />
+            android:divider="@android:color/transparent"
+            android:focusable="false"
+            android:scrollbarThumbVertical="@color/dark_teal"
+            android:smoothScrollbar="true" />
     </LinearLayout>
 </LinearLayout>
