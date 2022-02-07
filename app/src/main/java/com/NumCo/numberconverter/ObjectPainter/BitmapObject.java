@@ -5,8 +5,9 @@ import android.graphics.Bitmap;
 public class BitmapObject {
     private String id;
     private Bitmap bitmap;
+    private String description;
 
-    public BitmapObject(String id, Bitmap bitmap){
+    public BitmapObject(String id, Bitmap bitmap) {
         this.id = id;
         this.bitmap = bitmap;
     }
@@ -25,5 +26,13 @@ public class BitmapObject {
 
     public void setBitmap(Bitmap bitmap) {
         this.bitmap = bitmap;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

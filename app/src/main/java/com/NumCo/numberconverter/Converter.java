@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.NumCo.numberconverter.CipherCreation.CipherPreferencesDialog;
+import com.NumCo.numberconverter.Numerals.ConversionList;
 import com.NumCo.numberconverter.Numerals.Octal;
 import com.NumCo.numberconverter.Numerals.RomanNumeral;
 import com.NumCo.numberconverter.Numerals.Binary;
@@ -35,8 +36,9 @@ import java.util.Objects;
 
 public class Converter extends AppCompatActivity {
 
-    private static final String[] inputConversionList = {"DEC", "HEX", "OCT", "BIN"};
-    private static final String[] outputConversionList = {"ROM", "DEC", "HEX", "OCT", "BIN"};
+    private static final ConversionList conversionList = new ConversionList();
+    private static final String[] inputConversionList = conversionList.inputConversionList;
+    private static final String[] outputConversionList = conversionList.outputConversionList;
 
     private static String inputOption = "";
     private static String outputOption = "";

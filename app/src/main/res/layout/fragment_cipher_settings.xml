@@ -5,6 +5,7 @@
     tools:context="com.NumCo.numberconverter.CipherCreation.CipherHelpFragment">
 
     <ScrollView
+        android:id="@+id/cipherSettingsScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbarThumbVertical="@color/dark_teal"

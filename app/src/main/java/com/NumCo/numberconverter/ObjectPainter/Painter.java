@@ -22,6 +22,7 @@ public class Painter {
     public final Paint.Align DEFAULT = Paint.Align.LEFT;
     public final Paint.Align RIGHT = Paint.Align.RIGHT;
     public final Paint.Align LEFT = Paint.Align.LEFT;
+    public int width, height;
 
     /**
      * Create a Painter object that takes a bitmap as it's parameter. Use this class to draw bitmaps using the various
@@ -48,6 +49,8 @@ public class Painter {
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         bitmapCenterX = (float) Math.ceil((double) bitmap.getWidth() / 2);
         bitmapCenterY = (float) Math.ceil((double) bitmap.getHeight() / 2);
+        width = bitmap.getWidth();
+        height = bitmap.getHeight();
     }
 
     /**
@@ -116,6 +119,14 @@ public class Painter {
         return this;
     }
 
+    public Painter drawBorderedRoundedRectangle(float left, float top, float right, float bottom, float r, int thickness, int color) {
+        setPaintParameters(color, Paint.Style.STROKE, thickness, defaultTypeface, defaultTextSize);
+        float thinness = (float) thickness / 2;
+        canvas.drawRoundRect(new RectF(left + thinness, top + thinness, Math.abs(right - thinness), Math.abs(bottom - thinness)), r, r, paint);
+        resetPaintParameters();
+        return this;
+    }
+
     public Painter drawText(String text, float x, float y, Typeface typeface, Paint.Align alignment, int textSize, int color) {
         setPaintParameters(color, defaultStyle, defaultStrokeWidth, typeface, textSize);
         paint.setTextAlign(alignment);
@@ -142,7 +153,7 @@ public class Painter {
     public Painter drawTextAtCenter(String text, Typeface typeface, int textSize, int color) {
         setPaintParameters(color, defaultStyle, defaultStrokeWidth, typeface, textSize);
         paint.setTextAlign(CENTER);
-        float y = bitmapCenterY - (float) (textSize / 4);
+        float y = bitmapCenterY + (float) textSize * 0.365f;
         canvas.drawText(text, bitmapCenterX, y, paint);
         paint.setTextAlign(DEFAULT);
         resetPaintParameters();
@@ -152,7 +163,7 @@ public class Painter {
     public Painter drawTextAtCenter(String text, int textSize, int color) {
         setPaintParameters(color, defaultStyle, defaultStrokeWidth, defaultTypeface, textSize);
         paint.setTextAlign(CENTER);
-        float y = bitmapCenterY - (float) (textSize / 4);
+        float y = bitmapCenterY + (float) textSize * 0.365f;
         canvas.drawText(text, bitmapCenterX, y, paint);
         paint.setTextAlign(DEFAULT);
         resetPaintParameters();
@@ -177,6 +188,21 @@ public class Painter {
         setPaintParameters(color, Paint.Style.FILL_AND_STROKE, thickness, defaultTypeface, defaultTextSize);
         canvas.drawLine(X_1, Y_1, X_2, Y_2, paint);
         resetPaintParameters();
+        return this;
+    }
+
+    public Painter drawBorderAroundBitmap(int thickness, int color) {
+        drawBorderedRectangle(0, 0, width, height, thickness, color);
+        return this;
+    }
+
+    public Painter drawRoundedBorderAroundBitmap(float rx, float ry, int thickness, int color) {
+        drawBorderedRoundedRectangle(0, 0, width, height, rx, ry, thickness, color);
+        return this;
+    }
+
+    public Painter drawRoundedBorderAroundBitmap(float r, int thickness, int color) {
+        drawBorderedRoundedRectangle(0, 0, width, height, r, thickness, color);
         return this;
     }
 
@@ -287,7 +313,8 @@ public class Painter {
         bitmapCenterY = (float) Math.ceil((double) bitmap.getHeight() / 2);
         canvas = new Canvas(bitmap);
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        setDefaultPaintParameters();
+        width = bitmap.getWidth();
+        height = bitmap.getHeight();
         return this;
     }
 
@@ -297,6 +324,8 @@ public class Painter {
         bitmapCenterY = (float) Math.ceil((double) bitmap.getHeight() / 2);
         canvas = new Canvas(bitmap);
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        width = bitmap.getWidth();
+        height = bitmap.getHeight();
         return this;
     }
 

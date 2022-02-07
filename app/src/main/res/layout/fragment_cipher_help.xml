@@ -4,25 +4,19 @@
     android:layout_height="match_parent"
     tools:context="com.NumCo.numberconverter.CipherCreation.CipherHelpFragment">
 
-    <ScrollView
+    <LinearLayout
+        android:id="@+id/cipherHelpLinearLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbarThumbVertical="@color/dark_teal"
-        android:scrollbars="vertical"
-        tools:ignore="UselessParent">
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <ListView
+            android:id="@+id/cipherHelpFirstListView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <ImageView
-                android:id="@+id/image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center" />
-        </LinearLayout>
-    </ScrollView>
+            android:descendantFocusability="beforeDescendants"
+            android:divider="@color/teal"
+            android:focusable="false" />
+    </LinearLayout>
 </LinearLayout>

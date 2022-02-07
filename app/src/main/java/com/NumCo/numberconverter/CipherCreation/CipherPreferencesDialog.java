@@ -15,6 +15,7 @@ import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
@@ -32,11 +33,12 @@ public class CipherPreferencesDialog extends DialogFragment {
     private MaterialButton backButton;
     private CipherDialogFragmentAdapter cipherDialogFragmentAdapter;
     private boolean isFirst = true;
+    private View root;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.cipher_dialog_layout, container, false);
+        root = inflater.inflate(R.layout.cipher_dialog_layout, container, false);
         cipherDialogFragmentAdapter = new CipherDialogFragmentAdapter(requireActivity(), new ArrayList<>());
 
         cipherDialogFragmentAdapter.addCipherDialogFragment(new CipherHelpFragment());
@@ -55,7 +57,9 @@ public class CipherPreferencesDialog extends DialogFragment {
         viewPager.setOffscreenPageLimit(cipherDialogFragmentAdapter.getCipherDialogFragments().size());
 
         Objects.requireNonNull(getDialog()).getWindow().setBackgroundDrawableResource(R.drawable.transparent_dialog_inset_15_35);
-        Objects.requireNonNull(getDialog()).getWindow().getDecorView().setAlpha(0f);
+
+        if (isFirst)
+            root.setAlpha(0f);
 
         return root;
     }
@@ -107,14 +111,16 @@ public class CipherPreferencesDialog extends DialogFragment {
                     int maxMeasuredHeight = viewPager.getMeasuredHeight();
 
                     for (Fragment fragment : cipherDialogFragmentAdapter.getCipherDialogFragments()) {
-                        fragment.requireView().measure(fragment.requireView().getWidth(), fragment.requireView().getHeight());
-                        maxMeasuredHeight = Math.max(maxMeasuredHeight, fragment.requireView().getMeasuredHeight());
+                        if (fragment.getView() != null) {
+                            fragment.requireView().measure(fragment.requireView().getWidth(), fragment.requireView().getHeight());
+                            maxMeasuredHeight = Math.max(maxMeasuredHeight, fragment.requireView().getMeasuredHeight());
+                        }
                     }
 
                     int finalMaxMeasuredHeight = maxMeasuredHeight;
                     viewPager.post(() -> {
                         viewPager.setMinimumHeight(finalMaxMeasuredHeight);
-                        ObjectAnimator.ofFloat(Objects.requireNonNull(getDialog()).getWindow().getDecorView(), View.ALPHA, 0f, 1f).setDuration(200).start();
+                        ObjectAnimator.ofFloat(root, View.ALPHA, 0f, 1f).setDuration(200).start();
                     });
 
                     isFirst = false;

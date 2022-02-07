@@ -28,10 +28,17 @@ public class CipherSettingsFragment extends Fragment {
         ImageView imageView = view.findViewById(R.id.imageSettings);
         Painter painter = new Painter(200, 200, Bitmap.Config.ARGB_8888);
         painter
-                .drawBorderedRoundedRectangle(0, 0, 200, 200, 30, 30, 10, Color.BLACK)
-                .drawTextAtCenter("DEC", Typeface.create(Typeface.SERIF, Typeface.BOLD), 60, Color.BLACK)
-                .drawLine(15, 70, 15, 130, 10, Color.BLACK);
+                .drawBorderedRoundedRectangle(20, 20, 180, 180, 10, 10, 5, Color.BLUE)
+                .drawBorderedArc(40, 40, 160, 160, 30, 120, true, 5, Color.GREEN)
+                .drawBorderedArc(40, 40, 160, 160, -30, -120, true, 5, Color.GREEN)
+                .drawBorderedCircle(100, 100, 25, 5, Color.MAGENTA);
         imageView.setImageBitmap(painter.getBitmap());
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        requireView().requestLayout();
     }
 }
