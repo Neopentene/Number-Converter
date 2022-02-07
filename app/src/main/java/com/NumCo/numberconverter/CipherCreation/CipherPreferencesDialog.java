@@ -1,15 +1,22 @@
 package com.NumCo.numberconverter.CipherCreation;
 
+import android.animation.ObjectAnimator;
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.os.Bundle;
+import android.os.Handler;
+import android.transition.Transition;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.numberconverter.R;
@@ -23,11 +30,15 @@ public class CipherPreferencesDialog extends DialogFragment {
     private TabLayout tabLayout;
     private ViewPager2 viewPager;
     private MaterialButton backButton;
+    private CipherDialogFragmentAdapter cipherDialogFragmentAdapter;
+    private boolean isFirst = true;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.cipher_dialog_layout, container, false);
-        CipherDialogFragmentAdapter cipherDialogFragmentAdapter = new CipherDialogFragmentAdapter(requireActivity(), new ArrayList<>());
+        cipherDialogFragmentAdapter = new CipherDialogFragmentAdapter(requireActivity(), new ArrayList<>());
+
         cipherDialogFragmentAdapter.addCipherDialogFragment(new CipherHelpFragment());
         cipherDialogFragmentAdapter.addCipherDialogFragment(new CipherSettingsFragment());
 
@@ -41,8 +52,10 @@ public class CipherPreferencesDialog extends DialogFragment {
         tabLayout.addTab(tabLayout.newTab().setText(R.string.settings));
 
         viewPager.setAdapter(cipherDialogFragmentAdapter);
+        viewPager.setOffscreenPageLimit(cipherDialogFragmentAdapter.getCipherDialogFragments().size());
 
         Objects.requireNonNull(getDialog()).getWindow().setBackgroundDrawableResource(R.drawable.transparent_dialog_inset_15_35);
+        Objects.requireNonNull(getDialog()).getWindow().getDecorView().setAlpha(0f);
 
         return root;
     }
@@ -51,7 +64,7 @@ public class CipherPreferencesDialog extends DialogFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         Dialog dialog = getDialog();
 
-        if(dialog != null){
+        if (dialog != null) {
             WindowManager.LayoutParams params = dialog.getWindow().getAttributes();
             params.width = WindowManager.LayoutParams.MATCH_PARENT;
 
@@ -62,11 +75,11 @@ public class CipherPreferencesDialog extends DialogFragment {
         registerPagerOnPageChangeCallback();
 
         backButton.setOnClickListener(v -> {
-            this.dismiss();
+            dismiss();
         });
     }
 
-    public void setTabOnSelectedListener(){
+    public void setTabOnSelectedListener() {
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -85,10 +98,28 @@ public class CipherPreferencesDialog extends DialogFragment {
         });
     }
 
-    public void registerPagerOnPageChangeCallback(){
+    public void registerPagerOnPageChangeCallback() {
         viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
+
+                if (isFirst) {
+                    int maxMeasuredHeight = viewPager.getMeasuredHeight();
+
+                    for (Fragment fragment : cipherDialogFragmentAdapter.getCipherDialogFragments()) {
+                        fragment.requireView().measure(fragment.requireView().getWidth(), fragment.requireView().getHeight());
+                        maxMeasuredHeight = Math.max(maxMeasuredHeight, fragment.requireView().getMeasuredHeight());
+                    }
+
+                    int finalMaxMeasuredHeight = maxMeasuredHeight;
+                    viewPager.post(() -> {
+                        viewPager.setMinimumHeight(finalMaxMeasuredHeight);
+                        ObjectAnimator.ofFloat(Objects.requireNonNull(getDialog()).getWindow().getDecorView(), View.ALPHA, 0f, 1f).setDuration(200).start();
+                    });
+
+                    isFirst = false;
+                }
+
                 tabLayout.selectTab(tabLayout.getTabAt(position));
             }
         });
