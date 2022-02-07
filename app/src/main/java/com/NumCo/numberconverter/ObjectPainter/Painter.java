@@ -3,6 +3,7 @@ package com.NumCo.numberconverter.ObjectPainter;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.ColorFilter;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.RectF;
@@ -206,10 +207,10 @@ public class Painter {
         return this;
     }
 
-    public Painter drawBitmap(float x, float y, Bitmap bitmap, int color){
-        paint.setColor(color);
+    public Painter drawBitmap(float x, float y, Bitmap bitmap, ColorFilter colorFilter) {
+        paint.setColorFilter(colorFilter);
         canvas.drawBitmap(bitmap, x, y, paint);
-        resetColor();
+        resetColorFilter();
         return this;
     }
 
@@ -273,6 +274,16 @@ public class Painter {
 
     public Painter resetPaintStyle() {
         paint.setStyle(defaultStyle);
+        return this;
+    }
+
+    public Painter setColorFilter(ColorFilter colorFilter) {
+        paint.setColorFilter(colorFilter);
+        return this;
+    }
+
+    public Painter resetColorFilter() {
+        paint.setColorFilter(null);
         return this;
     }
 

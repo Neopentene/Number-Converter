@@ -2,6 +2,8 @@ package com.NumCo.numberconverter.CipherCreation;
 
 import android.annotation.SuppressLint;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -37,21 +39,14 @@ public class ConstantObjectAdapter extends ArrayAdapter<BitmapObject> {
         TextView textView = view.findViewById(R.id.helpInputOutputDescription);
         View divider = view.findViewById(R.id.helpInputOutputDescriptionDivider);
 
+        imageView.setImageBitmap(constantObjects.get(position).getBitmap());
         textView.setText(mContext.getResources().getIdentifier("help_" + constantObjects.get(position).getId(), "string", mContext.getPackageName()));
 
-        if (position == 0)
-            imageView.setImageBitmap(
-                    new Painter(constantObjects.get(position).getBitmap().getWidth(),
-                            constantObjects.get(position).getBitmap().getHeight(),
-                            constantObjects.get(position).getBitmap().getConfig()
-                    )
-                            .drawBitmap(0, 0, constantObjects.get(position).getBitmap(), Color.BLUE)
-                            .getBitmap()
-            );
-        else {
-            imageView.setImageBitmap(constantObjects.get(position).getBitmap());
+        if (position == 0) {
+            imageView.setColorFilter(new PorterDuffColorFilter(mContext.getResources().getColor(R.color.dark_blue),
+                    PorterDuff.Mode.SRC_IN));
+            imageView.setPadding(0, (int) Math.ceil((double) 12 * mContext.getResources().getDisplayMetrics().scaledDensity), 0, 0);
         }
-
         if (position == constantObjects.size() - 1)
             divider.setVisibility(View.INVISIBLE);
 
