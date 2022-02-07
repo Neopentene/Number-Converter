@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.graphics.Typeface;
 
 public class Painter {
     private Bitmap bitmap;
@@ -16,6 +17,11 @@ public class Painter {
     private final int defaultStrokeWidth = 0;
     private final Paint.Style defaultStyle = Paint.Style.FILL;
     private float bitmapCenterX, bitmapCenterY;
+    private final Typeface defaultTypeface = Typeface.create(Typeface.SANS_SERIF, Typeface.NORMAL);
+    public final Paint.Align CENTER = Paint.Align.CENTER;
+    public final Paint.Align DEFAULT = Paint.Align.LEFT;
+    public final Paint.Align RIGHT = Paint.Align.RIGHT;
+    public final Paint.Align LEFT = Paint.Align.LEFT;
 
     /**
      * Create a Painter object that takes a bitmap as it's parameter. Use this class to draw bitmaps using the various
@@ -39,7 +45,7 @@ public class Painter {
     public Painter(Bitmap bitmap) {
         this.bitmap = bitmap;
         canvas = new Canvas(bitmap);
-        paint = new Paint();
+        paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         bitmapCenterX = (float) Math.ceil((double) bitmap.getWidth() / 2);
         bitmapCenterY = (float) Math.ceil((double) bitmap.getHeight() / 2);
     }
@@ -60,7 +66,7 @@ public class Painter {
     }
 
     public Painter drawBorderedCircle(int radius, int thickness, int color) {
-        setPaintParameters(color, Paint.Style.STROKE, thickness, defaultTextSize);
+        setPaintParameters(color, Paint.Style.STROKE, thickness, defaultTypeface, defaultTextSize);
         canvas.drawCircle(bitmapCenterX, bitmapCenterY, Math.abs((int) Math.ceil((double) radius - ((float) thickness) / 2)), paint);
         resetPaintParameters();
         return this;
@@ -74,7 +80,7 @@ public class Painter {
     }
 
     public Painter drawBorderedCircle(float cx, float cy, int radius, int thickness, int color) {
-        setPaintParameters(color, Paint.Style.STROKE, thickness, defaultTextSize);
+        setPaintParameters(color, Paint.Style.STROKE, thickness, defaultTypeface, defaultTextSize);
         canvas.drawCircle(cx, cy, Math.abs((int) Math.ceil((double) radius - ((float) thickness) / 2)), paint);
         resetPaintParameters();
         return this;
@@ -88,7 +94,7 @@ public class Painter {
     }
 
     public Painter drawBorderedRectangle(float left, float top, float right, float bottom, int thickness, int color) {
-        setPaintParameters(color, Paint.Style.STROKE, thickness, defaultTextSize);
+        setPaintParameters(color, Paint.Style.STROKE, thickness, defaultTypeface, defaultTextSize);
         float thinness = (float) thickness / 2;
         canvas.drawRect(left + thinness, top + thinness, Math.abs(right - thinness), Math.abs(bottom - thinness), paint);
         resetPaintParameters();
@@ -103,16 +109,52 @@ public class Painter {
     }
 
     public Painter drawBorderedRoundedRectangle(float left, float top, float right, float bottom, float rx, float ry, int thickness, int color) {
-        setPaintParameters(color, Paint.Style.STROKE, thickness, defaultTextSize);
+        setPaintParameters(color, Paint.Style.STROKE, thickness, defaultTypeface, defaultTextSize);
         float thinness = (float) thickness / 2;
         canvas.drawRoundRect(new RectF(left + thinness, top + thinness, Math.abs(right - thinness), Math.abs(bottom - thinness)), rx, ry, paint);
         resetPaintParameters();
         return this;
     }
 
-    public Painter drawText(String text, float x, float y, int textSize, int color) {
-        setPaintParameters(color, defaultStyle, defaultStrokeWidth, textSize);
+    public Painter drawText(String text, float x, float y, Typeface typeface, Paint.Align alignment, int textSize, int color) {
+        setPaintParameters(color, defaultStyle, defaultStrokeWidth, typeface, textSize);
+        paint.setTextAlign(alignment);
         canvas.drawText(text, x, y, paint);
+        resetPaintParameters();
+        paint.setTextAlign(DEFAULT);
+        return this;
+    }
+
+    public Painter drawText(String text, float x, float y, Typeface typeface, int textSize, int color) {
+        setPaintParameters(color, defaultStyle, defaultStrokeWidth, typeface, textSize);
+        canvas.drawText(text, x, y, paint);
+        resetPaintParameters();
+        return this;
+    }
+
+    public Painter drawText(String text, float x, float y, int textSize, int color) {
+        setPaintParameters(color, defaultStyle, defaultStrokeWidth, defaultTypeface, textSize);
+        canvas.drawText(text, x, y, paint);
+        resetPaintParameters();
+        return this;
+    }
+
+    public Painter drawTextAtCenter(String text, Typeface typeface, int textSize, int color) {
+        setPaintParameters(color, defaultStyle, defaultStrokeWidth, typeface, textSize);
+        paint.setTextAlign(CENTER);
+        float y = bitmapCenterY - (float) (textSize / 4);
+        canvas.drawText(text, bitmapCenterX, y, paint);
+        paint.setTextAlign(DEFAULT);
+        resetPaintParameters();
+        return this;
+    }
+
+    public Painter drawTextAtCenter(String text, int textSize, int color) {
+        setPaintParameters(color, defaultStyle, defaultStrokeWidth, defaultTypeface, textSize);
+        paint.setTextAlign(CENTER);
+        float y = bitmapCenterY - (float) (textSize / 4);
+        canvas.drawText(text, bitmapCenterX, y, paint);
+        paint.setTextAlign(DEFAULT);
         resetPaintParameters();
         return this;
     }
@@ -125,8 +167,15 @@ public class Painter {
     }
 
     public Painter drawBorderedArc(float left, float top, float right, float bottom, float startAngle, float sweepAngle, boolean useCenter, int strokeWidth, int color) {
-        setPaintParameters(color, Paint.Style.STROKE, strokeWidth, defaultTextSize);
+        setPaintParameters(color, Paint.Style.STROKE, strokeWidth, defaultTypeface, defaultTextSize);
         canvas.drawArc(new RectF(left, top, right, bottom), startAngle, sweepAngle, useCenter, paint);
+        resetPaintParameters();
+        return this;
+    }
+
+    public Painter drawLine(float X_1, float Y_1, float X_2, float Y_2, int thickness, int color) {
+        setPaintParameters(color, Paint.Style.FILL_AND_STROKE, thickness, defaultTypeface, defaultTextSize);
+        canvas.drawLine(X_1, Y_1, X_2, Y_2, paint);
         resetPaintParameters();
         return this;
     }
@@ -194,17 +243,37 @@ public class Painter {
         return this;
     }
 
-    public void setPaintParameters(int color, Paint.Style style, int strokeWidth, int textSize) {
-        paint.setColor(color);
-        paint.setStyle(style);
-        paint.setStrokeWidth(strokeWidth);
-        paint.setTextSize(textSize);
+    public void setPaintParameters(int color, Paint.Style style, int strokeWidth, Typeface typeface, int textSize) {
+        if (color != defaultColor)
+            paint.setColor(color);
+        if (!style.equals(defaultStyle))
+            paint.setStyle(style);
+        if (strokeWidth != defaultStrokeWidth)
+            paint.setStrokeWidth(strokeWidth);
+        if (!typeface.equals(defaultTypeface))
+            paint.setTypeface(typeface);
+        if (textSize != defaultTextSize)
+            paint.setTextSize(textSize);
     }
 
     public void resetPaintParameters() {
+        if (paint.getColor() != defaultColor)
+            paint.setColor(defaultColor);
+        if (paint.getStyle() != null && !paint.getStyle().equals(defaultStyle))
+            paint.setStyle(defaultStyle);
+        if (paint.getStrokeWidth() != defaultStrokeWidth)
+            paint.setStrokeWidth(defaultStrokeWidth);
+        if (paint.getTypeface() != null && !paint.getTypeface().equals(defaultTypeface))
+            paint.setTypeface(defaultTypeface);
+        if (paint.getTextSize() != defaultTextSize)
+            paint.setTextSize(defaultTextSize);
+    }
+
+    public void setDefaultPaintParameters() {
         paint.setColor(defaultColor);
         paint.setStyle(defaultStyle);
         paint.setStrokeWidth(defaultStrokeWidth);
+        paint.setTypeface(defaultTypeface);
         paint.setTextSize(defaultTextSize);
     }
 
@@ -216,6 +285,9 @@ public class Painter {
         bitmap = Bitmap.createBitmap(width, height, config);
         bitmapCenterX = (float) Math.ceil((double) bitmap.getWidth() / 2);
         bitmapCenterY = (float) Math.ceil((double) bitmap.getHeight() / 2);
+        canvas = new Canvas(bitmap);
+        paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        setDefaultPaintParameters();
         return this;
     }
 
@@ -224,7 +296,7 @@ public class Painter {
         bitmapCenterX = (float) Math.ceil((double) bitmap.getWidth() / 2);
         bitmapCenterY = (float) Math.ceil((double) bitmap.getHeight() / 2);
         canvas = new Canvas(bitmap);
-        paint = new Paint();
+        paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         return this;
     }
 
@@ -242,6 +314,10 @@ public class Painter {
 
     public Paint.Style getDefaultStyle() {
         return defaultStyle;
+    }
+
+    public Typeface getDefaultTypeface() {
+        return defaultTypeface;
     }
 
     public float getBitmapCenterX() {

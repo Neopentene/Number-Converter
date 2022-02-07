@@ -3,6 +3,7 @@ package com.NumCo.numberconverter.CipherCreation;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -25,12 +26,11 @@ public class CipherSettingsFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_cipher_settings, container, true);
         ImageView imageView = view.findViewById(R.id.imageSettings);
-        Painter painter = new Painter(200, 1800, Bitmap.Config.ARGB_8888);
-        painter.drawBorderedCircle(100, 10, Color.RED);
-        painter.drawCircle(painter.getBitmapCenterX(), painter.getBitmapCenterY() + 200, 100, Color.DKGRAY);
-        painter.drawBorderedCircle(painter.getBitmapCenterX(), painter.getBitmapCenterY() + 200, 100, 10, Color.MAGENTA);
-        painter.drawCircle(10, Color.BLUE);
-        painter.drawText(painter.getBitmapCenterX() + ", " + painter.getBitmapCenterY(), 0, painter.getBitmapCenterY() + 400, 30, Color.BLACK);
+        Painter painter = new Painter(200, 200, Bitmap.Config.ARGB_8888);
+        painter
+                .drawBorderedRoundedRectangle(0, 0, 200, 200, 30, 30, 10, Color.BLACK)
+                .drawTextAtCenter("DEC", Typeface.create(Typeface.SERIF, Typeface.BOLD), 60, Color.BLACK)
+                .drawLine(15, 70, 15, 130, 10, Color.BLACK);
         imageView.setImageBitmap(painter.getBitmap());
         return view;
     }
