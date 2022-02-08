@@ -29,12 +29,6 @@ public class CipherSettingsFragment extends Fragment {
 
         Painter painter = new Painter(200 * 3, 200 * 3, Bitmap.Config.ARGB_8888);
 
-        // 20 top  * -------- * 180 right
-        //         |          |
-        //         |          |
-        //         |          |
-        // 20 left * -------- * 180 bottom
-
         painter
                 .drawBorderedRoundedRectangle(20 * 3, 20 * 3, 180 * 3, 180 * 3, 10 * 3, 10 * 3, 5 * 3, Color.BLUE)
                 .drawArc(40 * 3, 40 * 3, 160 * 3, 160 * 3, 30, 120, true, Color.GREEN)

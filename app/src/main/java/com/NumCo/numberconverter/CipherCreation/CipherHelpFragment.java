@@ -44,12 +44,14 @@ public class CipherHelpFragment extends Fragment {
 
         SharedPreferences sharedPreferences = requireContext().getSharedPreferences("saved-options", Context.MODE_PRIVATE);
         String selectedOutput = sharedPreferences.getString("output", "HEX");
+        String selectedInput = sharedPreferences.getString("input", "DEC");
 
         ArrayList<BitmapObject> objects = new ArrayList<>();
         objects.add(cipherObjectBitmaps.constantObjects.get(selectedOutput));
+        objects.add(cipherObjectBitmaps.constantObjects.get(selectedInput));
 
         for (String string : conversionList.allConversionOptions) {
-            if (!string.equals(selectedOutput))
+            if (!string.equals(selectedOutput) && !string.equals(selectedInput))
                 objects.add(cipherObjectBitmaps.constantObjects.get(string));
         }
 

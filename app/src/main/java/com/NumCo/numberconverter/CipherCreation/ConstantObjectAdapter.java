@@ -31,6 +31,7 @@ public class ConstantObjectAdapter extends ArrayAdapter<BitmapObject> {
         constantObjects = objects;
     }
 
+    @SuppressLint("SetTextI18n")
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
@@ -42,11 +43,19 @@ public class ConstantObjectAdapter extends ArrayAdapter<BitmapObject> {
         imageView.setImageBitmap(constantObjects.get(position).getBitmap());
         textView.setText(mContext.getResources().getIdentifier("help_" + constantObjects.get(position).getId(), "string", mContext.getPackageName()));
 
-        if (position == 0) {
+        if (constantObjects.size() > 1 && position == 0) {
             imageView.setColorFilter(new PorterDuffColorFilter(mContext.getResources().getColor(R.color.dark_blue),
                     PorterDuff.Mode.SRC_IN));
             imageView.setPadding(0, (int) Math.ceil((double) 12 * mContext.getResources().getDisplayMetrics().scaledDensity), 0, 0);
+            textView.append("\n\nCURRENT: Output");
         }
+
+        if (constantObjects.size() > 2 && position == 1) {
+            imageView.setColorFilter(new PorterDuffColorFilter(mContext.getResources().getColor(R.color.chrome_yellow),
+                    PorterDuff.Mode.SRC_IN));
+            textView.append("\n\nCURRENT: Input");
+        }
+
         if (position == constantObjects.size() - 1)
             divider.setVisibility(View.INVISIBLE);
 

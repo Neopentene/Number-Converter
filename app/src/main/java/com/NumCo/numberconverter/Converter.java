@@ -88,6 +88,13 @@ public class Converter extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        changeInputAdapter(null);
+        changeOutputAdapter(inputOption);
+    }
+
     private void setInputOnChangeListener() throws NullPointerException {
         inputConversionAutoText.addTextChangedListener(new TextWatcher() {
             @Override
