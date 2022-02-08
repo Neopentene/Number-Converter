@@ -44,6 +44,6 @@
     </string>
     <string name="help_ROM">Option: ROM (Roman)
         \n<br /> Type - Only Output
-        \n<br />Option to convert any input format to it's corresponding roman numeral
+        \n<br />Option to convert any input format to the corresponding roman numeral
     </string>
 </resources>

@@ -55,11 +55,11 @@ public class Painter {
     }
 
     /**
-     * draw a circle at center of the bitmap with the specified radius
+     * Draw a circle at center of the bitmap with the specified radius
      *
      * @param radius Radius of the circle
      * @param color  Color used to draw the circle
-     * @return object
+     * @return Self
      */
 
     public Painter drawCircle(int radius, int color) {
@@ -69,6 +69,15 @@ public class Painter {
         return this;
     }
 
+    /**
+     * Draw a circle border at center of the bitmap with the specified radius and thickness
+     *
+     * @param radius    Radius of the circle
+     * @param thickness Thickness of the border
+     * @param color     Color used to draw the circle
+     * @return Self
+     */
+
     public Painter drawBorderedCircle(int radius, int thickness, int color) {
         setPaintParameters(color, Paint.Style.STROKE, thickness, defaultTypeface, defaultTextSize);
         canvas.drawCircle(bitmapCenterX, bitmapCenterY, Math.abs((int) Math.ceil((double) radius - ((float) thickness) / 2)), paint);
@@ -76,12 +85,32 @@ public class Painter {
         return this;
     }
 
+    /**
+     * Draw a circle at center of your choosing with the specified radius
+     *
+     * @param cx     x Co-ordinate of the center
+     * @param cy     y Co-ordinate of the center
+     * @param radius Radius of the circle
+     * @param color  Color used to draw the circle
+     * @return Self
+     */
     public Painter drawCircle(float cx, float cy, int radius, int color) {
         setColor(color);
         canvas.drawCircle(cx, cy, radius, paint);
         resetColor();
         return this;
     }
+
+    /**
+     * Draw a circle border at center of your choosing with the specified radius
+     *
+     * @param cx        x Co-ordinate of the center
+     * @param cy        y Co-ordinate of the center
+     * @param thickness Thickness of the border
+     * @param radius    Radius of the circle
+     * @param color     Color used to draw the circle
+     * @return Self
+     */
 
     public Painter drawBorderedCircle(float cx, float cy, int radius, int thickness, int color) {
         setPaintParameters(color, Paint.Style.STROKE, thickness, defaultTypeface, defaultTextSize);
@@ -90,12 +119,69 @@ public class Painter {
         return this;
     }
 
+    /**
+     * Draw a rectangle at (left, top) with dimensions (right, bottom) of your choosing
+     * <pre>
+     * <code>
+     * <br /> (0, 0)  (20, 0)    (180, 0)
+     * <br />     *   *          *
+     * <br />
+     * <br />  (20, 20)          (180, 20)
+     * <br /> 20 top  * -------- * 180 right
+     * <br />         |          |
+     * <br />         |          |
+     * <br />         |          |
+     * <br /> 20 left * -------- * 180 bottom
+     * <br /> (20, 180)          (180, 180)
+     * <br />
+     * <br />     *   *          *
+     * <br />(0, 200)(20, 200)  (180, 200)
+     * </code>
+     * </pre>
+     *
+     * @param left   top left corner's x Co-ordinate
+     * @param top    top left corner's y Co-ordinate
+     * @param right  bottom right corner's x Co-ordinate
+     * @param bottom bottom right corner's x Co-ordinate
+     * @param color  Color used to draw the circle
+     * @return Self
+     */
+
     public Painter drawRectangle(float left, float top, float right, float bottom, int color) {
         setColor(color);
         canvas.drawRect(left, top, right, bottom, paint);
         resetColor();
         return this;
     }
+
+    /**
+     * Draw a rectangle at (left, top) with dimensions (right, bottom) of your choosing
+     * <pre>
+     * <code>
+     * <br /> (0, 0)  (20, 0)    (180, 0)
+     * <br />     *   *          *
+     * <br />
+     * <br />  (20, 20)          (180, 20)
+     * <br /> 20 top  * -------- * 180 right
+     * <br />         |          |
+     * <br />         |          |
+     * <br />         |          |
+     * <br /> 20 left * -------- * 180 bottom
+     * <br /> (20, 180)          (180, 180)
+     * <br />
+     * <br />     *   *          *
+     * <br />(0, 200)(20, 200)  (180, 200)
+     * </code>
+     * </pre>
+     *
+     * @param left      top left corner's x Co-ordinate
+     * @param top       top left corner's y Co-ordinate
+     * @param right     bottom right corner's x Co-ordinate
+     * @param bottom    bottom right corner's x Co-ordinate
+     * @param thickness Thickness of the border
+     * @param color     Color used to draw the circle
+     * @return Self
+     */
 
     public Painter drawBorderedRectangle(float left, float top, float right, float bottom, int thickness, int color) {
         setPaintParameters(color, Paint.Style.STROKE, thickness, defaultTypeface, defaultTextSize);
@@ -105,12 +191,73 @@ public class Painter {
         return this;
     }
 
+    /**
+     * Draw a rectangle at (left, top) with dimensions (right, bottom) of your choosing
+     * <pre>
+     * <code>
+     * <br /> (0, 0)  (20, 0)    (180, 0)
+     * <br />     *   *          *
+     * <br />
+     * <br />  (20, 20)          (180, 20)
+     * <br /> 20 top  * -------- * 180 right
+     * <br />         |          |
+     * <br />         |          |
+     * <br />         |          |
+     * <br /> 20 left * -------- * 180 bottom
+     * <br /> (20, 180)          (180, 180)
+     * <br />
+     * <br />     *   *          *
+     * <br />(0, 200)(20, 200)  (180, 200)
+     * </code>
+     * </pre>
+     *
+     * @param left   top left corner's x Co-ordinate
+     * @param top    top left corner's y Co-ordinate
+     * @param right  bottom right corner's x Co-ordinate
+     * @param bottom bottom right corner's x Co-ordinate
+     * @param rx     x inclination of the rounded corner
+     * @param ry     y inclination of the rounded corner
+     * @param color  Color used to draw the circle
+     * @return Self
+     */
+
     public Painter drawRoundedRectangle(float left, float top, float right, float bottom, float rx, float ry, int color) {
         setColor(color);
         canvas.drawRoundRect(new RectF(left, top, right, bottom), rx, ry, paint);
         resetColor();
         return this;
     }
+
+    /**
+     * Draw a rectangle at (left, top) with dimensions (right, bottom) of your choosing
+     * <pre>
+     * <code>
+     * <br /> (0, 0)  (20, 0)    (180, 0)
+     * <br />     *   *          *
+     * <br />
+     * <br />  (20, 20)          (180, 20)
+     * <br /> 20 top  * -------- * 180 right
+     * <br />         |          |
+     * <br />         |          |
+     * <br />         |          |
+     * <br /> 20 left * -------- * 180 bottom
+     * <br /> (20, 180)          (180, 180)
+     * <br />
+     * <br />     *   *          *
+     * <br />(0, 200)(20, 200)  (180, 200)
+     * </code>
+     * </pre>
+     *
+     * @param left      top left corner's x Co-ordinate
+     * @param top       top left corner's y Co-ordinate
+     * @param right     bottom right corner's x Co-ordinate
+     * @param bottom    bottom right corner's x Co-ordinate
+     * @param rx        x inclination of the rounded corner
+     * @param ry        y inclination of the rounded corner
+     * @param thickness Thickness of the border
+     * @param color     Color used to draw the circle
+     * @return Self
+     */
 
     public Painter drawBorderedRoundedRectangle(float left, float top, float right, float bottom, float rx, float ry, int thickness, int color) {
         setPaintParameters(color, Paint.Style.STROKE, thickness, defaultTypeface, defaultTextSize);
@@ -120,6 +267,34 @@ public class Painter {
         return this;
     }
 
+    /**
+     * Draw a rectangle at (left, top) with dimensions (right, bottom) of your choosing
+     * <pre>
+     * <code>
+     * <br /> (0, 0)  (20, 0)    (180, 0)
+     * <br />     *   *          *
+     * <br />
+     * <br />  (20, 20)          (180, 20)
+     * <br /> 20 top  * -------- * 180 right
+     * <br />         |          |
+     * <br />         |          |
+     * <br />         |          |
+     * <br /> 20 left * -------- * 180 bottom
+     * <br /> (20, 180)          (180, 180)
+     * <br />
+     * <br />     *   *          *
+     * <br />(0, 200)(20, 200)  (180, 200)
+     * </code>
+     * </pre>
+     *
+     * @param left   top left corner's x Co-ordinate
+     * @param top    top left corner's y Co-ordinate
+     * @param right  bottom right corner's x Co-ordinate
+     * @param bottom bottom right corner's x Co-ordinate
+     * @param r      set equal x and y inclination of the rounded corners
+     * @param color  Color used to draw the circle
+     * @return Self
+     */
     public Painter drawBorderedRoundedRectangle(float left, float top, float right, float bottom, float r, int thickness, int color) {
         setPaintParameters(color, Paint.Style.STROKE, thickness, defaultTypeface, defaultTextSize);
         float thinness = (float) thickness / 2;
@@ -127,6 +302,19 @@ public class Painter {
         resetPaintParameters();
         return this;
     }
+
+    /**
+     * Draw text at point (x, y) of your choosing
+     *
+     * @param text      Text to draw
+     * @param x         x Co-ordinate of the top left corner
+     * @param y         y Co-ordinate of the top left corner
+     * @param typeface  The font family and text style - (ITALICS, BOLD, NORMAL)
+     * @param alignment The alignment of the text with respect to (x, y)
+     * @param textSize  The size of the text
+     * @param color     Color used to draw text
+     * @return Self
+     */
 
     public Painter drawText(String text, float x, float y, Typeface typeface, Paint.Align alignment, int textSize, int color) {
         setPaintParameters(color, defaultStyle, defaultStrokeWidth, typeface, textSize);
@@ -137,6 +325,18 @@ public class Painter {
         return this;
     }
 
+    /**
+     * Draw text at point (x, y) of your choosing with default alignment - (LEFT)
+     *
+     * @param text     Text to draw
+     * @param x        x Co-ordinate of the top left corner
+     * @param y        y Co-ordinate of the top left corner
+     * @param typeface The font family and text style - (ITALICS, BOLD, NORMAL)
+     * @param textSize The size of the text
+     * @param color    Color used to draw text
+     * @return Self
+     */
+
     public Painter drawText(String text, float x, float y, Typeface typeface, int textSize, int color) {
         setPaintParameters(color, defaultStyle, defaultStrokeWidth, typeface, textSize);
         canvas.drawText(text, x, y, paint);
@@ -144,12 +344,33 @@ public class Painter {
         return this;
     }
 
+    /**
+     * Draw text at point (x, y) of your choosing with default typeface - (SAN-SERIF, NORMAL) and default alignment - (LEFT)
+     *
+     * @param text     Text to draw
+     * @param x        x Co-ordinate of the top left corner
+     * @param y        y Co-ordinate of the top left corner
+     * @param textSize The size of the text
+     * @param color    Color used to draw text
+     * @return Self
+     */
+
     public Painter drawText(String text, float x, float y, int textSize, int color) {
         setPaintParameters(color, defaultStyle, defaultStrokeWidth, defaultTypeface, textSize);
         canvas.drawText(text, x, y, paint);
         resetPaintParameters();
         return this;
     }
+
+    /**
+     * Draw text at center of the bitmap
+     *
+     * @param text     Text to draw
+     * @param typeface The font family and text style - (ITALICS, BOLD, NORMAL)
+     * @param textSize The size of the text
+     * @param color    Color used to draw text
+     * @return Self
+     */
 
     public Painter drawTextAtCenter(String text, Typeface typeface, int textSize, int color) {
         setPaintParameters(color, defaultStyle, defaultStrokeWidth, typeface, textSize);
@@ -161,6 +382,15 @@ public class Painter {
         return this;
     }
 
+    /**
+     * Draw text at center of the bitmap with default typeface - (SAN-SERIF, NORMAL)
+     *
+     * @param text     Text to draw
+     * @param textSize The size of the text
+     * @param color    Color used to draw text
+     * @return Self
+     */
+
     public Painter drawTextAtCenter(String text, int textSize, int color) {
         setPaintParameters(color, defaultStyle, defaultStrokeWidth, defaultTypeface, textSize);
         paint.setTextAlign(CENTER);
@@ -171,12 +401,75 @@ public class Painter {
         return this;
     }
 
+    /**
+     * Draw an Arc
+     * <pre>
+     * <code>
+     * <br /> (0, 0)  (20, 0)    (180, 0)
+     * <br />     *   *          *
+     * <br />
+     * <br />  (20, 20)          (180, 20)
+     * <br /> 20 top  * -------- * 180 right
+     * <br />         |          |
+     * <br />         |(Arc - in)|
+     * <br />         |          |
+     * <br /> 20 left * -------- * 180 bottom
+     * <br /> (20, 180)          (180, 180)
+     * <br />
+     * <br />     *   *          *
+     * <br />(0, 200)(20, 200)  (180, 200)
+     * </code>
+     * </pre>
+     *
+     * @param left       top left corner's x Co-ordinate
+     * @param top        top left corner's y Co-ordinate
+     * @param right      bottom right corner's x Co-ordinate
+     * @param bottom     bottom right corner's x Co-ordinate
+     * @param startAngle starting angle to draw the arc
+     * @param sweepAngle angle between the sides of the arc
+     * @param useCenter  include the usage of center while rendering
+     * @param color      Color used to draw arc
+     * @return Self
+     */
+
     public Painter drawArc(float left, float top, float right, float bottom, float startAngle, float sweepAngle, boolean useCenter, int color) {
         setColor(color);
         canvas.drawArc(new RectF(left, top, right, bottom), startAngle, sweepAngle, useCenter, paint);
         resetColor();
         return this;
     }
+
+    /**
+     * Draw an Arc
+     * <pre>
+     * <code>
+     * <br /> (0, 0)  (20, 0)    (180, 0)
+     * <br />     *   *          *
+     * <br />
+     * <br />  (20, 20)          (180, 20)
+     * <br /> 20 top  * -------- * 180 right
+     * <br />         |          |
+     * <br />         |(Arc - in)|
+     * <br />         |          |
+     * <br /> 20 left * -------- * 180 bottom
+     * <br /> (20, 180)          (180, 180)
+     * <br />
+     * <br />     *   *          *
+     * <br />(0, 200)(20, 200)  (180, 200)
+     * </code>
+     * </pre>
+     *
+     * @param left        top left corner's x Co-ordinate
+     * @param top         top left corner's y Co-ordinate
+     * @param right       bottom right corner's x Co-ordinate
+     * @param bottom      bottom right corner's x Co-ordinate
+     * @param startAngle  starting angle to draw the arc
+     * @param sweepAngle  angle between the sides of the arc
+     * @param useCenter   include the usage of center while rendering
+     * @param strokeWidth thickness of the border
+     * @param color       Color used to draw arc
+     * @return Self
+     */
 
     public Painter drawBorderedArc(float left, float top, float right, float bottom, float startAngle, float sweepAngle, boolean useCenter, int strokeWidth, int color) {
         setPaintParameters(color, Paint.Style.STROKE, strokeWidth, defaultTypeface, defaultTextSize);
@@ -185,6 +478,18 @@ public class Painter {
         return this;
     }
 
+    /**
+     * Draw a line <code>(X-1, Y-1)<sup>2</sup> = (X-2, Y-2)<sup>2</sup></code>
+     *
+     * @param X_1       Starting X Co-ordinate of the line
+     * @param Y_1       Starting Y Co-ordinate of the line
+     * @param X_2       Ending X Co-ordinate of the line
+     * @param Y_2       Ending Y Co-ordinate of the line
+     * @param thickness thickness of the line
+     * @param color     Color used to draw line
+     * @return Self
+     */
+
     public Painter drawLine(float X_1, float Y_1, float X_2, float Y_2, int thickness, int color) {
         setPaintParameters(color, Paint.Style.FILL_AND_STROKE, thickness, defaultTypeface, defaultTextSize);
         canvas.drawLine(X_1, Y_1, X_2, Y_2, paint);
@@ -192,20 +497,57 @@ public class Painter {
         return this;
     }
 
+    /**
+     * Draw a border around the bitmap
+     *
+     * @param thickness thickness of the border
+     * @param color     Color used to draw border
+     * @return Self
+     */
+
     public Painter drawBorderAroundBitmap(int thickness, int color) {
         drawBorderedRectangle(0, 0, width, height, thickness, color);
         return this;
     }
+
+    /**
+     * Draw a rounded border around the bitmap
+     *
+     * @param rx        x inclination of the rounded corner
+     * @param ry        y inclination of the rounded corner
+     * @param thickness thickness of the border
+     * @param color     Color used to draw border
+     * @return Self
+     */
 
     public Painter drawRoundedBorderAroundBitmap(float rx, float ry, int thickness, int color) {
         drawBorderedRoundedRectangle(0, 0, width, height, rx, ry, thickness, color);
         return this;
     }
 
+    /**
+     * Draw a rounded border around the bitmap
+     *
+     * @param r         set equal x and y inclination of the rounded corners
+     * @param thickness thickness of the border
+     * @param color     Color used to draw border
+     * @return Self
+     */
+
     public Painter drawRoundedBorderAroundBitmap(float r, int thickness, int color) {
         drawBorderedRoundedRectangle(0, 0, width, height, r, thickness, color);
         return this;
     }
+
+    /**
+     * Draw the given bitmap
+     *
+     * @param x           x Co-ordinate of the top left corner
+     * @param y           y Co-ordinate of the top left corner
+     * @param bitmap      Bitmap to draw
+     * @param colorFilter Filter used to draw bitmap default - null
+     * @return Self
+     */
 
     public Painter drawBitmap(float x, float y, Bitmap bitmap, ColorFilter colorFilter) {
         paint.setColorFilter(colorFilter);
@@ -213,6 +555,14 @@ public class Painter {
         resetColorFilter();
         return this;
     }
+
+    /**
+     * Scaling with given x and y values
+     *
+     * @param sx scale x
+     * @param sy scale y
+     * @return Self
+     */
 
     public Painter scale(float sx, float sy) {
         Bitmap oldMap = getBitmap();
@@ -227,10 +577,22 @@ public class Painter {
         return this;
     }
 
+    /**
+     * Save the canvas layer
+     *
+     * @return Self
+     */
+
     public Painter save() {
         canvas.save();
         return this;
     }
+
+    /**
+     * Restore the last saved canvas layer
+     *
+     * @return Self
+     */
 
     public Painter restore() {
         canvas.restore();
@@ -321,6 +683,11 @@ public class Painter {
         paint.setTextSize(defaultTextSize);
     }
 
+    /**
+     * Get the internal bitmap
+     *
+     * @return Bitmap
+     */
     public Bitmap getBitmap() {
         return bitmap;
     }

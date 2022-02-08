@@ -26,11 +26,19 @@ public class CipherSettingsFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_cipher_settings, container, true);
         ImageView imageView = view.findViewById(R.id.imageSettings);
+
         Painter painter = new Painter(200 * 3, 200 * 3, Bitmap.Config.ARGB_8888);
+
+        // 20 top  * -------- * 180 right
+        //         |          |
+        //         |          |
+        //         |          |
+        // 20 left * -------- * 180 bottom
+
         painter
                 .drawBorderedRoundedRectangle(20 * 3, 20 * 3, 180 * 3, 180 * 3, 10 * 3, 10 * 3, 5 * 3, Color.BLUE)
-                .drawBorderedArc(40 * 3, 40 * 3, 160 * 3, 160 * 3, 30, 120, true, 5 * 3, Color.GREEN)
-                .drawBorderedArc(40 * 3, 40 * 3, 160 * 3, 160 * 3, -30, -120, true, 5 * 3, Color.GREEN)
+                .drawArc(40 * 3, 40 * 3, 160 * 3, 160 * 3, 30, 120, true, Color.GREEN)
+                .drawBorderedArc(40 * 3, 40 * 3, 160 * 3, 160 * 3, -30, -120, false, 5 * 3, Color.GREEN)
                 .drawBorderedCircle(100 * 3, 100 * 3, 25 * 3, 5 * 3, Color.MAGENTA);
         imageView.setImageBitmap(painter.getBitmap());
         return view;
