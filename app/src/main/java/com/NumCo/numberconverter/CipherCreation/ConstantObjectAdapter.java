@@ -36,6 +36,7 @@ public class ConstantObjectAdapter extends ArrayAdapter<BitmapObject> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         @SuppressLint("ViewHolder") View view = mContext.getLayoutInflater().inflate(R.layout.help_input_output_layout, parent, false);
+
         ImageView imageView = view.findViewById(R.id.helpInputOutputImage);
         TextView textView = view.findViewById(R.id.helpInputOutputDescription);
         View divider = view.findViewById(R.id.helpInputOutputDescriptionDivider);
