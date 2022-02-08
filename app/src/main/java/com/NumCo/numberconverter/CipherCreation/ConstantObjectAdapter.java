@@ -4,10 +4,12 @@ import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -37,6 +39,7 @@ public class ConstantObjectAdapter extends ArrayAdapter<BitmapObject> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         @SuppressLint("ViewHolder") View view = mContext.getLayoutInflater().inflate(R.layout.help_input_output_layout, parent, false);
 
+        LinearLayout linearLayout = view.findViewById(R.id.helpInputOutputLayout);
         ImageView imageView = view.findViewById(R.id.helpInputOutputImage);
         TextView textView = view.findViewById(R.id.helpInputOutputDescription);
         View divider = view.findViewById(R.id.helpInputOutputDescriptionDivider);
@@ -44,17 +47,25 @@ public class ConstantObjectAdapter extends ArrayAdapter<BitmapObject> {
         imageView.setImageBitmap(constantObjects.get(position).getBitmap());
         textView.setText(mContext.getResources().getIdentifier("help_" + constantObjects.get(position).getId(), "string", mContext.getPackageName()));
 
-        if (constantObjects.size() > 1 && position == 0) {
+        if (constantObjects.size() > 0 && position == 0) {
             imageView.setColorFilter(new PorterDuffColorFilter(mContext.getResources().getColor(R.color.dark_blue),
                     PorterDuff.Mode.SRC_IN));
-            imageView.setPadding(0, (int) Math.ceil((double) 12 * mContext.getResources().getDisplayMetrics().scaledDensity), 0, 0);
-            textView.append("\n\nCURRENT: Output");
+            TextView status = new TextView(mContext);
+            status.setText("Selected Output");
+            status.setTextColor(mContext.getResources().getColor(R.color.dark_blue));
+            status.setGravity(Gravity.CENTER);
+            status.setPadding(0, (int) Math.ceil((double) 15 * mContext.getResources().getDisplayMetrics().scaledDensity), 0, 0);
+            linearLayout.addView(status, 0);
         }
 
-        if (constantObjects.size() > 2 && position == 1) {
+        if (constantObjects.size() > 1 && position == 1) {
             imageView.setColorFilter(new PorterDuffColorFilter(mContext.getResources().getColor(R.color.chrome_yellow),
                     PorterDuff.Mode.SRC_IN));
-            textView.append("\n\nCURRENT: Input");
+            TextView status = new TextView(mContext);
+            status.setText("Selected Input");
+            status.setTextColor(mContext.getResources().getColor(R.color.chrome_yellow));
+            status.setGravity(Gravity.CENTER);
+            linearLayout.addView(status, 0);
         }
 
         if (position == constantObjects.size() - 1)

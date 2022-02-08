@@ -121,7 +121,7 @@ public class CipherPreferencesDialog extends DialogFragment {
                     int finalMaxMeasuredHeight = maxMeasuredHeight;
                     viewPager.post(() -> {
                         viewPager.setMinimumHeight(finalMaxMeasuredHeight);
-                        ObjectAnimator.ofFloat(root, View.ALPHA, 0f, 1f).setDuration(200).start();
+                        ObjectAnimator.ofFloat(root, View.ALPHA, 0f, 1f).setDuration(150).start();
                     });
 
                     isFirst = false;

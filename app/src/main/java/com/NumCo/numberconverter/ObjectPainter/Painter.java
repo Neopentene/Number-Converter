@@ -120,22 +120,24 @@ public class Painter {
     }
 
     /**
-     * Draw a rectangle at (left, top) with dimensions (right, bottom) of your choosing
+     * Draw a rectangle at (left, top) with dimensions (right - top, bottom - top) of your choosing.
+     * Below is an example of rectangle (20, 20) and (180, 180)
      * <pre>
      * <code>
-     * <br /> (0, 0)  (20, 0)    (180, 0)
-     * <br />     *   *          *
      * <br />
-     * <br />  (20, 20)          (180, 20)
-     * <br /> 20 top  * -------- * 180 right
-     * <br />         |          |
-     * <br />         |          |
-     * <br />         |          |
-     * <br /> 20 left * -------- * 180 bottom
-     * <br /> (20, 180)          (180, 180)
-     * <br />
-     * <br />     *   *          *
-     * <br />(0, 200)(20, 200)  (180, 200)
+     *  (0, 0)  (20, 0)    (180, 0)
+     *      *   *          *
+     *
+     *   (20, 20)          (180, 20)
+     *  20 top  * -------- * 180 right
+     *          |          |
+     *          |          |
+     *          |          |
+     *  20 left * -------- * 180 bottom
+     *  (20, 180)          (180, 180)
+     *
+     *      *   *          *
+     * (0, 200)(20, 200)  (180, 200)
      * </code>
      * </pre>
      *
@@ -155,22 +157,24 @@ public class Painter {
     }
 
     /**
-     * Draw a rectangle at (left, top) with dimensions (right, bottom) of your choosing
+     * Draw a rectangle at (left, top) with dimensions (right - top, bottom - top) of your choosing.
+     * Below is an example of rectangle (20, 20) and (180, 180)
      * <pre>
      * <code>
-     * <br /> (0, 0)  (20, 0)    (180, 0)
-     * <br />     *   *          *
      * <br />
-     * <br />  (20, 20)          (180, 20)
-     * <br /> 20 top  * -------- * 180 right
-     * <br />         |          |
-     * <br />         |          |
-     * <br />         |          |
-     * <br /> 20 left * -------- * 180 bottom
-     * <br /> (20, 180)          (180, 180)
-     * <br />
-     * <br />     *   *          *
-     * <br />(0, 200)(20, 200)  (180, 200)
+     *  (0, 0)  (20, 0)    (180, 0)
+     *      *   *          *
+     *
+     *   (20, 20)          (180, 20)
+     *  20 top  * -------- * 180 right
+     *          |          |
+     *          |          |
+     *          |          |
+     *  20 left * -------- * 180 bottom
+     *  (20, 180)          (180, 180)
+     *
+     *      *   *          *
+     * (0, 200)(20, 200)  (180, 200)
      * </code>
      * </pre>
      *
@@ -192,22 +196,24 @@ public class Painter {
     }
 
     /**
-     * Draw a rectangle at (left, top) with dimensions (right, bottom) of your choosing
+     * Draw a rectangle at (left, top) with dimensions (right - top, bottom - top) of your choosing.
+     * Below is an example of rectangle (20, 20) and (180, 180)
      * <pre>
      * <code>
-     * <br /> (0, 0)  (20, 0)    (180, 0)
-     * <br />     *   *          *
      * <br />
-     * <br />  (20, 20)          (180, 20)
-     * <br /> 20 top  * -------- * 180 right
-     * <br />         |          |
-     * <br />         |          |
-     * <br />         |          |
-     * <br /> 20 left * -------- * 180 bottom
-     * <br /> (20, 180)          (180, 180)
-     * <br />
-     * <br />     *   *          *
-     * <br />(0, 200)(20, 200)  (180, 200)
+     *  (0, 0)  (20, 0)    (180, 0)
+     *      *   *          *
+     *
+     *   (20, 20)          (180, 20)
+     *  20 top  * -------- * 180 right
+     *          |          |
+     *          |          |
+     *          |          |
+     *  20 left * -------- * 180 bottom
+     *  (20, 180)          (180, 180)
+     *
+     *      *   *          *
+     * (0, 200)(20, 200)  (180, 200)
      * </code>
      * </pre>
      *
@@ -229,22 +235,24 @@ public class Painter {
     }
 
     /**
-     * Draw a rectangle at (left, top) with dimensions (right, bottom) of your choosing
+     * Draw a rectangle at (left, top) with dimensions (right - top, bottom - top) of your choosing.
+     * Below is an example of rectangle (20, 20) and (180, 180)
      * <pre>
      * <code>
-     * <br /> (0, 0)  (20, 0)    (180, 0)
-     * <br />     *   *          *
      * <br />
-     * <br />  (20, 20)          (180, 20)
-     * <br /> 20 top  * -------- * 180 right
-     * <br />         |          |
-     * <br />         |          |
-     * <br />         |          |
-     * <br /> 20 left * -------- * 180 bottom
-     * <br /> (20, 180)          (180, 180)
-     * <br />
-     * <br />     *   *          *
-     * <br />(0, 200)(20, 200)  (180, 200)
+     *  (0, 0)  (20, 0)    (180, 0)
+     *      *   *          *
+     *
+     *   (20, 20)          (180, 20)
+     *  20 top  * -------- * 180 right
+     *          |          |
+     *          |          |
+     *          |          |
+     *  20 left * -------- * 180 bottom
+     *  (20, 180)          (180, 180)
+     *
+     *      *   *          *
+     * (0, 200)(20, 200)  (180, 200)
      * </code>
      * </pre>
      *
@@ -268,22 +276,24 @@ public class Painter {
     }
 
     /**
-     * Draw a rectangle at (left, top) with dimensions (right, bottom) of your choosing
+     * Draw a rectangle at (left, top) with dimensions (right - top, bottom - top) of your choosing.
+     * Below is an example of rectangle (20, 20) and (180, 180)
      * <pre>
      * <code>
-     * <br /> (0, 0)  (20, 0)    (180, 0)
-     * <br />     *   *          *
      * <br />
-     * <br />  (20, 20)          (180, 20)
-     * <br /> 20 top  * -------- * 180 right
-     * <br />         |          |
-     * <br />         |          |
-     * <br />         |          |
-     * <br /> 20 left * -------- * 180 bottom
-     * <br /> (20, 180)          (180, 180)
-     * <br />
-     * <br />     *   *          *
-     * <br />(0, 200)(20, 200)  (180, 200)
+     *  (0, 0)  (20, 0)    (180, 0)
+     *      *   *          *
+     *
+     *   (20, 20)          (180, 20)
+     *  20 top  * -------- * 180 right
+     *          |          |
+     *          |          |
+     *          |          |
+     *  20 left * -------- * 180 bottom
+     *  (20, 180)          (180, 180)
+     *
+     *      *   *          *
+     * (0, 200)(20, 200)  (180, 200)
      * </code>
      * </pre>
      *
@@ -403,21 +413,23 @@ public class Painter {
 
     /**
      * Draw an Arc
+     * Below is an example of how arc works with the following parameters (20, 20) and (180, 180)
      * <pre>
      * <code>
-     * <br /> (0, 0)  (20, 0)    (180, 0)
-     * <br />     *   *          *
      * <br />
-     * <br />  (20, 20)          (180, 20)
-     * <br /> 20 top  * -------- * 180 right
-     * <br />         |          |
-     * <br />         |(Arc - in)|
-     * <br />         |          |
-     * <br /> 20 left * -------- * 180 bottom
-     * <br /> (20, 180)          (180, 180)
-     * <br />
-     * <br />     *   *          *
-     * <br />(0, 200)(20, 200)  (180, 200)
+     *  (0, 0)  (20, 0)    (180, 0)
+     *      *   *          *
+     *
+     *   (20, 20)          (180, 20)
+     *  20 top  * -------- * 180 right
+     *          |          |
+     *          |(Arc - in)|
+     *          |          |
+     *  20 left * -------- * 180 bottom
+     *  (20, 180)          (180, 180)
+     *
+     *      *   *          *
+     * (0, 200)(20, 200)  (180, 200)
      * </code>
      * </pre>
      *
@@ -441,21 +453,23 @@ public class Painter {
 
     /**
      * Draw an Arc
+     * Below is an example of how arc works with the following parameters (20, 20) and (180, 180)
      * <pre>
      * <code>
-     * <br /> (0, 0)  (20, 0)    (180, 0)
-     * <br />     *   *          *
      * <br />
-     * <br />  (20, 20)          (180, 20)
-     * <br /> 20 top  * -------- * 180 right
-     * <br />         |          |
-     * <br />         |(Arc - in)|
-     * <br />         |          |
-     * <br /> 20 left * -------- * 180 bottom
-     * <br /> (20, 180)          (180, 180)
-     * <br />
-     * <br />     *   *          *
-     * <br />(0, 200)(20, 200)  (180, 200)
+     *  (0, 0)  (20, 0)    (180, 0)
+     *      *   *          *
+     *
+     *   (20, 20)          (180, 20)
+     *  20 top  * -------- * 180 right
+     *          |          |
+     *          |(Arc - in)|
+     *          |          |
+     *  20 left * -------- * 180 bottom
+     *  (20, 180)          (180, 180)
+     *
+     *      *   *          *
+     * (0, 200)(20, 200)  (180, 200)
      * </code>
      * </pre>
      *
