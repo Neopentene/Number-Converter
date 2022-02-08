@@ -40,10 +40,10 @@
     </string>
     <string name="help_BIN">Option: BIN (Binary)
         \n<br /> Type - Input &amp; Output
-        \n<br />Option to set input format to base 2 or to convert any input format to simple positive integers
+        \n<br />Option to set input format to base 2 or to convert any input format to base 2
     </string>
     <string name="help_ROM">Option: ROM (Roman)
         \n<br /> Type - Only Output
-        \n<br />Option to convert or input Simple positive integers
+        \n<br />Option to convert any input format to it's corresponding roman numeral
     </string>
 </resources>
