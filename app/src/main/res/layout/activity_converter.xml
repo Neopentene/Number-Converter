@@ -161,7 +161,7 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:clickable="true"
                 android:focusable="true"
-                android:onClick="cipherPreferencesDialog"
+                android:onClick="aboutUsDialog"
 
                 android:padding="0dp"
                 app:srcCompat="@drawable/help_icon"
