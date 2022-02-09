@@ -56,7 +56,7 @@ public class CipherObjectBitmaps {
                                  .getBitmap()
                          , ObjectBitmapStatus.NORMAL));
     }
-
+// celestyn gandu :))
     private void addConstantObjects(int color) {
         constantObjects.put("DEC", new BitmapObject("DEC", new Painter(200, 150, Bitmap.Config.ARGB_8888)
                 .drawRoundedBorderAroundBitmap(30, 10, color)
