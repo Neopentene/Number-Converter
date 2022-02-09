@@ -13,17 +13,11 @@
         <entry key="..\:/Android/NumberConverter/app/src/main/res/drawable/ic_baseline_error_24.xml" value="0.14635416666666667" />
         <entry key="..\:/Android/NumberConverter/app/src/main/res/drawable/ic_baseline_help_24.xml" value="0.1962962962962963" />
         <entry key="..\:/Android/NumberConverter/app/src/main/res/drawable/transparent_dialog.xml" value="0.14635416666666667" />
-        <entry key="..\:/Android/NumberConverter/app/src/main/res/drawable/transparent_dialog_inset_10.xml" value="0.1935185185185185" />
-        <entry key="..\:/Android/NumberConverter/app/src/main/res/font/lucida_sans_typewriter.xml" value="0.18796296296296297" />
         <entry key="..\:/Android/NumberConverter/app/src/main/res/layout/about_us_dialog_layout.xml" value="0.23777173913043478" />
         <entry key="..\:/Android/NumberConverter/app/src/main/res/layout/activity_converter.xml" value="0.2" />
         <entry key="..\:/Android/NumberConverter/app/src/main/res/layout/activity_main.xml" value="0.16259057971014493" />
         <entry key="..\:/Android/NumberConverter/app/src/main/res/layout/activity_splash_screen.xml" value="0.136" />
-        <entry key="..\:/Android/NumberConverter/app/src/main/res/layout/cipher_dialog_layout.xml" value="0.176" />
-        <entry key="..\:/Android/NumberConverter/app/src/main/res/layout/fragment_cipher_help.xml" value="0.2" />
-        <entry key="..\:/Android/NumberConverter/app/src/main/res/layout/fragment_cipher_settings.xml" value="0.22056159420289856" />
-        <entry key="..\:/Android/NumberConverter/app/src/main/res/layout/fragment_help.xml" value="0.22056159420289856" />
-        <entry key="..\:/Android/NumberConverter/app/src/main/res/layout/help_input_output_layout.xml" value="0.20606884057971014" />
+        <entry key="..\:/Android/NumberConverter/app/src/main/res/layout/cipher_dialog_layout.xml" value="0.13020833333333334" />
         <entry key="..\:/Android/NumberConverter/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.14635416666666667" />
         <entry key="..\:/Android/NumberConverter/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.14635416666666667" />
       </map>

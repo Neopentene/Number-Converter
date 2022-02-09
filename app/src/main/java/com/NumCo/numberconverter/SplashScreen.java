@@ -30,7 +30,7 @@ public class SplashScreen extends AppCompatActivity {
         launchConverter();
     }
 
-    private void launchConverter() {
+    private void launchConverter(){
         Handler handler = new Handler(Looper.getMainLooper());
 
         ObjectAnimator.ofFloat(icon, View.ALPHA, 0f, 1f).setDuration(1500).start();
