@@ -9,7 +9,10 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.SharedPreferences;
+<<<<<<< HEAD
 import android.graphics.Color;
+=======
+>>>>>>> cc007d0 (Celestyn's Commit)
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Editable;
@@ -21,7 +24,10 @@ import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+<<<<<<< HEAD
 import com.NumCo.numberconverter.CipherCreation.CipherObjectBitmaps;
+=======
+>>>>>>> cc007d0 (Celestyn's Commit)
 import com.NumCo.numberconverter.CipherCreation.CipherPreferencesDialog;
 import com.NumCo.numberconverter.Numerals.ConversionList;
 import com.NumCo.numberconverter.Numerals.Octal;
@@ -238,10 +244,15 @@ public class Converter extends AppCompatActivity {
         } catch (Exception e) {
             if (displayInput.getEditText().getText().toString().trim().equals(""))
                 Toast.makeText(context, "Input Empty", Toast.LENGTH_SHORT).show();
+<<<<<<< HEAD
             else if (inputOption.equals(outputOption))
                 Toast.makeText(context, "Invalid Output Selection", Toast.LENGTH_SHORT).show();
             else
                 Toast.makeText(context, "Invalid Input", Toast.LENGTH_SHORT).show();
+=======
+            else
+                Toast.makeText(context, "Invalid Output Selection", Toast.LENGTH_SHORT).show();
+>>>>>>> cc007d0 (Celestyn's Commit)
         }
     }
 
@@ -293,7 +304,11 @@ public class Converter extends AppCompatActivity {
 
         fragmentTransaction.addToBackStack(null);
 
+<<<<<<< HEAD
         CipherPreferencesDialog cipherPreferencesDialog = new CipherPreferencesDialog(new CipherObjectBitmaps(Color.GRAY));
+=======
+        CipherPreferencesDialog cipherPreferencesDialog = new CipherPreferencesDialog();
+>>>>>>> cc007d0 (Celestyn's Commit)
         cipherPreferencesDialog.show(fragmentTransaction, "cipher preference dialog");
     }
 }

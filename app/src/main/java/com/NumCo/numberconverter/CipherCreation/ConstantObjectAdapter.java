@@ -17,7 +17,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentActivity;
 
 import com.NumCo.numberconverter.ObjectPainter.BitmapObject;
+<<<<<<< HEAD
 import com.NumCo.numberconverter.ObjectPainter.ObjectBitmapStatus;
+=======
+>>>>>>> cc007d0 (Celestyn's Commit)
 import com.NumCo.numberconverter.ObjectPainter.Painter;
 import com.example.numberconverter.R;
 
@@ -48,6 +51,7 @@ public class ConstantObjectAdapter extends ArrayAdapter<BitmapObject> {
         imageView.setImageBitmap(constantObjects.get(position).getBitmap());
         textView.setText(mContext.getResources().getIdentifier("help_" + constantObjects.get(position).getId(), "string", mContext.getPackageName()));
 
+<<<<<<< HEAD
         ObjectBitmapStatus status = constantObjects.get(position).getBitmapStatus();
         TextView statusTextView = new TextView(mContext);
 
@@ -78,6 +82,27 @@ public class ConstantObjectAdapter extends ArrayAdapter<BitmapObject> {
                 statusTextView.setPadding(0, (int) Math.ceil((double) 15 * mContext.getResources().getDisplayMetrics().scaledDensity), 0, 0);
                 linearLayout.addView(statusTextView, 0);
                 break;
+=======
+        if (constantObjects.size() > 0 && position == 0) {
+            imageView.setColorFilter(new PorterDuffColorFilter(mContext.getResources().getColor(R.color.dark_blue),
+                    PorterDuff.Mode.SRC_IN));
+            TextView status = new TextView(mContext);
+            status.setText("Selected Output");
+            status.setTextColor(mContext.getResources().getColor(R.color.dark_blue));
+            status.setGravity(Gravity.CENTER);
+            status.setPadding(0, (int) Math.ceil((double) 15 * mContext.getResources().getDisplayMetrics().scaledDensity), 0, 0);
+            linearLayout.addView(status, 0);
+        }
+
+        if (constantObjects.size() > 1 && position == 1) {
+            imageView.setColorFilter(new PorterDuffColorFilter(mContext.getResources().getColor(R.color.chrome_yellow),
+                    PorterDuff.Mode.SRC_IN));
+            TextView status = new TextView(mContext);
+            status.setText("Selected Input");
+            status.setTextColor(mContext.getResources().getColor(R.color.chrome_yellow));
+            status.setGravity(Gravity.CENTER);
+            linearLayout.addView(status, 0);
+>>>>>>> cc007d0 (Celestyn's Commit)
         }
 
         if (position == constantObjects.size() - 1)

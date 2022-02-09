@@ -25,7 +25,10 @@ import android.widget.TextView;
 
 import com.NumCo.numberconverter.Numerals.ConversionList;
 import com.NumCo.numberconverter.ObjectPainter.BitmapObject;
+<<<<<<< HEAD
 import com.NumCo.numberconverter.ObjectPainter.ObjectBitmapStatus;
+=======
+>>>>>>> cc007d0 (Celestyn's Commit)
 import com.NumCo.numberconverter.ObjectPainter.Painter;
 import com.example.numberconverter.R;
 
@@ -34,11 +37,15 @@ import java.util.Objects;
 
 public class CipherHelpFragment extends Fragment {
     private final ConversionList conversionList = new ConversionList();
+<<<<<<< HEAD
     private final CipherObjectBitmaps cipherObjectBitmaps;
 
     public CipherHelpFragment(CipherObjectBitmaps cipherObjectBitmaps) {
         this.cipherObjectBitmaps = cipherObjectBitmaps;
     }
+=======
+    private final CipherObjectBitmaps cipherObjectBitmaps = new CipherObjectBitmaps(Color.GRAY);
+>>>>>>> cc007d0 (Celestyn's Commit)
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -52,6 +59,7 @@ public class CipherHelpFragment extends Fragment {
         String selectedInput = sharedPreferences.getString("input", "DEC");
 
         ArrayList<BitmapObject> objects = new ArrayList<>();
+<<<<<<< HEAD
         if (!selectedInput.equals(selectedOutput)) {
             objects.add(cipherObjectBitmaps.constantObjects.get(selectedOutput));
             objects.get(0).setBitmapStatus(ObjectBitmapStatus.ACTIVE_OUTPUT);
@@ -61,6 +69,10 @@ public class CipherHelpFragment extends Fragment {
             objects.add(cipherObjectBitmaps.constantObjects.get(selectedOutput));
             objects.get(0).setBitmapStatus(ObjectBitmapStatus.ERROR);
         }
+=======
+        objects.add(cipherObjectBitmaps.constantObjects.get(selectedOutput));
+        objects.add(cipherObjectBitmaps.constantObjects.get(selectedInput));
+>>>>>>> cc007d0 (Celestyn's Commit)
 
         for (String string : conversionList.allConversionOptions) {
             if (!string.equals(selectedOutput) && !string.equals(selectedInput))
