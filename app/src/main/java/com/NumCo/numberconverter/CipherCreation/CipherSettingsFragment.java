@@ -36,8 +36,10 @@ public class CipherSettingsFragment extends Fragment {
         .drawBorderedArc(100f,150f, 400f, 350f, 0, 180,false,5, Color.MAGENTA)
         .drawBorderedArc(100, 150, 400, 350, 180, 360,false,5,Color.MAGENTA)
         .drawLine(250,150,250,350,5,Color.BLUE)
-        .drawLine(100,260,250,445,5,Color.CYAN)
-        .drawLine(400,260,250,445,5,Color.CYAN)
+        .drawLine(100,260,250,445,5,Color.CYAN)//left-bottom
+        .drawLine(400,260,250,445,5,Color.CYAN)//right-bottom
+        .drawLine(250,55,400,260,5,Color.CYAN)//right-top
+        .drawLine(250,55,100,260,5,Color.CYAN)//left-top
 
         ;
         painter.scale(2f,2f);
