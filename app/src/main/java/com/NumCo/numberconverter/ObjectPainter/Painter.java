@@ -19,11 +19,35 @@ public class Painter {
     private final Paint.Style defaultStyle = Paint.Style.FILL;
     private float bitmapCenterX, bitmapCenterY;
     private final Typeface defaultTypeface = Typeface.create(Typeface.SANS_SERIF, Typeface.NORMAL);
+    public final Bitmap.Config defaultConfig = Bitmap.Config.ARGB_8888;
     public final Paint.Align CENTER = Paint.Align.CENTER;
     public final Paint.Align DEFAULT = Paint.Align.LEFT;
     public final Paint.Align RIGHT = Paint.Align.RIGHT;
     public final Paint.Align LEFT = Paint.Align.LEFT;
     public int width, height;
+
+    /**
+     * Create a Painter object that takes a bitmap as it's parameter. Use this class to draw bitmaps using the various
+     * methods and functions provided.
+     *
+     * @param side Length of side of a Square
+     */
+
+    public Painter(int side) {
+        this(Bitmap.createBitmap(side, side, Bitmap.Config.ARGB_8888));
+    }
+
+    /**
+     * Create a Painter object that takes a bitmap as it's parameter. Use this class to draw bitmaps using the various
+     * methods and functions provided.
+     *
+     * @param width  Width of the bitmap
+     * @param height Height of the bitmap
+     */
+
+    public Painter(int width, int height) {
+        this(Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888));
+    }
 
     /**
      * Create a Painter object that takes a bitmap as it's parameter. Use this class to draw bitmaps using the various

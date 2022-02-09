@@ -18,7 +18,8 @@
             android:descendantFocusability="beforeDescendants"
             android:divider="@android:color/transparent"
             android:focusable="false"
-            android:scrollbarThumbVertical="@color/dark_teal"
+            android:scrollbarThumbVertical="@color/teal"
+            android:scrollbarSize="4dp"
             android:smoothScrollbar="true" />
     </LinearLayout>
 </LinearLayout>

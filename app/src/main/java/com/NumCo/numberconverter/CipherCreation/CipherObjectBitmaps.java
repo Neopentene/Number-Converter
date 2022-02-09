@@ -48,7 +48,8 @@ public class CipherObjectBitmaps {
      */
 
     private void addObjects() {
-        objects.add(new BitmapObject("Something", new Painter(500, 500, Bitmap.Config.ARGB_8888)
+        Bitmap bitmap = Bitmap.createBitmap(500, 500, Bitmap.Config.ARGB_8888);
+        objects.add(new BitmapObject("Something", new Painter(bitmap)
                                  .drawBorderedRoundedRectangle(20 * 3, 20 * 3, 180 * 3, 180 * 3, 10 * 3, 10 * 3, 5 * 3, Color.BLUE)
                                  .drawArc(40 * 3, 40 * 3, 160 * 3, 160 * 3, 30, 120, true, Color.GREEN)
                                  .drawBorderedArc(40 * 3, 40 * 3, 160 * 3, 160 * 3, -30, -120, false, 5 * 3, Color.GREEN)
