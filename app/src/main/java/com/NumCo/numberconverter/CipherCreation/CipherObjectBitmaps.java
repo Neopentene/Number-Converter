@@ -20,7 +20,7 @@ public class CipherObjectBitmaps {
         addConstantObjects(color);
     }
 
-    public CipherObjectBitmaps(Short columns) {
+    public CipherObjectBitmaps() {
         this.columns = columns;
         addObjects();
     }
@@ -37,25 +37,43 @@ public class CipherObjectBitmaps {
      * Usage example
      * <code>
      * objects.add(new BitmapObject("Something",
-     *                 new Painter(500, 500, Bitmap.Config.ARGB_8888)
-     *                 .drawBorderedRoundedRectangle(20 * 3, 20 * 3, 180 * 3, 180 * 3, 10 * 3, 10 * 3, 5 * 3, Color.BLUE)
-     *                 .drawArc(40 * 3, 40 * 3, 160 * 3, 160 * 3, 30, 120, true, Color.GREEN)
-     *                 .drawBorderedArc(40 * 3, 40 * 3, 160 * 3, 160 * 3, -30, -120, false, 5 * 3, Color.GREEN)
-     *                 .drawBorderedCircle(100 * 3, 100 * 3, 25 * 3, 5 * 3, Color.MAGENTA)
-     *                 .getBitmap()
-     *         , ObjectBitmapStatus.NORMAL));
+     * new Painter(500, 500, Bitmap.Config.ARGB_8888)
+     * .drawBorderedRoundedRectangle(20 * 3, 20 * 3, 180 * 3, 180 * 3, 10 * 3, 10 * 3, 5 * 3, Color.BLUE)
+     * .drawArc(40 * 3, 40 * 3, 160 * 3, 160 * 3, 30, 120, true, Color.GREEN)
+     * .drawBorderedArc(40 * 3, 40 * 3, 160 * 3, 160 * 3, -30, -120, false, 5 * 3, Color.GREEN)
+     * .drawBorderedCircle(100 * 3, 100 * 3, 25 * 3, 5 * 3, Color.MAGENTA)
+     * .getBitmap()
+     * , ObjectBitmapStatus.NORMAL));
      * </code>
      */
 
     private void addObjects() {
-        Bitmap bitmap = Bitmap.createBitmap(500, 500, Bitmap.Config.ARGB_8888);
-        objects.add(new BitmapObject("Something", new Painter(bitmap)
-                                 .drawBorderedRoundedRectangle(20 * 3, 20 * 3, 180 * 3, 180 * 3, 10 * 3, 10 * 3, 5 * 3, Color.BLUE)
-                                 .drawArc(40 * 3, 40 * 3, 160 * 3, 160 * 3, 30, 120, true, Color.GREEN)
-                                 .drawBorderedArc(40 * 3, 40 * 3, 160 * 3, 160 * 3, -30, -120, false, 5 * 3, Color.GREEN)
-                                 .drawBorderedCircle(100 * 3, 100 * 3, 25 * 3, 5 * 3, Color.MAGENTA)
-                                 .getBitmap()
-                         , ObjectBitmapStatus.NORMAL));
+        objects.add(new BitmapObject("ID0", new Painter(500)
+                .drawArc(80, 80, 420, 420, 30, 120, true, Color.GREEN)
+                .drawBorderedArc(80, 80, 420, 420, 30, -240, false, 15, Color.GREEN)
+                .drawBorderedCircle(65, 15, Color.MAGENTA)
+                .getBitmap()
+                , ObjectBitmapStatus.NORMAL));
+
+        objects.add(new BitmapObject("ID1", new Painter(500)
+                .drawBorderedCircle(200, 10, Color.RED)
+                .drawBorderedCircle(100, 5, Color.GREEN)
+                .getBitmap(), ObjectBitmapStatus.NORMAL));
+
+        objects.add(new BitmapObject("ID2", new Painter(500)
+                .drawBorderedCircle(200, 10, Color.RED)
+                .drawBorderedRectangle(100f, 150f, 400f, 350f, 5, Color.YELLOW)
+                .getBitmap(), ObjectBitmapStatus.NORMAL));
+
+        objects.add(new BitmapObject("ID3", new Painter(500)
+                .drawBorderedRectangle(100f, 150f, 400f, 350f, 5, Color.YELLOW)
+                .drawBorderedArc(100f, 150f, 400f, 350f, 0, 180, false, 5, Color.MAGENTA)
+                .getBitmap(), ObjectBitmapStatus.NORMAL));
+
+        objects.add(new BitmapObject("ID4", new Painter(500)
+                .drawBorderedArc(100, 150, 400, 350, 180, 360, false, 5, Color.MAGENTA)
+                .drawLine(250, 150, 250, 350, 5, Color.BLUE)
+                .getBitmap(), ObjectBitmapStatus.NORMAL));
     }
 
     private void addConstantObjects(int color) {
@@ -72,7 +90,7 @@ public class CipherObjectBitmaps {
         constantObjects.put("HEX", new BitmapObject("HEX", new Painter(200, 150, Bitmap.Config.ARGB_8888)
                 .drawRoundedBorderAroundBitmap(30, 10, color)
                 .drawTextAtCenter("HEX", Typeface.create(Typeface.SERIF, Typeface.BOLD), 65, color)
-                .getBitmap(),ObjectBitmapStatus.DISABLED));
+                .getBitmap(), ObjectBitmapStatus.DISABLED));
 
         constantObjects.put("OCT", new BitmapObject("OCT", new Painter(200, 150, Bitmap.Config.ARGB_8888)
                 .drawRoundedBorderAroundBitmap(30, 10, color)
