@@ -2,11 +2,14 @@ package com.NumCo.numberconverter;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Editable;
@@ -18,6 +21,9 @@ import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.NumCo.numberconverter.CipherCreation.CipherObjectBitmaps;
+import com.NumCo.numberconverter.CipherCreation.CipherPreferencesDialog;
+import com.NumCo.numberconverter.Numerals.ConversionList;
 import com.NumCo.numberconverter.Numerals.Octal;
 import com.NumCo.numberconverter.Numerals.RomanNumeral;
 import com.NumCo.numberconverter.Numerals.Binary;
@@ -32,8 +38,9 @@ import java.util.Objects;
 
 public class Converter extends AppCompatActivity {
 
-    private static final String[] inputConversionList = {"DEC", "HEX", "OCT", "BIN"};
-    private static final String[] outputConversionList = {"ROM", "DEC", "HEX", "OCT", "BIN"};
+    private static final ConversionList conversionList = new ConversionList();
+    private static final String[] inputConversionList = conversionList.inputConversionList;
+    private static final String[] outputConversionList = conversionList.outputConversionList;
 
     private static String inputOption = "";
     private static String outputOption = "";
@@ -81,6 +88,13 @@ public class Converter extends AppCompatActivity {
         inputConversionAutoText.setText(inputOption, false);
         outputConversionAutoText.setText(outputOption, false);
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        changeInputAdapter(null);
+        changeOutputAdapter(inputOption);
     }
 
     private void setInputOnChangeListener() throws NullPointerException {
@@ -224,8 +238,10 @@ public class Converter extends AppCompatActivity {
         } catch (Exception e) {
             if (displayInput.getEditText().getText().toString().trim().equals(""))
                 Toast.makeText(context, "Input Empty", Toast.LENGTH_SHORT).show();
-            else
+            else if (inputOption.equals(outputOption))
                 Toast.makeText(context, "Invalid Output Selection", Toast.LENGTH_SHORT).show();
+            else
+                Toast.makeText(context, "Invalid Input", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -267,5 +283,17 @@ public class Converter extends AppCompatActivity {
         dialog.show();
 
         actionButton.setOnClickListener(v1 -> dialog.dismiss());
+    }
+
+    public void cipherPreferencesDialog(View v){
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        Fragment previousDialog = getSupportFragmentManager().findFragmentByTag("cipher preference dialog");
+        if (previousDialog != null)
+            fragmentTransaction.remove(previousDialog);
+
+        fragmentTransaction.addToBackStack(null);
+
+        CipherPreferencesDialog cipherPreferencesDialog = new CipherPreferencesDialog(new CipherObjectBitmaps(Color.GRAY));
+        cipherPreferencesDialog.show(fragmentTransaction, "cipher preference dialog");
     }
 }
