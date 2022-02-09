@@ -36,6 +36,9 @@ public class CipherSettingsFragment extends Fragment {
         .drawBorderedArc(100f,150f, 400f, 350f, 0, 180,false,5, Color.MAGENTA)
         .drawBorderedArc(100, 150, 400, 350, 180, 360,false,5,Color.MAGENTA)
         .drawLine(250,150,250,350,5,Color.BLUE)
+        .drawLine(100,260,250,445,5,Color.CYAN)
+        .drawLine(400,260,250,445,5,Color.CYAN)
+
         ;
         painter.scale(2f,2f);
         imageView.setImageBitmap(painter.getBitmap());

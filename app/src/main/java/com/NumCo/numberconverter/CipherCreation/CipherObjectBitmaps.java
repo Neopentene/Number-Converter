@@ -59,10 +59,12 @@ public class CipherObjectBitmaps {
         objects.add(new BitmapObject("ID3", new Painter(500,500,Bitmap.Config.ARGB_8888)
                 .drawBorderedRectangle(100f, 150f, 400f,350f, 5, Color.YELLOW)
                 .drawBorderedArc(100f,150f, 400f, 350f, 0, 180,false,5, Color.MAGENTA)
+                .drawBorderedArc(100, 150, 400, 350, 180, 360,false,5,Color.MAGENTA)
                 .getBitmap(), ObjectBitmapStatus.NORMAL));
         objects.add(new BitmapObject("ID4", new Painter(500,500,Bitmap.Config.ARGB_8888)
                 .drawBorderedArc(100, 150, 400, 350, 180, 360,false,5,Color.MAGENTA)
                 .drawLine(250,150,250,350,5,Color.BLUE)
+                .drawBorderedRectangle(100f, 150f, 400f,350f, 5, Color.YELLOW)
                 .getBitmap(), ObjectBitmapStatus.NORMAL));
     }
 
