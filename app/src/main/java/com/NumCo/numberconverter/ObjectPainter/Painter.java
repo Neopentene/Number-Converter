@@ -511,7 +511,13 @@ public class Painter {
 
     public Painter drawBorderedArc(float left, float top, float right, float bottom, float startAngle, float sweepAngle, boolean useCenter, int strokeWidth, int color) {
         setPaintParameters(color, Paint.Style.STROKE, strokeWidth, defaultTypeface, defaultTextSize);
-        canvas.drawArc(new RectF(left, top, right, bottom), startAngle, sweepAngle, useCenter, paint);
+        float halfStrokeWidth = (float) strokeWidth / 2;
+        canvas.drawArc(new RectF(
+                        (float) Math.ceil((double) left + halfStrokeWidth)
+                        , (float) Math.ceil((double) top + halfStrokeWidth)
+                        , (float) Math.ceil((double) right - halfStrokeWidth)
+                        , (float) Math.ceil((double) bottom - halfStrokeWidth))
+                , startAngle, sweepAngle, useCenter, paint);
         resetPaintParameters();
         return this;
     }
