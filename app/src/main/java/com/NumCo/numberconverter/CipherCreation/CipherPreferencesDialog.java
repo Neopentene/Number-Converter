@@ -20,6 +20,7 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.NumCo.numberconverter.ObjectPainter.BitmapObject;
 import com.example.numberconverter.R;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.tabs.TabLayout;
@@ -35,13 +36,19 @@ public class CipherPreferencesDialog extends DialogFragment {
     private boolean isFirst = true;
     private View root;
 
+    private CipherObjectBitmaps cipherObjectBitmaps;
+
+    public CipherPreferencesDialog(CipherObjectBitmaps cipherObjectBitmaps){
+        this.cipherObjectBitmaps = cipherObjectBitmaps;
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.cipher_dialog_layout, container, false);
         cipherDialogFragmentAdapter = new CipherDialogFragmentAdapter(requireActivity(), new ArrayList<>());
 
-        cipherDialogFragmentAdapter.addCipherDialogFragment(new CipherHelpFragment());
+        cipherDialogFragmentAdapter.addCipherDialogFragment(new CipherHelpFragment(cipherObjectBitmaps));
         cipherDialogFragmentAdapter.addCipherDialogFragment(new CipherSettingsFragment());
 
         tabLayout = root.findViewById(R.id.tabLayout);

@@ -17,6 +17,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentActivity;
 
 import com.NumCo.numberconverter.ObjectPainter.BitmapObject;
+import com.NumCo.numberconverter.ObjectPainter.ObjectBitmapStatus;
 import com.NumCo.numberconverter.ObjectPainter.Painter;
 import com.example.numberconverter.R;
 
@@ -47,25 +48,36 @@ public class ConstantObjectAdapter extends ArrayAdapter<BitmapObject> {
         imageView.setImageBitmap(constantObjects.get(position).getBitmap());
         textView.setText(mContext.getResources().getIdentifier("help_" + constantObjects.get(position).getId(), "string", mContext.getPackageName()));
 
-        if (constantObjects.size() > 0 && position == 0) {
-            imageView.setColorFilter(new PorterDuffColorFilter(mContext.getResources().getColor(R.color.dark_blue),
-                    PorterDuff.Mode.SRC_IN));
-            TextView status = new TextView(mContext);
-            status.setText("Selected Output");
-            status.setTextColor(mContext.getResources().getColor(R.color.dark_blue));
-            status.setGravity(Gravity.CENTER);
-            status.setPadding(0, (int) Math.ceil((double) 15 * mContext.getResources().getDisplayMetrics().scaledDensity), 0, 0);
-            linearLayout.addView(status, 0);
-        }
+        ObjectBitmapStatus status = constantObjects.get(position).getBitmapStatus();
+        TextView statusTextView = new TextView(mContext);
 
-        if (constantObjects.size() > 1 && position == 1) {
-            imageView.setColorFilter(new PorterDuffColorFilter(mContext.getResources().getColor(R.color.chrome_yellow),
-                    PorterDuff.Mode.SRC_IN));
-            TextView status = new TextView(mContext);
-            status.setText("Selected Input");
-            status.setTextColor(mContext.getResources().getColor(R.color.chrome_yellow));
-            status.setGravity(Gravity.CENTER);
-            linearLayout.addView(status, 0);
+        switch (status) {
+            case ERROR:
+                imageView.setColorFilter(new PorterDuffColorFilter(status.color,
+                        PorterDuff.Mode.SRC_IN));
+                statusTextView.setText("Input and Output\nERROR");
+                statusTextView.setTextColor(status.color);
+                statusTextView.setGravity(Gravity.CENTER);
+                statusTextView.setPadding(0, (int) Math.ceil((double) 15 * mContext.getResources().getDisplayMetrics().scaledDensity), 0, 0);
+                linearLayout.addView(statusTextView, 0);
+                break;
+            case ACTIVE_INPUT:
+                imageView.setColorFilter(new PorterDuffColorFilter(status.color,
+                        PorterDuff.Mode.SRC_IN));
+                statusTextView.setText("Selected Input");
+                statusTextView.setTextColor(status.color);
+                statusTextView.setGravity(Gravity.CENTER);
+                linearLayout.addView(statusTextView, 0);
+                break;
+            case ACTIVE_OUTPUT:
+                imageView.setColorFilter(new PorterDuffColorFilter(status.color,
+                        PorterDuff.Mode.SRC_IN));
+                statusTextView.setText("Selected Output");
+                statusTextView.setTextColor(status.color);
+                statusTextView.setGravity(Gravity.CENTER);
+                statusTextView.setPadding(0, (int) Math.ceil((double) 15 * mContext.getResources().getDisplayMetrics().scaledDensity), 0, 0);
+                linearLayout.addView(statusTextView, 0);
+                break;
         }
 
         if (position == constantObjects.size() - 1)

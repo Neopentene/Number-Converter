@@ -25,6 +25,7 @@ import android.widget.TextView;
 
 import com.NumCo.numberconverter.Numerals.ConversionList;
 import com.NumCo.numberconverter.ObjectPainter.BitmapObject;
+import com.NumCo.numberconverter.ObjectPainter.ObjectBitmapStatus;
 import com.NumCo.numberconverter.ObjectPainter.Painter;
 import com.example.numberconverter.R;
 
@@ -33,7 +34,11 @@ import java.util.Objects;
 
 public class CipherHelpFragment extends Fragment {
     private final ConversionList conversionList = new ConversionList();
-    private final CipherObjectBitmaps cipherObjectBitmaps = new CipherObjectBitmaps(Color.GRAY);
+    private final CipherObjectBitmaps cipherObjectBitmaps;
+
+    public CipherHelpFragment(CipherObjectBitmaps cipherObjectBitmaps) {
+        this.cipherObjectBitmaps = cipherObjectBitmaps;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -47,8 +52,15 @@ public class CipherHelpFragment extends Fragment {
         String selectedInput = sharedPreferences.getString("input", "DEC");
 
         ArrayList<BitmapObject> objects = new ArrayList<>();
-        objects.add(cipherObjectBitmaps.constantObjects.get(selectedOutput));
-        objects.add(cipherObjectBitmaps.constantObjects.get(selectedInput));
+        if (!selectedInput.equals(selectedOutput)) {
+            objects.add(cipherObjectBitmaps.constantObjects.get(selectedOutput));
+            objects.get(0).setBitmapStatus(ObjectBitmapStatus.ACTIVE_OUTPUT);
+            objects.add(cipherObjectBitmaps.constantObjects.get(selectedInput));
+            objects.get(1).setBitmapStatus(ObjectBitmapStatus.ACTIVE_INPUT);
+        } else {
+            objects.add(cipherObjectBitmaps.constantObjects.get(selectedOutput));
+            objects.get(0).setBitmapStatus(ObjectBitmapStatus.ERROR);
+        }
 
         for (String string : conversionList.allConversionOptions) {
             if (!string.equals(selectedOutput) && !string.equals(selectedInput))

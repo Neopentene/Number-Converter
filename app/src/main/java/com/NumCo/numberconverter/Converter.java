@@ -9,6 +9,7 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Editable;
@@ -20,6 +21,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.NumCo.numberconverter.CipherCreation.CipherObjectBitmaps;
 import com.NumCo.numberconverter.CipherCreation.CipherPreferencesDialog;
 import com.NumCo.numberconverter.Numerals.ConversionList;
 import com.NumCo.numberconverter.Numerals.Octal;
@@ -289,7 +291,7 @@ public class Converter extends AppCompatActivity {
 
         fragmentTransaction.addToBackStack(null);
 
-        CipherPreferencesDialog cipherPreferencesDialog = new CipherPreferencesDialog();
+        CipherPreferencesDialog cipherPreferencesDialog = new CipherPreferencesDialog(new CipherObjectBitmaps(Color.GRAY));
         cipherPreferencesDialog.show(fragmentTransaction, "cipher preference dialog");
     }
 }
