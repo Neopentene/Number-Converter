@@ -43,7 +43,7 @@ public class CipherObjectBitmaps {
      *                 .drawBorderedArc(40 * 3, 40 * 3, 160 * 3, 160 * 3, -30, -120, false, 5 * 3, Color.GREEN)
      *                 .drawBorderedCircle(100 * 3, 100 * 3, 25 * 3, 5 * 3, Color.MAGENTA)
      *                 .getBitmap()
-     *         ));
+     *         , ObjectBitmapStatus.NORMAL));
      * </code>
      */
 
