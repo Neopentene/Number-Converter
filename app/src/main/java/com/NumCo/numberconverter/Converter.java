@@ -238,8 +238,10 @@ public class Converter extends AppCompatActivity {
         } catch (Exception e) {
             if (displayInput.getEditText().getText().toString().trim().equals(""))
                 Toast.makeText(context, "Input Empty", Toast.LENGTH_SHORT).show();
-            else
+            else if (inputOption.equals(outputOption))
                 Toast.makeText(context, "Invalid Output Selection", Toast.LENGTH_SHORT).show();
+            else
+                Toast.makeText(context, "Invalid Input", Toast.LENGTH_SHORT).show();
         }
     }
 
