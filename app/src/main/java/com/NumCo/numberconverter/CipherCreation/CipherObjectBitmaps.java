@@ -49,14 +49,11 @@ public class CipherObjectBitmaps {
 
     private void addObjects() {
         objects.add(new BitmapObject("Something", new Painter(500, 500, Bitmap.Config.ARGB_8888)
-                                 .drawBorderedRoundedRectangle(20 * 3, 20 * 3, 180 * 3, 180 * 3, 10 * 3, 10 * 3, 5 * 3, Color.BLUE)
-                                 .drawArc(40 * 3, 40 * 3, 160 * 3, 160 * 3, 30, 120, true, Color.GREEN)
-                                 .drawBorderedArc(40 * 3, 40 * 3, 160 * 3, 160 * 3, -30, -120, false, 5 * 3, Color.GREEN)
-                                 .drawBorderedCircle(100 * 3, 100 * 3, 25 * 3, 5 * 3, Color.MAGENTA)
+
                                  .getBitmap()
                          , ObjectBitmapStatus.NORMAL));
     }
-// celestyn gandu :))
+
     private void addConstantObjects(int color) {
         constantObjects.put("DEC", new BitmapObject("DEC", new Painter(200, 150, Bitmap.Config.ARGB_8888)
                 .drawRoundedBorderAroundBitmap(30, 10, color)
