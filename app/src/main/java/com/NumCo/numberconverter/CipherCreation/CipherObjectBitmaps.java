@@ -48,11 +48,24 @@ public class CipherObjectBitmaps {
      */
 
     private void addObjects() {
-        objects.add(new BitmapObject("Something", new Painter(500, 500, Bitmap.Config.ARGB_8888)
-
-                                 .getBitmap()
-                         , ObjectBitmapStatus.NORMAL));
+        objects.add(new BitmapObject("ID1", new Painter(500, 500, Bitmap.Config.ARGB_8888)
+                .drawBorderedCircle(200, 10, Color.RED)
+                .drawBorderedCircle(100, 5, Color.GREEN)
+                .getBitmap(), ObjectBitmapStatus.NORMAL));
+        objects.add(new BitmapObject("ID2", new Painter(500,500,Bitmap.Config.ARGB_8888)
+                .drawBorderedCircle(200, 10, Color.RED)
+                .drawBorderedRectangle(100f, 150f, 400f,350f, 5, Color.YELLOW)
+                .getBitmap(), ObjectBitmapStatus.NORMAL));
+        objects.add(new BitmapObject("ID3", new Painter(500,500,Bitmap.Config.ARGB_8888)
+                .drawBorderedRectangle(100f, 150f, 400f,350f, 5, Color.YELLOW)
+                .drawBorderedArc(100f,150f, 400f, 350f, 0, 180,false,5, Color.MAGENTA)
+                .getBitmap(), ObjectBitmapStatus.NORMAL));
+        objects.add(new BitmapObject("ID4", new Painter(500,500,Bitmap.Config.ARGB_8888)
+                .drawBorderedArc(100, 150, 400, 350, 180, 360,false,5,Color.MAGENTA)
+                .drawLine(250,150,250,350,5,Color.BLUE)
+                .getBitmap(), ObjectBitmapStatus.NORMAL));
     }
+
 
     private void addConstantObjects(int color) {
         constantObjects.put("DEC", new BitmapObject("DEC", new Painter(200, 150, Bitmap.Config.ARGB_8888)
