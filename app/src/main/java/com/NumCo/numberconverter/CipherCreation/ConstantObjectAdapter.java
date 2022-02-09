@@ -55,7 +55,7 @@ public class ConstantObjectAdapter extends ArrayAdapter<BitmapObject> {
             case ERROR:
                 imageView.setColorFilter(new PorterDuffColorFilter(status.color,
                         PorterDuff.Mode.SRC_IN));
-                statusTextView.setText("Input and Output\nERROR");
+                statusTextView.setText("Input and Output");
                 statusTextView.setTextColor(status.color);
                 statusTextView.setGravity(Gravity.CENTER);
                 statusTextView.setPadding(0, (int) Math.ceil((double) 15 * mContext.getResources().getDisplayMetrics().scaledDensity), 0, 0);
