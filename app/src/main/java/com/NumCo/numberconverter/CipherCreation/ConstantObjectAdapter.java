@@ -25,8 +25,8 @@ import java.util.ArrayList;
 
 public class ConstantObjectAdapter extends ArrayAdapter<BitmapObject> {
 
-    private final FragmentActivity mContext;
-    private final ArrayList<BitmapObject> constantObjects;
+    private FragmentActivity mContext;
+    private ArrayList<BitmapObject> constantObjects = null;
 
     public ConstantObjectAdapter(@NonNull FragmentActivity context, @NonNull ArrayList<BitmapObject> objects) {
         super(context, R.layout.help_input_output_layout, objects);
@@ -49,36 +49,35 @@ public class ConstantObjectAdapter extends ArrayAdapter<BitmapObject> {
         textView.setText(mContext.getResources().getIdentifier("help_" + constantObjects.get(position).getId(), "string", mContext.getPackageName()));
 
         ObjectBitmapStatus status = constantObjects.get(position).getBitmapStatus();
+        TextView statusTextView = new TextView(mContext);
 
-        if (status != ObjectBitmapStatus.DISABLED) {
-
-            TextView statusTextView = new TextView(mContext);
-            statusTextView.setTextColor(status.color);
-            statusTextView.setGravity(Gravity.CENTER);
-
-            imageView.setColorFilter(new PorterDuffColorFilter(status.color,
-                    PorterDuff.Mode.SRC_IN));
-
-            switch (status) {
-                case ERROR:
-                    statusTextView.setText("Input and Output");
-                    linearLayout.addView(statusTextView, 0);
-                    break;
-                case ACTIVE_INPUT:
-                    statusTextView.setText("Selected Input");
-                    linearLayout.addView(statusTextView, 0);
-                    break;
-                case ACTIVE_OUTPUT:
-                    statusTextView.setText("Selected Output");
-                    linearLayout.addView(statusTextView, 0);
-                    break;
-            }
-
-            if (position == 0)
-                statusTextView.setPadding(0,
-                        (int) Math.ceil((double) 15 * mContext.getResources().getDisplayMetrics().scaledDensity),
-                        0,
-                        0);
+        switch (status) {
+            case ERROR:
+                imageView.setColorFilter(new PorterDuffColorFilter(status.color,
+                        PorterDuff.Mode.SRC_IN));
+                statusTextView.setText("Input and Output");
+                statusTextView.setTextColor(status.color);
+                statusTextView.setGravity(Gravity.CENTER);
+                statusTextView.setPadding(0, (int) Math.ceil((double) 15 * mContext.getResources().getDisplayMetrics().scaledDensity), 0, 0);
+                linearLayout.addView(statusTextView, 0);
+                break;
+            case ACTIVE_INPUT:
+                imageView.setColorFilter(new PorterDuffColorFilter(status.color,
+                        PorterDuff.Mode.SRC_IN));
+                statusTextView.setText("Selected Input");
+                statusTextView.setTextColor(status.color);
+                statusTextView.setGravity(Gravity.CENTER);
+                linearLayout.addView(statusTextView, 0);
+                break;
+            case ACTIVE_OUTPUT:
+                imageView.setColorFilter(new PorterDuffColorFilter(status.color,
+                        PorterDuff.Mode.SRC_IN));
+                statusTextView.setText("Selected Output");
+                statusTextView.setTextColor(status.color);
+                statusTextView.setGravity(Gravity.CENTER);
+                statusTextView.setPadding(0, (int) Math.ceil((double) 15 * mContext.getResources().getDisplayMetrics().scaledDensity), 0, 0);
+                linearLayout.addView(statusTextView, 0);
+                break;
         }
 
         if (position == constantObjects.size() - 1)
