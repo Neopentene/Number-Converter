@@ -53,10 +53,10 @@ public class CipherHelpFragment extends Fragment {
 
         ArrayList<BitmapObject> objects = new ArrayList<>();
         if (!selectedInput.equals(selectedOutput)) {
-            objects.add(cipherObjectBitmaps.constantObjects.get(selectedOutput));
-            objects.get(0).setBitmapStatus(ObjectBitmapStatus.ACTIVE_OUTPUT);
             objects.add(cipherObjectBitmaps.constantObjects.get(selectedInput));
-            objects.get(1).setBitmapStatus(ObjectBitmapStatus.ACTIVE_INPUT);
+            objects.get(0).setBitmapStatus(ObjectBitmapStatus.ACTIVE_INPUT);
+            objects.add(cipherObjectBitmaps.constantObjects.get(selectedOutput));
+            objects.get(1).setBitmapStatus(ObjectBitmapStatus.ACTIVE_OUTPUT);
         } else {
             objects.add(cipherObjectBitmaps.constantObjects.get(selectedOutput));
             objects.get(0).setBitmapStatus(ObjectBitmapStatus.ERROR);

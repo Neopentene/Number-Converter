@@ -50,6 +50,10 @@ public class ConstantObjectAdapter extends ArrayAdapter<BitmapObject> {
 
         ObjectBitmapStatus status = constantObjects.get(position).getBitmapStatus();
         TextView statusTextView = new TextView(mContext);
+        if (position == 0) {
+            statusTextView.setPadding(0, (int) Math.ceil((double) 15 * mContext.getResources().getDisplayMetrics().scaledDensity), 0, 0);
+        }
+
 
         switch (status) {
             case ERROR:
@@ -58,7 +62,6 @@ public class ConstantObjectAdapter extends ArrayAdapter<BitmapObject> {
                 statusTextView.setText("Input and Output");
                 statusTextView.setTextColor(status.color);
                 statusTextView.setGravity(Gravity.CENTER);
-                statusTextView.setPadding(0, (int) Math.ceil((double) 15 * mContext.getResources().getDisplayMetrics().scaledDensity), 0, 0);
                 linearLayout.addView(statusTextView, 0);
                 break;
             case ACTIVE_INPUT:
@@ -75,7 +78,6 @@ public class ConstantObjectAdapter extends ArrayAdapter<BitmapObject> {
                 statusTextView.setText("Selected Output");
                 statusTextView.setTextColor(status.color);
                 statusTextView.setGravity(Gravity.CENTER);
-                statusTextView.setPadding(0, (int) Math.ceil((double) 15 * mContext.getResources().getDisplayMetrics().scaledDensity), 0, 0);
                 linearLayout.addView(statusTextView, 0);
                 break;
         }
