@@ -10,15 +10,15 @@ public class Decimal extends Numeral {
     }
 
     public String toHex() {
-        return Long.toHexString(Integer.parseInt(decimal));
+        return Long.toHexString(Long.parseLong(decimal));
     }
 
     public String toBin() {
-        return Long.toBinaryString(Integer.parseInt(decimal));
+        return Long.toBinaryString(Long.parseLong(decimal));
     }
 
     public String toOct() {
-        return Long.toOctalString(Integer.parseInt(decimal));
+        return Long.toOctalString(Long.parseLong(decimal));
     }
 
 }
