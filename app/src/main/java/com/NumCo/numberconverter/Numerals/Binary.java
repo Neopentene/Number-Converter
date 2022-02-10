@@ -9,15 +9,15 @@ public class Binary extends Numeral {
     }
 
     public String toDec() {
-        return Long.toString(Integer.parseInt(binary, 2));
+        return Long.toString(Long.parseLong(binary, 2));
     }
 
     public String toHex() {
-        return Long.toHexString(Integer.parseInt(binary, 2));
+        return Long.toHexString(Long.parseLong(binary, 2));
     }
 
     public String toOct() {
-        return Long.toOctalString(Integer.parseInt(binary, 2));
+        return Long.toOctalString(Long.parseLong(binary, 2));
     }
 
 }
