@@ -1,5 +1,8 @@
 package com.NumCo.numberconverter;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -15,34 +18,26 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.ScrollView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import androidx.annotation.StringRes;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
-import com.NumCo.numberconverter.CipherCreation.CipherConstantObjectBitmaps;
-import com.NumCo.numberconverter.CipherCreation.ImageCreator;
-import com.NumCo.numberconverter.CipherCreation.CipherDialogs.ImageDialog;
 import com.NumCo.numberconverter.CipherCreation.CipherObjectBitmaps;
-import com.NumCo.numberconverter.CipherCreation.CipherDialogs.PreferencesDialog;
+import com.NumCo.numberconverter.CipherCreation.CipherPreferencesDialog;
+import com.NumCo.numberconverter.Numerals.Octal;
+import com.NumCo.numberconverter.Numerals.RomanNumeral;
 import com.NumCo.numberconverter.Numerals.Binary;
 import com.NumCo.numberconverter.Numerals.Decimal;
 import com.NumCo.numberconverter.Numerals.Hexadecimal;
 import com.NumCo.numberconverter.Numerals.Numeral;
-import com.NumCo.numberconverter.Numerals.Octal;
-import com.NumCo.numberconverter.Numerals.RomanNumeral;
-import com.NumCo.numberconverter.ObjectPainter.ObjectBitmapStatus;
+import com.example.numberconverter.R;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.Objects;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-public class Converter extends AppCompatActivity implements Notify {
+public class Converter extends AppCompatActivity {
 
     private static final ConversionList conversionList = new ConversionList();
     private static final String[] inputConversionList = conversionList.inputConversionList;
@@ -52,22 +47,21 @@ public class Converter extends AppCompatActivity implements Notify {
     private static String outputOption = "";
 
     private static Numeral numeral;
-    private TextInputLayout displayOutput;
-    private TextInputLayout displayInput;
+
     private AutoCompleteTextView inputConversionAutoText = null;
-    private TextInputLayout inputConversionLayout = null;
     private TextInputLayout outputConversionLayout = null;
     private AutoCompleteTextView outputConversionAutoText = null;
-    private ScrollView parentLayout = null;
+    private RelativeLayout parentLayout = null;
+
+    TextInputLayout displayOutput;
+    TextInputLayout displayInput;
+
     private SharedPreferences sharedPreferences;
 
     private Context context;
-    private short cipherPreferencesDialogCounter = 0, cipherImageDialogCounter = 0;
-    private PreferencesDialog cipherPreferencesDialog;
-    private ImageDialog cipherImageDialog;
+    private short cipherPreferencesDialogCounter = 0;
+    private CipherPreferencesDialog cipherPreferencesDialog;
 
-    private CipherObjectBitmaps cipherObjectBitmaps;
-    private CipherConstantObjectBitmaps cipherConstantObjectBitmaps;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) throws NullPointerException {
@@ -76,14 +70,11 @@ public class Converter extends AppCompatActivity implements Notify {
 
         context = this;
 
-        cipherObjectBitmaps = new CipherObjectBitmaps();
-        cipherConstantObjectBitmaps = new CipherConstantObjectBitmaps();
-
-        inputConversionLayout = findViewById(R.id.InputConversion);
+        TextInputLayout inputConversionLayout = findViewById(R.id.InputConversion);
         inputConversionAutoText = findViewById(R.id.InputConversionDropdown);
         outputConversionLayout = findViewById(R.id.OutputConversion);
         outputConversionAutoText = findViewById(R.id.OutputConversionDropdown);
-        parentLayout = findViewById(R.id.parentScrollViewConvertor);
+        parentLayout = findViewById(R.id.parentRelativeConvertor);
 
         displayInput = findViewById(R.id.InputIn);
         displayOutput = findViewById(R.id.OutputOut);
@@ -98,7 +89,6 @@ public class Converter extends AppCompatActivity implements Notify {
 
         setInputOnChangeListener();
         setOutputOnChangeListener();
-        setOnKeyListeners();
 
         inputConversionAutoText.setText(inputOption, false);
         outputConversionAutoText.setText(outputOption, false);
@@ -132,7 +122,7 @@ public class Converter extends AppCompatActivity implements Notify {
                 editor.putString("input", inputOption);
                 editor.apply();
 
-                setNumeralObject(Objects.requireNonNull(displayInput.getEditText()).getText().toString());
+                setNumsObject(Objects.requireNonNull(displayInput.getEditText()).getText().toString());
 
                 changeOutputAdapter(inputOption);
             }
@@ -172,80 +162,58 @@ public class Converter extends AppCompatActivity implements Notify {
         });
     }
 
-    private void setOnKeyListeners() {
-        inputConversionAutoText.setOnKeyListener((v, keyCode, event) -> {
-            if (keyCode == 66) {
-                Objects.requireNonNull(displayInput.getEditText()).requestFocus();
-                return true;
-            }
-            return false;
-        });
+    private void setNumsObject(String value) throws NullPointerException {
 
-        outputConversionAutoText.setOnKeyListener((v, keyCode, event) -> {
-            Snackbar.make(parentLayout, event.getAction() + ", " + keyCode, Snackbar.LENGTH_SHORT).setBackgroundTint(ObjectBitmapStatus.ERROR.color).show();
-
-            if (keyCode == 66) {
-                Objects.requireNonNull(displayInput.getEditText()).requestFocus();
-                return true;
-            }
-            return false;
-        });
-
-        Objects.requireNonNull(displayInput.getEditText()).setOnKeyListener((v, keyCode, event) -> {
-            if (keyCode == 66) {
-                convert();
-                return true;
-            }
-            return false;
-        });
-    }
-
-    private void setNumeralObject(String value) throws NullPointerException {
         switch (inputOption) {
             case "DEC":
-                Objects.requireNonNull(displayInput.getEditText()).setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_SIGNED);
+                Objects.requireNonNull(displayInput.getEditText()).setInputType(InputType.TYPE_CLASS_NUMBER);
                 numeral = new Decimal(value);
                 break;
             case "HEX":
-                Objects.requireNonNull(displayInput.getEditText()).setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_NUMBER_FLAG_SIGNED);
+                Objects.requireNonNull(displayInput.getEditText()).setInputType(InputType.TYPE_CLASS_TEXT);
                 numeral = new Hexadecimal(value);
                 break;
             case "OCT":
-                Objects.requireNonNull(displayInput.getEditText()).setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_SIGNED);
+                Objects.requireNonNull(displayInput.getEditText()).setInputType(InputType.TYPE_CLASS_NUMBER);
                 numeral = new Octal(value);
                 break;
             case "BIN":
-                Objects.requireNonNull(displayInput.getEditText()).setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_SIGNED);
+                Objects.requireNonNull(displayInput.getEditText()).setInputType(InputType.TYPE_CLASS_NUMBER);
                 numeral = new Binary(value);
                 break;
         }
     }
 
     private void changeOutputAdapter(String value) {
-        outputConversionAutoText.setAdapter(new ArrayAdapter<>(context, R.layout.support_simple_spinner_dropdown_item, removeStringArrayItem(outputConversionList, value)));
+        outputConversionAutoText.setAdapter(new ArrayAdapter<>(context, R.layout.support_simple_spinner_dropdown_item, removeListItem(value)));
     }
 
     private void setInputAdapter() {
         inputConversionAutoText.setAdapter(new ArrayAdapter<>(context, R.layout.support_simple_spinner_dropdown_item, inputConversionList));
     }
 
-    public void exchangeInputOutput(View v) {
-        if (!outputOption.equals("ROM")) {
-            String temp = inputOption;
-            inputOption = outputOption;
-            outputOption = temp;
-            outputConversionAutoText.setText(temp, false);
-            inputConversionAutoText.setText(inputOption, false);
-        } else
-            makeSnackBar("Cannot Interchange Options", ObjectBitmapStatus.ACTIVE_OUTPUT.color);
+    private String[] removeListItem(String item) {
+        boolean itemFound = false;
+        int listItem = 0;
+        String[] newList = new String[Converter.outputConversionList.length];
+
+        for (String s : Converter.outputConversionList) {
+            if (s.equals(item)) {
+                itemFound = true;
+            } else {
+                newList[listItem] = s;
+                listItem++;
+            }
+        }
+
+        if (itemFound) {
+            return newList;
+        }
+        return outputConversionList;
     }
 
     public void convert(View v) {
-        convert();
-    }
-
-    private void convert() {
-        setNumeralObject(Objects.requireNonNull(displayInput.getEditText()).getText().toString().trim());
+        setNumsObject(Objects.requireNonNull(displayInput.getEditText()).getText().toString().trim());
         try {
             if (inputOption.equals(outputOption))
                 throw new IllegalStateException();
@@ -268,12 +236,12 @@ public class Converter extends AppCompatActivity implements Notify {
                     break;
             }
         } catch (Exception e) {
-            if (inputOption.equals(outputOption))
-                makeSnackBar("Invalid Output Selection", ObjectBitmapStatus.ERROR.color);
-            else if (displayInput.getEditText().getText().toString().trim().equals(""))
-                makeSnackBar("Input Empty", ObjectBitmapStatus.ERROR.color);
+            if (displayInput.getEditText().getText().toString().trim().equals(""))
+                Snackbar.make(parentLayout, "Input Empty", Snackbar.LENGTH_SHORT).show();
+            else if (inputOption.equals(outputOption))
+                Snackbar.make(parentLayout, "Invalid Output Selection", Snackbar.LENGTH_SHORT).show();
             else
-                makeSnackBar("Invalid Input", ObjectBitmapStatus.ERROR.color);
+                Snackbar.make(parentLayout, "Invalid Input", Snackbar.LENGTH_SHORT).show();
         }
     }
 
@@ -283,11 +251,14 @@ public class Converter extends AppCompatActivity implements Notify {
 
         if (!output.trim().isEmpty()) {
             ClipboardManager clipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-            ClipData clipData = ClipData.newPlainText(outputOption, output);
+            ClipData clipData = ClipData.newPlainText("Output Copied", output);
             clipboardManager.setPrimaryClip(clipData);
-            makeSnackBar("Output Copied to Clipboard", ObjectBitmapStatus.THEME.color);
-        } else
-            makeSnackBar("Output is Empty", ObjectBitmapStatus.ACTIVE_INPUT.color);
+
+            Toast.makeText(context, "Output Copied to Clipboard", Toast.LENGTH_LONG).show();
+
+        } else {
+            Toast.makeText(context, "Output is Empty", Toast.LENGTH_LONG).show();
+        }
     }
 
     public void aboutUsDialog(View v) {
@@ -318,80 +289,10 @@ public class Converter extends AppCompatActivity implements Notify {
         if (++cipherPreferencesDialogCounter == 1) {
             Handler handler = new Handler(Looper.getMainLooper());
             handler.post(() -> {
-                cipherPreferencesDialog = new PreferencesDialog(cipherObjectBitmaps,
-                        cipherConstantObjectBitmaps, this,
-                        getSupportFragmentManager(), getLifecycle());
+                cipherPreferencesDialog = new CipherPreferencesDialog(new CipherObjectBitmaps(Color.GRAY), this, getSupportFragmentManager(), getLifecycle());
                 cipherPreferencesDialog.setOnDismissListener(dialog -> cipherPreferencesDialogCounter = 0);
                 cipherPreferencesDialog.show();
             });
         }
-    }
-
-    public void cipherImageDialog(View v) {
-        if (++cipherImageDialogCounter == 1) {
-
-            setNumeralObject(Objects.requireNonNull(displayInput.getEditText()).getText().toString().trim());
-            if (inputOption.equals(outputOption))
-                throw new IllegalStateException();
-
-            Handler handler = new Handler(Looper.getMainLooper());
-            handler.post(() -> {
-                try {
-                    String zeroes = "";
-                    Matcher matcher = Pattern.compile("^(0*)(\\w*)$", Pattern.MULTILINE)
-                            .matcher(Objects.requireNonNull(displayInput.getEditText()).getText()
-                                    .toString().trim());
-                    if (matcher.find()) {
-                        if (matcher.group(1) != null)
-                            zeroes = matcher.group(1);
-                        numeral.setValue(matcher.group(2));
-                    }
-                    ImageCreator cipherImageCreator = new ImageCreator(zeroes + numeral.toDec(), new CipherObjectBitmaps(), this);
-                    cipherImageDialog = new ImageDialog(this, cipherImageCreator.generate(), this);
-                    cipherImageDialog.setOnDismissListener(dialog -> cipherImageDialogCounter = 0);
-                    cipherImageDialog.show();
-                } catch (Exception e) {
-                    if (inputOption.equals(outputOption))
-                        makeSnackBar("Invalid Output Selection", ObjectBitmapStatus.ERROR.color);
-                    else if (Objects.requireNonNull(displayInput.getEditText()).getText().toString().trim().equals(""))
-                        makeSnackBar("Input Empty", ObjectBitmapStatus.ERROR.color);
-                    else
-                        makeSnackBar("Invalid Input", ObjectBitmapStatus.ERROR.color);
-                }
-                cipherImageDialogCounter = 0;
-            });
-        }
-    }
-
-    private static String[] removeStringArrayItem(String[] list, String item) {
-        boolean itemFound = false;
-        int listItem = -1;
-        String[] newList = new String[list.length - 1];
-
-        for (String s : list) {
-            if (s.equals(item)) {
-                itemFound = true;
-            } else {
-                if (listItem + 1 == newList.length)
-                    break;
-                newList[++listItem] = s;
-            }
-        }
-
-        if (itemFound) {
-            return newList;
-        }
-        return list;
-    }
-
-    public void makeSnackBar(String msg, int color) {
-        final Snackbar snackbar = Snackbar.make(parentLayout, msg, Snackbar.LENGTH_SHORT).setBackgroundTint(color);
-        snackbar.setAction(R.string.close, v -> snackbar.dismiss()).setActionTextColor(Color.WHITE).show();
-    }
-
-    @Override
-    public void makeSnackBar(String msg, int color, @StringRes int resId, Runnable runnable) {
-        final Snackbar snackbar = Snackbar.make(parentLayout, msg, Snackbar.LENGTH_SHORT).setBackgroundTint(color);
-        snackbar.setAction(resId, v -> runnable.run()).setActionTextColor(Color.WHITE).show();
     }
 }

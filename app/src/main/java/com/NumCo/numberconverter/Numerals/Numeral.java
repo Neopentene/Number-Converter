@@ -23,8 +23,4 @@ public class Numeral {
         return value;
     }
 
-    public void setValue(String value){
-        this.value = value;
-    }
-
 }

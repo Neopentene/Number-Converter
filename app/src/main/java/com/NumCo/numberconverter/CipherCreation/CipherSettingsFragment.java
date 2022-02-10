@@ -29,8 +29,11 @@ public class CipherSettingsFragment extends Fragment {
         ImageView imageView = view.findViewById(R.id.imageSettings);
         CipherObjectBitmaps cipherObjectBitmaps = new CipherObjectBitmaps();
         Painter painter = new Painter(500, 500 * cipherObjectBitmaps.objects.size());
-        for (int i = 0; i < cipherObjectBitmaps.objects.size(); i++) {
-            painter.drawBitmap(0, 500 * i, cipherObjectBitmaps.objects.get(i).getBitmap(), null);
+
+        int i = 0;
+        for (BitmapObject bitmapObject: cipherObjectBitmaps.objects.values()) {
+            painter.drawBitmap(0, 500 * i, bitmapObject.getBitmap(), null);
+            i++;
         }
 
         /*
@@ -43,11 +46,5 @@ public class CipherSettingsFragment extends Fragment {
 
         imageView.setImageBitmap(painter.getBitmap());
         return view;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        requireView().requestLayout();
     }
 }

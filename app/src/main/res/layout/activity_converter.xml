@@ -1,219 +1,191 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/parentRelativeConvertor"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/parentScrollViewConvertor"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.NumCo.numberconverter.Converter">
 
-    <RelativeLayout
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/ToolbarLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp">
 
-        <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/ToolbarLayout"
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/Toolbar"
+            style="@style/Widget.MaterialComponents.Toolbar.Primary"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:title="@string/page_title" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/InputConversion"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ToolbarLayout"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:textColorHint="@color/grey_hint">
+
+        <AutoCompleteTextView
+            android:id="@+id/InputConversionDropdown"
+            android:layout_width="122dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:hint="@string/input"
+            android:inputType="none" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/OutputConversion"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/InputConversion"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:textColorHint="@color/grey_hint"
+        app:errorEnabled="true">
+
+        <AutoCompleteTextView
+            android:id="@+id/OutputConversionDropdown"
+            android:layout_width="122dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:hint="@string/output"
+            android:inputType="none" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/InputIn"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/OutputConversion"
+        android:layout_below="@id/ToolbarLayout"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:layout_toEndOf="@id/InputConversion"
+        app:hintTextColor="@color/grey_hint">
+
+        <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp">
+            android:layout_margin="2dp"
+            android:hint="@string/enter_input"
+            android:inputType="number" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/Toolbar"
-                style="@style/Widget.MaterialComponents.Toolbar.Primary"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:title="@string/page_title" />
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/OutputOut"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/additionalButtons"
+        android:layout_below="@id/InputIn"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_toEndOf="@id/OutputConversion"
+        app:hintTextColor="@color/grey_hint">
 
-        </com.google.android.material.appbar.AppBarLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/InputConversion"
-            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/ToolbarLayout"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
-            android:textColorHint="@color/grey_hint">
-
-            <AutoCompleteTextView
-                android:id="@+id/InputConversionDropdown"
-                android:layout_width="122dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="2dp"
-                android:hint="@string/input"
-                android:inputType="none" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/OutputConversion"
-            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/InputConversion"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:textColorHint="@color/grey_hint"
-            app:errorEnabled="true">
-
-            <AutoCompleteTextView
-                android:id="@+id/OutputConversionDropdown"
-                android:layout_width="122dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="2dp"
-                android:hint="@string/output"
-                android:inputType="none" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/InputIn"
-            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+        <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_above="@id/OutputConversion"
-            android:layout_below="@id/ToolbarLayout"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
-            android:layout_toEndOf="@id/InputConversion"
-            app:hintTextColor="@color/grey_hint">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="2dp"
-                android:hint="@string/enter_input"
-                android:imeOptions="actionGo"
-                android:inputType="number" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/OutputOut"
-            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@id/additionalButtons"
-            android:layout_below="@id/InputIn"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_toEndOf="@id/OutputConversion"
+            android:layout_margin="2dp"
+            android:ellipsize="end"
             android:focusable="false"
-            app:hintTextColor="@color/grey_hint">
+            android:hint="@string/converted_output"
+            android:inputType="none" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="2dp"
-                android:ellipsize="end"
-                android:focusable="false"
-                android:focusableInTouchMode="false"
-                android:hint="@string/converted_output"
-                android:inputType="none"
-                android:selectAllOnFocus="false" />
-        </com.google.android.material.textfield.TextInputLayout>
+    <LinearLayout
+        android:id="@+id/additionalButtons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/OutputConversion"
+        android:layout_margin="0dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
 
         <LinearLayout
-            android:id="@+id/additionalButtons"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/OutputConversion"
-            android:layout_margin="0dp"
+            android:layout_gravity="center"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <ImageButton
-                    android:id="@+id/exchangeInputOutput"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
-                    android:background="?attr/selectableItemBackgroundBorderless"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:onClick="exchangeInputOutput"
-
-                    android:padding="0dp"
-                    app:srcCompat="@drawable/exchange_input_output"
-                    tools:ignore="UsingOnClickInXml,VectorDrawableCompat" />
-
-                <ImageButton
-                    android:id="@+id/copyOutput"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
-                    android:background="?attr/selectableItemBackgroundBorderless"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:onClick="copyOutput"
-
-                    android:padding="0dp"
-                    app:srcCompat="@drawable/copy_icon_round"
-                    tools:ignore="UsingOnClickInXml,VectorDrawableCompat" />
-
-                <ImageButton
-                    android:id="@+id/aboutUs"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
-                    android:background="?attr/selectableItemBackgroundBorderless"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:onClick="aboutUsDialog"
-
-                    android:padding="0dp"
-                    app:srcCompat="@drawable/about_us_icon"
-                    tools:ignore="VectorDrawableCompat" />
-
-                <ImageButton
-                    android:id="@+id/cipherHelp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
-                    android:background="?attr/selectableItemBackgroundBorderless"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:onClick="cipherPreferencesDialog"
-
-                    android:padding="0dp"
-                    app:srcCompat="@drawable/help_icon"
-                    tools:ignore="VectorDrawableCompat" />
-            </LinearLayout>
-
-            <Button
-                android:id="@+id/convertInput"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            <ImageButton
+                android:id="@+id/copyOutput"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="6dp"
+                android:layout_margin="16dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
+                android:onClick="copyOutput"
 
-                android:onClick="convert"
-                android:text="@string/convert"
-                app:strokeColor="@color/dark_blue" />
+                android:padding="0dp"
+                app:srcCompat="@drawable/copy_icon_round"
+                tools:ignore="UsingOnClickInXml,VectorDrawableCompat" />
 
-            <Button
-                android:id="@+id/cipherImageButton"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            <ImageButton
+                android:id="@+id/aboutUs"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="6dp"
-                android:onClick="cipherImageDialog"
-                android:text="@string/cipher_input"
-                app:strokeColor="@color/dark_blue" />
+                android:layout_margin="16dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
+                android:onClick="aboutUsDialog"
 
+                android:padding="0dp"
+                app:srcCompat="@drawable/about_us_icon"
+                tools:ignore="VectorDrawableCompat" />
+
+            <ImageButton
+                android:id="@+id/cipherHelp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
+                android:onClick="aboutUsDialog"
+
+                android:padding="0dp"
+                app:srcCompat="@drawable/help_icon"
+                tools:ignore="VectorDrawableCompat" />
         </LinearLayout>
 
+        <Button
+            android:id="@+id/convertInput"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="6dp"
+            android:onClick="convert"
+            android:text="@string/convert" />
 
-    </RelativeLayout>
-</ScrollView>
+        <Button
+            android:id="@+id/cipherInput"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="6dp"
+            android:onClick="convert"
+            android:text="@string/cipher_input" />
+
+    </LinearLayout>
+
+
+</RelativeLayout>
