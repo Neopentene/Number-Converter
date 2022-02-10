@@ -127,6 +127,20 @@
             android:orientation="horizontal">
 
             <ImageButton
+                android:id="@+id/exchangeInputOutput"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
+                android:onClick="exchangeInputOutput"
+
+                android:padding="0dp"
+                app:srcCompat="@drawable/exchange_input_output"
+                tools:ignore="UsingOnClickInXml,VectorDrawableCompat" />
+
+            <ImageButton
                 android:id="@+id/copyOutput"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

@@ -14,7 +14,7 @@ import java.util.HashMap;
 public class CipherObjectBitmaps {
     public HashMap<String, BitmapObject> objects = new HashMap<>();
     public HashMap<String, BitmapObject> constantObjects = new HashMap<>();
-    public short columns = 0;
+    public String[] keyArray = {"ID0", "ID1", "ID2", "ID3", "ID4", "ID5", "ID6", "ID7", "ID8", "ID9"};
 
     public CipherObjectBitmaps(Integer color) {
         addConstantObjects(color);
