@@ -9,15 +9,15 @@ public class Hexadecimal extends Numeral {
     }
 
     public String toDec() {
-        return "" + Integer.parseInt(hexadecimal, 16);
+        return "" + Long.parseLong(hexadecimal, 16);
     }
 
     public String toBin() {
-        return Integer.toBinaryString(Integer.parseInt(hexadecimal, 16));
+        return Long.toBinaryString(Integer.parseInt(hexadecimal, 16));
     }
 
     public String toOct() {
-        return Integer.toOctalString(Integer.parseInt(hexadecimal, 16));
+        return Long.toOctalString(Integer.parseInt(hexadecimal, 16));
     }
 
 }

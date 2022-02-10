@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="10dp"
-    android:background="@drawable/transparent_dialog_inset_15_35"
+    android:background="@drawable/transparent_dialog_inset_10_30"
     android:maxHeight="300dp"
     app:cardCornerRadius="8dp">
 
@@ -45,8 +46,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:orientation="horizontal"
             android:paddingLeft="6dp"
-            android:paddingRight="6dp">
+            android:paddingRight="6dp"
+            android:gravity="center"
+            android:weightSum="2">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/closeCipherPreferencesDialog"
@@ -56,7 +60,20 @@
                 android:layout_marginLeft="2dp"
                 android:layout_marginTop="0dp"
                 android:layout_marginRight="2dp"
-                android:layout_marginBottom="0dp" />
+                android:layout_marginBottom="0dp"
+                android:layout_weight="1"
+                tools:ignore="NestedWeights" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/saveButton"
+                style="@style/Widget.MaterialComponents.Button.TextButton.Dialog.Flush"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginRight="2dp"
+                android:layout_marginBottom="0dp"
+                android:layout_weight="1"/>
         </LinearLayout>
 
     </LinearLayout>

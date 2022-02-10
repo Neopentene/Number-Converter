@@ -10,15 +10,15 @@ public class Octal extends Numeral {
     }
 
     public String toHex() {
-        return Integer.toHexString(Integer.parseInt(octal, 8));
+        return Long.toHexString(Long.parseLong(octal, 8));
     }
 
     public String toBin() {
-        return Integer.toBinaryString(Integer.parseInt(octal, 8));
+        return Long.toBinaryString(Long.parseLong(octal, 8));
     }
 
     public String toDec() {
-        return Integer.toString(Integer.parseInt(octal, 8));
+        return Long.toString(Long.parseLong(octal, 8));
     }
 
 }

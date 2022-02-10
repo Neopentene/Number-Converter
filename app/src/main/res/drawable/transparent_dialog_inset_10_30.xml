@@ -2,8 +2,8 @@
 <inset xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:drawable="@drawable/transparent_dialog"
-    android:insetLeft="15dp"
-    android:insetTop="35dp"
-    android:insetRight="15dp"
-    android:insetBottom="35dp"
+    android:insetLeft="10dp"
+    android:insetTop="30dp"
+    android:insetRight="10dp"
+    android:insetBottom="30dp"
     tools:ignore="ResourceCycle" />

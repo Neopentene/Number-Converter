@@ -2,8 +2,6 @@ package com.NumCo.numberconverter;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -12,18 +10,20 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.NumCo.numberconverter.CipherCreation.CipherObjectBitmaps;
 import com.NumCo.numberconverter.CipherCreation.CipherPreferencesDialog;
-import com.NumCo.numberconverter.Numerals.ConversionList;
 import com.NumCo.numberconverter.Numerals.Octal;
 import com.NumCo.numberconverter.Numerals.RomanNumeral;
 import com.NumCo.numberconverter.Numerals.Binary;
@@ -32,6 +32,7 @@ import com.NumCo.numberconverter.Numerals.Hexadecimal;
 import com.NumCo.numberconverter.Numerals.Numeral;
 import com.example.numberconverter.R;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.Objects;
@@ -47,10 +48,10 @@ public class Converter extends AppCompatActivity {
 
     private static Numeral numeral;
 
-    TextInputLayout inputConversionLayout;
-    AutoCompleteTextView inputConversionAutoText;
-    TextInputLayout outputConversionLayout;
-    AutoCompleteTextView outputConversionAutoText;
+    private AutoCompleteTextView inputConversionAutoText = null;
+    private TextInputLayout outputConversionLayout = null;
+    private AutoCompleteTextView outputConversionAutoText = null;
+    private RelativeLayout parentLayout = null;
 
     TextInputLayout displayOutput;
     TextInputLayout displayInput;
@@ -58,6 +59,9 @@ public class Converter extends AppCompatActivity {
     private SharedPreferences sharedPreferences;
 
     private Context context;
+    private short cipherPreferencesDialogCounter = 0;
+    private CipherPreferencesDialog cipherPreferencesDialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) throws NullPointerException {
@@ -66,10 +70,11 @@ public class Converter extends AppCompatActivity {
 
         context = this;
 
-        inputConversionLayout = findViewById(R.id.InputConversion);
+        TextInputLayout inputConversionLayout = findViewById(R.id.InputConversion);
         inputConversionAutoText = findViewById(R.id.InputConversionDropdown);
         outputConversionLayout = findViewById(R.id.OutputConversion);
         outputConversionAutoText = findViewById(R.id.OutputConversionDropdown);
+        parentLayout = findViewById(R.id.parentRelativeConvertor);
 
         displayInput = findViewById(R.id.InputIn);
         displayOutput = findViewById(R.id.OutputOut);
@@ -77,7 +82,7 @@ public class Converter extends AppCompatActivity {
         sharedPreferences = context.getSharedPreferences("saved-options", MODE_PRIVATE);
 
         inputOption = sharedPreferences.getString("input", "DEC");
-        changeInputAdapter(null);
+        setInputAdapter();
 
         outputOption = sharedPreferences.getString("output", "HEX");
         changeOutputAdapter(inputOption);
@@ -87,13 +92,12 @@ public class Converter extends AppCompatActivity {
 
         inputConversionAutoText.setText(inputOption, false);
         outputConversionAutoText.setText(outputOption, false);
-
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        changeInputAdapter(null);
+        setInputAdapter();
         changeOutputAdapter(inputOption);
     }
 
@@ -101,7 +105,7 @@ public class Converter extends AppCompatActivity {
         inputConversionAutoText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
+                // Not Required
             }
 
             @Override
@@ -110,8 +114,7 @@ public class Converter extends AppCompatActivity {
 
                 if (inputOption.equals(outputOption)) {
                     outputConversionLayout.setError("Invalid");
-                }
-                else{
+                } else {
                     outputConversionLayout.setError(null);
                 }
 
@@ -126,7 +129,7 @@ public class Converter extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-
+                // Not Required
             }
         });
     }
@@ -135,15 +138,14 @@ public class Converter extends AppCompatActivity {
         outputConversionAutoText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
+                // Not Required
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (inputOption.equals(s.toString())) {
                     outputConversionLayout.setError("Invalid");
-                }
-                else{
+                } else {
                     outputConversionLayout.setError(null);
 
                     outputOption = s.toString();
@@ -155,12 +157,13 @@ public class Converter extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-
+                // Not Required
             }
         });
     }
 
     private void setNumsObject(String value) throws NullPointerException {
+
         switch (inputOption) {
             case "DEC":
                 Objects.requireNonNull(displayInput.getEditText()).setInputType(InputType.TYPE_CLASS_NUMBER);
@@ -182,40 +185,37 @@ public class Converter extends AppCompatActivity {
     }
 
     private void changeOutputAdapter(String value) {
-        outputConversionAutoText.setAdapter(new ArrayAdapter<>(context, R.layout.support_simple_spinner_dropdown_item, removeListItem(outputConversionList, value)));
+        outputConversionAutoText.setAdapter(new ArrayAdapter<>(context, R.layout.support_simple_spinner_dropdown_item, removeListItem(value)));
     }
 
-    private void changeInputAdapter(String value) {
-        inputConversionAutoText.setAdapter(new ArrayAdapter<>(context, R.layout.support_simple_spinner_dropdown_item, removeListItem(inputConversionList, value)));
+    private void setInputAdapter() {
+        inputConversionAutoText.setAdapter(new ArrayAdapter<>(context, R.layout.support_simple_spinner_dropdown_item, inputConversionList));
     }
 
-    private String[] removeListItem(String[] list, String item) {
+    private String[] removeListItem(String item) {
         boolean itemFound = false;
         int listItem = 0;
-        String[] newList = list;
+        String[] newList = new String[Converter.outputConversionList.length];
 
-        for (String s : list)
+        for (String s : Converter.outputConversionList) {
             if (s.equals(item)) {
                 itemFound = true;
-                break;
-            }
-
-        if (itemFound) {
-            newList = new String[list.length - 1];
-            for (String s : list) {
-                if (!s.equals(item)) {
-                    newList[listItem] = s;
-                    listItem++;
-                }
+            } else {
+                newList[listItem] = s;
+                listItem++;
             }
         }
-        return newList;
+
+        if (itemFound) {
+            return newList;
+        }
+        return outputConversionList;
     }
 
     public void convert(View v) {
         setNumsObject(Objects.requireNonNull(displayInput.getEditText()).getText().toString().trim());
         try {
-            if(inputOption.equals(outputOption))
+            if (inputOption.equals(outputOption))
                 throw new IllegalStateException();
 
             switch (outputOption) {
@@ -237,11 +237,11 @@ public class Converter extends AppCompatActivity {
             }
         } catch (Exception e) {
             if (displayInput.getEditText().getText().toString().trim().equals(""))
-                Toast.makeText(context, "Input Empty", Toast.LENGTH_SHORT).show();
+                Snackbar.make(parentLayout, "Input Empty", Snackbar.LENGTH_SHORT).show();
             else if (inputOption.equals(outputOption))
-                Toast.makeText(context, "Invalid Output Selection", Toast.LENGTH_SHORT).show();
+                Snackbar.make(parentLayout, "Invalid Output Selection", Snackbar.LENGTH_SHORT).show();
             else
-                Toast.makeText(context, "Invalid Input", Toast.LENGTH_SHORT).show();
+                Snackbar.make(parentLayout, "Invalid Input", Snackbar.LENGTH_SHORT).show();
         }
     }
 
@@ -261,7 +261,7 @@ public class Converter extends AppCompatActivity {
         }
     }
 
-    public void aboutUsDialog(View v){
+    public void aboutUsDialog(View v) {
         View aboutUsDialog = getLayoutInflater().inflate(R.layout.about_us_dialog_layout, null);
         TextView title = aboutUsDialog.findViewById(R.id.Title);
         TextView description = aboutUsDialog.findViewById(R.id.Description);
@@ -285,15 +285,14 @@ public class Converter extends AppCompatActivity {
         actionButton.setOnClickListener(v1 -> dialog.dismiss());
     }
 
-    public void cipherPreferencesDialog(View v){
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        Fragment previousDialog = getSupportFragmentManager().findFragmentByTag("cipher preference dialog");
-        if (previousDialog != null)
-            fragmentTransaction.remove(previousDialog);
-
-        fragmentTransaction.addToBackStack(null);
-
-        CipherPreferencesDialog cipherPreferencesDialog = new CipherPreferencesDialog(new CipherObjectBitmaps(Color.GRAY));
-        cipherPreferencesDialog.show(fragmentTransaction, "cipher preference dialog");
+    public void cipherPreferencesDialog(View v) {
+        if (++cipherPreferencesDialogCounter == 1) {
+            Handler handler = new Handler(Looper.getMainLooper());
+            handler.post(() -> {
+                cipherPreferencesDialog = new CipherPreferencesDialog(new CipherObjectBitmaps(Color.GRAY), this, getSupportFragmentManager(), getLifecycle());
+                cipherPreferencesDialog.setOnDismissListener(dialog -> cipherPreferencesDialogCounter = 0);
+                cipherPreferencesDialog.show();
+            });
+        }
     }
 }

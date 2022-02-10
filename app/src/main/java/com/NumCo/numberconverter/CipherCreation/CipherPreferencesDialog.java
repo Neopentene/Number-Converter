@@ -3,24 +3,17 @@ package com.NumCo.numberconverter.CipherCreation;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
-import android.transition.Transition;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.Lifecycle;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.NumCo.numberconverter.ObjectPainter.BitmapObject;
 import com.example.numberconverter.R;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.tabs.TabLayout;
@@ -28,66 +21,59 @@ import com.google.android.material.tabs.TabLayout;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class CipherPreferencesDialog extends DialogFragment {
+public class CipherPreferencesDialog extends Dialog {
     private TabLayout tabLayout;
     private ViewPager2 viewPager;
-    private MaterialButton backButton;
+    private MaterialButton saveButton;
     private CipherDialogFragmentAdapter cipherDialogFragmentAdapter;
-    private boolean isFirst = true;
-    private View root;
+    private volatile boolean isFirst = true;
 
-    private CipherObjectBitmaps cipherObjectBitmaps;
+    protected CipherObjectBitmaps cipherObjectBitmaps;
 
-    public CipherPreferencesDialog(CipherObjectBitmaps cipherObjectBitmaps){
+    private final FragmentManager fragmentManager;
+    private final Lifecycle lifecycle;
+
+    public CipherPreferencesDialog(CipherObjectBitmaps cipherObjectBitmaps, Context context, FragmentManager fragmentManager, Lifecycle lifecycle) {
+        super(context);
         this.cipherObjectBitmaps = cipherObjectBitmaps;
+        this.fragmentManager = fragmentManager;
+        this.lifecycle = lifecycle;
     }
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        root = inflater.inflate(R.layout.cipher_dialog_layout, container, false);
-        cipherDialogFragmentAdapter = new CipherDialogFragmentAdapter(requireActivity(), new ArrayList<>());
+    protected void onCreate(Bundle savedInstanceState) {
+        setContentView(R.layout.cipher_dialog_layout);
 
-        cipherDialogFragmentAdapter.addCipherDialogFragment(new CipherHelpFragment(cipherObjectBitmaps));
-        cipherDialogFragmentAdapter.addCipherDialogFragment(new CipherSettingsFragment());
+        cipherDialogFragmentAdapter = new CipherDialogFragmentAdapter(fragmentManager, lifecycle, new ArrayList<>());
 
-        tabLayout = root.findViewById(R.id.tabLayout);
-        viewPager = root.findViewById(R.id.viewPager);
-
-        backButton = root.findViewById(R.id.closeCipherPreferencesDialog);
-        backButton.setText(R.string.back);
+        tabLayout = findViewById(R.id.tabLayout);
+        viewPager = findViewById(R.id.viewPager);
 
         tabLayout.addTab(tabLayout.newTab().setText(R.string.help));
         tabLayout.addTab(tabLayout.newTab().setText(R.string.settings));
 
-        viewPager.setAdapter(cipherDialogFragmentAdapter);
-        viewPager.setOffscreenPageLimit(cipherDialogFragmentAdapter.getCipherDialogFragments().size());
+        MaterialButton backButton = findViewById(R.id.closeCipherPreferencesDialog);
+        backButton.setText(R.string.back);
 
-        Objects.requireNonNull(getDialog()).getWindow().setBackgroundDrawableResource(R.drawable.transparent_dialog_inset_15_35);
+        saveButton = findViewById(R.id.saveButton);
+        saveButton.setText(R.string.save);
+
+        cipherDialogFragmentAdapter.addCipherDialogFragment(new CipherHelpFragment(cipherObjectBitmaps));
+        cipherDialogFragmentAdapter.addCipherDialogFragment(new CipherSettingsFragment());
+
+        viewPager.setAdapter(cipherDialogFragmentAdapter);
+
+        getWindow().setBackgroundDrawableResource(R.drawable.transparent_dialog_inset_10_30);
+
+        WindowManager.LayoutParams params = getWindow().getAttributes();
+        params.width = WindowManager.LayoutParams.MATCH_PARENT;
+
+        getWindow().setAttributes(params);
 
         if (isFirst)
-            root.setAlpha(0f);
+            getWindow().getDecorView().setAlpha(0f);
 
-        return root;
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        Dialog dialog = getDialog();
-
-        if (dialog != null) {
-            WindowManager.LayoutParams params = dialog.getWindow().getAttributes();
-            params.width = WindowManager.LayoutParams.MATCH_PARENT;
-
-            dialog.getWindow().setAttributes(params);
-        }
-
-        setTabOnSelectedListener();
-        registerPagerOnPageChangeCallback();
-
-        backButton.setOnClickListener(v -> {
-            dismiss();
-        });
+        backButton.setOnClickListener(v -> dismiss());
     }
 
     public void setTabOnSelectedListener() {
@@ -115,27 +101,46 @@ public class CipherPreferencesDialog extends DialogFragment {
             public void onPageSelected(int position) {
 
                 if (isFirst) {
-                    int maxMeasuredHeight = viewPager.getMeasuredHeight();
-
-                    for (Fragment fragment : cipherDialogFragmentAdapter.getCipherDialogFragments()) {
-                        if (fragment.getView() != null) {
-                            fragment.requireView().measure(fragment.requireView().getWidth(), fragment.requireView().getHeight());
-                            maxMeasuredHeight = Math.max(maxMeasuredHeight, fragment.requireView().getMeasuredHeight());
-                            fragment.requireView().requestLayout();
-                        }
-                    }
-
-                    int finalMaxMeasuredHeight = maxMeasuredHeight;
                     viewPager.post(() -> {
-                        viewPager.setMinimumHeight(finalMaxMeasuredHeight);
-                        ObjectAnimator.ofFloat(root, View.ALPHA, 0f, 1f).setDuration(150).start();
-                    });
+                        int maxMeasuredHeight = viewPager.getMeasuredHeight();
 
-                    isFirst = false;
+                        for (int i = 1; i < cipherDialogFragmentAdapter.getItemCount(); i++) {
+                            Fragment fragment = cipherDialogFragmentAdapter.getCipherDialogFragments().get(i);
+                            if (fragment.getView() != null) {
+                                fragment.requireView().measure(fragment.requireView().getWidth(), fragment.requireView().getHeight());
+                                maxMeasuredHeight = Math.max(maxMeasuredHeight, fragment.requireView().getMeasuredHeight());
+                                fragment.requireView().requestLayout();
+                            }
+                        }
+
+                        viewPager.setMinimumHeight(maxMeasuredHeight);
+                        ObjectAnimator.ofFloat(getWindow().getDecorView(), View.ALPHA, 0f, 1f).setDuration(250).start();
+
+                        isFirst = false;
+                    });
                 }
 
                 tabLayout.selectTab(tabLayout.getTabAt(position));
+
+                if (position == 1) {
+                    saveButton.setVisibility(View.VISIBLE);
+                } else {
+                    saveButton.setVisibility(View.GONE);
+                }
             }
         });
+    }
+
+    @Override
+    public void show() {
+        super.show();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        setTabOnSelectedListener();
+        registerPagerOnPageChangeCallback();
     }
 }

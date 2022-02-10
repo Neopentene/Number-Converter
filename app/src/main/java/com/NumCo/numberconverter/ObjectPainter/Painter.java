@@ -147,7 +147,7 @@ public class Painter {
      * Draw a rectangle at (left, top) with dimensions (right - top, bottom - top) of your choosing.
      * Below is an example of rectangle (20, 20) and (180, 180)
      * <pre>
-     * <code>
+     * <code style="font-weight: bold; color: orange">
      * <br />
      *  (0, 0)  (20, 0)    (180, 0)
      *      *   *          *
@@ -184,7 +184,7 @@ public class Painter {
      * Draw a rectangle at (left, top) with dimensions (right - top, bottom - top) of your choosing.
      * Below is an example of rectangle (20, 20) and (180, 180)
      * <pre>
-     * <code>
+     * <code style="font-weight: bold; color: orange">
      * <br />
      *  (0, 0)  (20, 0)    (180, 0)
      *      *   *          *
@@ -223,7 +223,7 @@ public class Painter {
      * Draw a rectangle at (left, top) with dimensions (right - top, bottom - top) of your choosing.
      * Below is an example of rectangle (20, 20) and (180, 180)
      * <pre>
-     * <code>
+     * <code style="font-weight: bold; color: orange">
      * <br />
      *  (0, 0)  (20, 0)    (180, 0)
      *      *   *          *
@@ -262,7 +262,7 @@ public class Painter {
      * Draw a rectangle at (left, top) with dimensions (right - top, bottom - top) of your choosing.
      * Below is an example of rectangle (20, 20) and (180, 180)
      * <pre>
-     * <code>
+     * <code style="font-weight: bold; color: orange">
      * <br />
      *  (0, 0)  (20, 0)    (180, 0)
      *      *   *          *
@@ -303,7 +303,7 @@ public class Painter {
      * Draw a rectangle at (left, top) with dimensions (right - top, bottom - top) of your choosing.
      * Below is an example of rectangle (20, 20) and (180, 180)
      * <pre>
-     * <code>
+     * <code style="font-weight: bold; color: orange">
      * <br />
      *  (0, 0)  (20, 0)    (180, 0)
      *      *   *          *
@@ -439,7 +439,7 @@ public class Painter {
      * Draw an Arc
      * Below is an example of how arc works with the following parameters (20, 20) and (180, 180)
      * <pre>
-     * <code>
+     * <code style="font-weight: bold; color: black">
      * <br />
      *  (0, 0)  (20, 0)    (180, 0)
      *      *   *          *
@@ -479,7 +479,7 @@ public class Painter {
      * Draw an Arc
      * Below is an example of how arc works with the following parameters (20, 20) and (180, 180)
      * <pre>
-     * <code>
+     * <code style="font-weight: bold; color: black">
      * <br />
      *  (0, 0)  (20, 0)    (180, 0)
      *      *   *          *
@@ -523,7 +523,11 @@ public class Painter {
     }
 
     /**
-     * Draw a line <code>(X-1, Y-1)<sup>2</sup> = (X-2, Y-2)<sup>2</sup></code>
+     * Draw a line
+     * <code style="font-weight: bold; color: yellow">
+     * <br/>
+     * &#40;x<sub>2</sub> + x<sub>1</sub>&#41;&#40;y<sub>1</sub> - y<sub>2</sub>&#41; &#61; &#40;x<sub>1</sub> - x<sub>2</sub>&#41;&#40;y<sub>2</sub> - y<sub>1</sub>&#41;
+     * </code>
      *
      * @param X_1       Starting X Co-ordinate of the line
      * @param Y_1       Starting Y Co-ordinate of the line
