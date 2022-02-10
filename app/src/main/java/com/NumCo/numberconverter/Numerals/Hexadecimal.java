@@ -13,11 +13,11 @@ public class Hexadecimal extends Numeral {
     }
 
     public String toBin() {
-        return Long.toBinaryString(Integer.parseInt(hexadecimal, 16));
+        return Long.toBinaryString(Long.parseLong(hexadecimal, 16));
     }
 
     public String toOct() {
-        return Long.toOctalString(Integer.parseInt(hexadecimal, 16));
+        return Long.toOctalString(Long.parseLong(hexadecimal, 16));
     }
 
 }

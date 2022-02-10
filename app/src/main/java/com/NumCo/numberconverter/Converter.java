@@ -1,8 +1,5 @@
 package com.NumCo.numberconverter;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -18,17 +15,20 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.NumCo.numberconverter.CipherCreation.CipherObjectBitmaps;
 import com.NumCo.numberconverter.CipherCreation.CipherPreferencesDialog;
-import com.NumCo.numberconverter.Numerals.Octal;
-import com.NumCo.numberconverter.Numerals.RomanNumeral;
 import com.NumCo.numberconverter.Numerals.Binary;
 import com.NumCo.numberconverter.Numerals.Decimal;
 import com.NumCo.numberconverter.Numerals.Hexadecimal;
 import com.NumCo.numberconverter.Numerals.Numeral;
+import com.NumCo.numberconverter.Numerals.Octal;
+import com.NumCo.numberconverter.Numerals.RomanNumeral;
 import com.NumCo.numberconverter.ObjectPainter.ObjectBitmapStatus;
 import com.example.numberconverter.R;
 import com.google.android.material.button.MaterialButton;
@@ -47,21 +47,18 @@ public class Converter extends AppCompatActivity {
     private static String outputOption = "";
 
     private static Numeral numeral;
-
-    private AutoCompleteTextView inputConversionAutoText = null;
-    private TextInputLayout outputConversionLayout = null;
-    private AutoCompleteTextView outputConversionAutoText = null;
-    private RelativeLayout parentLayout = null;
-
     TextInputLayout displayOutput;
     TextInputLayout displayInput;
-
+    private AutoCompleteTextView inputConversionAutoText = null;
+    private TextInputLayout inputConversionLayout = null;
+    private TextInputLayout outputConversionLayout = null;
+    private AutoCompleteTextView outputConversionAutoText = null;
+    private ScrollView parentLayout = null;
     private SharedPreferences sharedPreferences;
 
     private Context context;
     private short cipherPreferencesDialogCounter = 0;
     private CipherPreferencesDialog cipherPreferencesDialog;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) throws NullPointerException {
@@ -70,11 +67,11 @@ public class Converter extends AppCompatActivity {
 
         context = this;
 
-        TextInputLayout inputConversionLayout = findViewById(R.id.InputConversion);
+        inputConversionLayout = findViewById(R.id.InputConversion);
         inputConversionAutoText = findViewById(R.id.InputConversionDropdown);
         outputConversionLayout = findViewById(R.id.OutputConversion);
         outputConversionAutoText = findViewById(R.id.OutputConversionDropdown);
-        parentLayout = findViewById(R.id.parentRelativeConvertor);
+        parentLayout = findViewById(R.id.parentScrollViewConvertor);
 
         displayInput = findViewById(R.id.InputIn);
         displayOutput = findViewById(R.id.OutputOut);
@@ -89,6 +86,7 @@ public class Converter extends AppCompatActivity {
 
         setInputOnChangeListener();
         setOutputOnChangeListener();
+        setOnKeyListeners();
 
         inputConversionAutoText.setText(inputOption, false);
         outputConversionAutoText.setText(outputOption, false);
@@ -162,22 +160,50 @@ public class Converter extends AppCompatActivity {
         });
     }
 
+    private void setOnKeyListeners() {
+        inputConversionAutoText.setOnKeyListener((v, keyCode, event) -> {
+            if (keyCode == 66) {
+                Objects.requireNonNull(displayInput.getEditText()).requestFocus();
+                return true;
+            }
+            return false;
+        });
+
+        outputConversionAutoText.setOnKeyListener((v, keyCode, event) -> {
+            Snackbar.make(parentLayout, event.getAction() + ", " + keyCode, Snackbar.LENGTH_SHORT).setBackgroundTint(ObjectBitmapStatus.ERROR.color).show();
+
+            if (keyCode == 66) {
+                Objects.requireNonNull(displayInput.getEditText()).requestFocus();
+                return true;
+            }
+            return false;
+        });
+
+        Objects.requireNonNull(displayInput.getEditText()).setOnKeyListener((v, keyCode, event) -> {
+            if (keyCode == 66) {
+                convert();
+                return true;
+            }
+            return false;
+        });
+    }
+
     private void setNumeralObject(String value) throws NullPointerException {
         switch (inputOption) {
             case "DEC":
-                Objects.requireNonNull(displayInput.getEditText()).setInputType(InputType.TYPE_CLASS_NUMBER);
+                Objects.requireNonNull(displayInput.getEditText()).setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_SIGNED);
                 numeral = new Decimal(value);
                 break;
             case "HEX":
-                Objects.requireNonNull(displayInput.getEditText()).setInputType(InputType.TYPE_CLASS_TEXT);
+                Objects.requireNonNull(displayInput.getEditText()).setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_NUMBER_FLAG_SIGNED);
                 numeral = new Hexadecimal(value);
                 break;
             case "OCT":
-                Objects.requireNonNull(displayInput.getEditText()).setInputType(InputType.TYPE_CLASS_NUMBER);
+                Objects.requireNonNull(displayInput.getEditText()).setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_SIGNED);
                 numeral = new Octal(value);
                 break;
             case "BIN":
-                Objects.requireNonNull(displayInput.getEditText()).setInputType(InputType.TYPE_CLASS_NUMBER);
+                Objects.requireNonNull(displayInput.getEditText()).setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_SIGNED);
                 numeral = new Binary(value);
                 break;
         }
@@ -191,27 +217,6 @@ public class Converter extends AppCompatActivity {
         inputConversionAutoText.setAdapter(new ArrayAdapter<>(context, R.layout.support_simple_spinner_dropdown_item, inputConversionList));
     }
 
-    private static String[] removeStringArrayItem(String[] list, String item) {
-        boolean itemFound = false;
-        int listItem = -1;
-        String[] newList = new String[list.length - 1];
-
-        for (String s : list) {
-            if (s.equals(item)) {
-                itemFound = true;
-            } else {
-                if (listItem + 1 == newList.length)
-                    break;
-                newList[++listItem] = s;
-            }
-        }
-
-        if (itemFound) {
-            return newList;
-        }
-        return list;
-    }
-
     public void exchangeInputOutput(View v) {
         if (!outputOption.equals("ROM")) {
             String temp = inputOption;
@@ -220,10 +225,14 @@ public class Converter extends AppCompatActivity {
             outputConversionAutoText.setText(temp, false);
             inputConversionAutoText.setText(inputOption, false);
         } else
-            Snackbar.make(parentLayout, "Cannot Interchange Options", Snackbar.LENGTH_SHORT).setBackgroundTint(ObjectBitmapStatus.ACTIVE_OUTPUT.color).show();
+            makeSnackbar("Cannot Interchange Options", ObjectBitmapStatus.ACTIVE_OUTPUT.color, Color.WHITE);
     }
 
     public void convert(View v) {
+        convert();
+    }
+
+    private void convert() {
         setNumeralObject(Objects.requireNonNull(displayInput.getEditText()).getText().toString().trim());
         try {
             if (inputOption.equals(outputOption))
@@ -248,11 +257,11 @@ public class Converter extends AppCompatActivity {
             }
         } catch (Exception e) {
             if (inputOption.equals(outputOption))
-                Snackbar.make(parentLayout, "Invalid Output Selection", Snackbar.LENGTH_SHORT).setBackgroundTint(ObjectBitmapStatus.ERROR.color).show();
+                makeSnackbar("Invalid Output Selection", ObjectBitmapStatus.ERROR.color, Color.WHITE);
             else if (displayInput.getEditText().getText().toString().trim().equals(""))
-                Snackbar.make(parentLayout, "Input Empty", Snackbar.LENGTH_SHORT).setBackgroundTint(ObjectBitmapStatus.ERROR.color).show();
+                makeSnackbar("Input Empty", ObjectBitmapStatus.ERROR.color, Color.WHITE);
             else
-                Snackbar.make(parentLayout, "Invalid Input", Snackbar.LENGTH_SHORT).setBackgroundTint(ObjectBitmapStatus.ERROR.color).show();
+                makeSnackbar("Invalid Input", ObjectBitmapStatus.ERROR.color, Color.WHITE);
         }
     }
 
@@ -262,14 +271,11 @@ public class Converter extends AppCompatActivity {
 
         if (!output.trim().isEmpty()) {
             ClipboardManager clipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-            ClipData clipData = ClipData.newPlainText("Output Copied", output);
+            ClipData clipData = ClipData.newPlainText(outputOption, output);
             clipboardManager.setPrimaryClip(clipData);
-
-            Snackbar.make(parentLayout, "Output Copied to Clipboard", Snackbar.LENGTH_SHORT).setBackgroundTint(ObjectBitmapStatus.ACTIVE_INPUT.color).show();
-
-        } else {
-            Snackbar.make(parentLayout, "Output Copied to Clipboard", Snackbar.LENGTH_SHORT).setBackgroundTint(ObjectBitmapStatus.ERROR.color).show();
-        }
+            makeSnackbar("Output Copied to Clipboard", ObjectBitmapStatus.THEME.color, Color.WHITE);
+        } else
+            makeSnackbar("Output is Empty", ObjectBitmapStatus.ACTIVE_INPUT.color, Color.WHITE);
     }
 
     public void aboutUsDialog(View v) {
@@ -305,5 +311,31 @@ public class Converter extends AppCompatActivity {
                 cipherPreferencesDialog.show();
             });
         }
+    }
+
+    private static String[] removeStringArrayItem(String[] list, String item) {
+        boolean itemFound = false;
+        int listItem = -1;
+        String[] newList = new String[list.length - 1];
+
+        for (String s : list) {
+            if (s.equals(item)) {
+                itemFound = true;
+            } else {
+                if (listItem + 1 == newList.length)
+                    break;
+                newList[++listItem] = s;
+            }
+        }
+
+        if (itemFound) {
+            return newList;
+        }
+        return list;
+    }
+
+    private void makeSnackbar(String msg, int color, int textColor) {
+        final Snackbar snackbar = Snackbar.make(parentLayout, msg, Snackbar.LENGTH_SHORT).setBackgroundTint(color);
+        snackbar.setAction(R.string.close, v -> snackbar.dismiss()).setActionTextColor(textColor).show();
     }
 }
