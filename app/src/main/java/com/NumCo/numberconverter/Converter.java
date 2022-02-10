@@ -225,7 +225,7 @@ public class Converter extends AppCompatActivity {
             outputConversionAutoText.setText(temp, false);
             inputConversionAutoText.setText(inputOption, false);
         } else
-            makeSnackbar("Cannot Interchange Options", ObjectBitmapStatus.ACTIVE_OUTPUT.color, Color.WHITE);
+            makeSnackBar("Cannot Interchange Options", ObjectBitmapStatus.ACTIVE_OUTPUT.color);
     }
 
     public void convert(View v) {
@@ -257,11 +257,11 @@ public class Converter extends AppCompatActivity {
             }
         } catch (Exception e) {
             if (inputOption.equals(outputOption))
-                makeSnackbar("Invalid Output Selection", ObjectBitmapStatus.ERROR.color, Color.WHITE);
+                makeSnackBar("Invalid Output Selection", ObjectBitmapStatus.ERROR.color);
             else if (displayInput.getEditText().getText().toString().trim().equals(""))
-                makeSnackbar("Input Empty", ObjectBitmapStatus.ERROR.color, Color.WHITE);
+                makeSnackBar("Input Empty", ObjectBitmapStatus.ERROR.color);
             else
-                makeSnackbar("Invalid Input", ObjectBitmapStatus.ERROR.color, Color.WHITE);
+                makeSnackBar("Invalid Input", ObjectBitmapStatus.ERROR.color);
         }
     }
 
@@ -273,9 +273,9 @@ public class Converter extends AppCompatActivity {
             ClipboardManager clipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
             ClipData clipData = ClipData.newPlainText(outputOption, output);
             clipboardManager.setPrimaryClip(clipData);
-            makeSnackbar("Output Copied to Clipboard", ObjectBitmapStatus.THEME.color, Color.WHITE);
+            makeSnackBar("Output Copied to Clipboard", ObjectBitmapStatus.THEME.color);
         } else
-            makeSnackbar("Output is Empty", ObjectBitmapStatus.ACTIVE_INPUT.color, Color.WHITE);
+            makeSnackBar("Output is Empty", ObjectBitmapStatus.ACTIVE_INPUT.color);
     }
 
     public void aboutUsDialog(View v) {
@@ -334,8 +334,8 @@ public class Converter extends AppCompatActivity {
         return list;
     }
 
-    private void makeSnackbar(String msg, int color, int textColor) {
+    private void makeSnackBar(String msg, int color) {
         final Snackbar snackbar = Snackbar.make(parentLayout, msg, Snackbar.LENGTH_SHORT).setBackgroundTint(color);
-        snackbar.setAction(R.string.close, v -> snackbar.dismiss()).setActionTextColor(textColor).show();
+        snackbar.setAction(R.string.close, v -> snackbar.dismiss()).setActionTextColor(Color.WHITE).show();
     }
 }
