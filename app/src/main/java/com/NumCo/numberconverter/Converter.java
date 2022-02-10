@@ -20,7 +20,6 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.NumCo.numberconverter.CipherCreation.CipherObjectBitmaps;
 import com.NumCo.numberconverter.CipherCreation.CipherPreferencesDialog;
@@ -30,6 +29,7 @@ import com.NumCo.numberconverter.Numerals.Binary;
 import com.NumCo.numberconverter.Numerals.Decimal;
 import com.NumCo.numberconverter.Numerals.Hexadecimal;
 import com.NumCo.numberconverter.Numerals.Numeral;
+import com.NumCo.numberconverter.ObjectPainter.ObjectBitmapStatus;
 import com.example.numberconverter.R;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -122,7 +122,7 @@ public class Converter extends AppCompatActivity {
                 editor.putString("input", inputOption);
                 editor.apply();
 
-                setNumsObject(Objects.requireNonNull(displayInput.getEditText()).getText().toString());
+                setNumeralObject(Objects.requireNonNull(displayInput.getEditText()).getText().toString());
 
                 changeOutputAdapter(inputOption);
             }
@@ -162,8 +162,7 @@ public class Converter extends AppCompatActivity {
         });
     }
 
-    private void setNumsObject(String value) throws NullPointerException {
-
+    private void setNumeralObject(String value) throws NullPointerException {
         switch (inputOption) {
             case "DEC":
                 Objects.requireNonNull(displayInput.getEditText()).setInputType(InputType.TYPE_CLASS_NUMBER);
@@ -185,35 +184,47 @@ public class Converter extends AppCompatActivity {
     }
 
     private void changeOutputAdapter(String value) {
-        outputConversionAutoText.setAdapter(new ArrayAdapter<>(context, R.layout.support_simple_spinner_dropdown_item, removeListItem(value)));
+        outputConversionAutoText.setAdapter(new ArrayAdapter<>(context, R.layout.support_simple_spinner_dropdown_item, removeStringArrayItem(outputConversionList, value)));
     }
 
     private void setInputAdapter() {
         inputConversionAutoText.setAdapter(new ArrayAdapter<>(context, R.layout.support_simple_spinner_dropdown_item, inputConversionList));
     }
 
-    private String[] removeListItem(String item) {
+    private static String[] removeStringArrayItem(String[] list, String item) {
         boolean itemFound = false;
-        int listItem = 0;
-        String[] newList = new String[Converter.outputConversionList.length];
+        int listItem = -1;
+        String[] newList = new String[list.length - 1];
 
-        for (String s : Converter.outputConversionList) {
+        for (String s : list) {
             if (s.equals(item)) {
                 itemFound = true;
             } else {
-                newList[listItem] = s;
-                listItem++;
+                if (listItem + 1 == newList.length)
+                    break;
+                newList[++listItem] = s;
             }
         }
 
         if (itemFound) {
             return newList;
         }
-        return outputConversionList;
+        return list;
+    }
+
+    public void exchangeInputOutput(View v) {
+        if (!outputOption.equals("ROM")) {
+            String temp = inputOption;
+            inputOption = outputOption;
+            outputOption = temp;
+            outputConversionAutoText.setText(temp, false);
+            inputConversionAutoText.setText(inputOption, false);
+        } else
+            Snackbar.make(parentLayout, "Cannot Interchange Options", Snackbar.LENGTH_SHORT).setBackgroundTint(ObjectBitmapStatus.ACTIVE_OUTPUT.color).show();
     }
 
     public void convert(View v) {
-        setNumsObject(Objects.requireNonNull(displayInput.getEditText()).getText().toString().trim());
+        setNumeralObject(Objects.requireNonNull(displayInput.getEditText()).getText().toString().trim());
         try {
             if (inputOption.equals(outputOption))
                 throw new IllegalStateException();
@@ -236,12 +247,12 @@ public class Converter extends AppCompatActivity {
                     break;
             }
         } catch (Exception e) {
-            if (displayInput.getEditText().getText().toString().trim().equals(""))
-                Snackbar.make(parentLayout, "Input Empty", Snackbar.LENGTH_SHORT).show();
-            else if (inputOption.equals(outputOption))
-                Snackbar.make(parentLayout, "Invalid Output Selection", Snackbar.LENGTH_SHORT).show();
+            if (inputOption.equals(outputOption))
+                Snackbar.make(parentLayout, "Invalid Output Selection", Snackbar.LENGTH_SHORT).setBackgroundTint(ObjectBitmapStatus.ERROR.color).show();
+            else if (displayInput.getEditText().getText().toString().trim().equals(""))
+                Snackbar.make(parentLayout, "Input Empty", Snackbar.LENGTH_SHORT).setBackgroundTint(ObjectBitmapStatus.ERROR.color).show();
             else
-                Snackbar.make(parentLayout, "Invalid Input", Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(parentLayout, "Invalid Input", Snackbar.LENGTH_SHORT).setBackgroundTint(ObjectBitmapStatus.ERROR.color).show();
         }
     }
 
@@ -254,10 +265,10 @@ public class Converter extends AppCompatActivity {
             ClipData clipData = ClipData.newPlainText("Output Copied", output);
             clipboardManager.setPrimaryClip(clipData);
 
-            Toast.makeText(context, "Output Copied to Clipboard", Toast.LENGTH_LONG).show();
+            Snackbar.make(parentLayout, "Output Copied to Clipboard", Snackbar.LENGTH_SHORT).setBackgroundTint(ObjectBitmapStatus.ACTIVE_INPUT.color).show();
 
         } else {
-            Toast.makeText(context, "Output is Empty", Toast.LENGTH_LONG).show();
+            Snackbar.make(parentLayout, "Output Copied to Clipboard", Snackbar.LENGTH_SHORT).setBackgroundTint(ObjectBitmapStatus.ERROR.color).show();
         }
     }
 
