@@ -1,30 +1,26 @@
 package com.NumCo.numberconverter.Numerals;
 
 public class Numeral {
-    private String nums;
+    public String value;
 
-    public Numeral(String nums) {
-        this.nums = nums;
-    }
-
-    public String getValue() {
-        return nums;
+    public Numeral(String value) {
+        this.value = value;
     }
 
     public String toDec() {
-        return nums;
+        return value;
     }
 
     public String toHex() {
-        return nums;
+        return value;
     }
 
     public String toBin() {
-        return nums;
+        return value;
     }
 
     public String toOct() {
-        return nums;
+        return value;
     }
 
 }
