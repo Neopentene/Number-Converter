@@ -7,8 +7,18 @@
     <string name="enter_input">Enter Input</string>
     <string name="converted_output">Converted Output</string>
     <string name="about_us">About Us</string>
+    <string name="ok">OK</string>
+    <string name="no">NO</string>
+    <string name="cancel">CANCEL</string>
+    <string name="clear">CLEAR</string>
+    <string name="back">BACK</string>
+    <string name="cipher_input">Cipher Input</string>
+    <string name="convert">Convert</string>
+    <string name="help">help</string>
+    <string name="settings">settings</string>
+    <string name="save">SAVE</string>
     <string name="made_with">
-        Made together with 🤡 and 🧠 by
+        Made together with 🤡\'s and 🧠\'s by
         \n<br />
         \n<br />Elkana Sampath
         \n<br />Boris Misquitta
@@ -16,11 +26,35 @@
         \n<br />Aniruddha Khandekar
         \n<br />Celestyn Kinny
     </string>
-    <string name="ok">OK</string>
-    <string name="no">No</string>
-    <string name="cancel">Cancel</string>
-    <string name="clear">Clear</string>
-    <string name="back">Back</string>
-    <string name="cipher_input">Cipher Input</string>
-    <string name="convert">Convert</string>
+
+    <string name="help_DEC">Option: DEC (Decimal)
+        \n<br /> Type - Input &amp; Output
+        \n<br />Option to set input format to simple positive integers or to convert any input format to simple positive integers
+    </string>
+
+    <string name="help_HEX">Option: HEX (Hexadecimal)
+        \n<br /> Type - Input &amp; Output
+        \n<br />Option to set input format to base 16 or to convert any input format to base 16
+    </string>
+
+    <string name="help_OCT">Option: OCT (Octal)
+        \n<br /> Type - Input &amp; Output
+        \n<br />Option to set input format to base 8 or to convert any input format to base 8
+    </string>
+
+    <string name="help_BIN">Option: BIN (Binary)
+        \n<br /> Type - Input &amp; Output
+        \n<br />Option to set input format to base 2 or to convert any input format to base 2
+    </string>
+
+    <string name="help_ROM">Option: ROM (Roman)
+        \n<br /> Type - Only Output
+        \n<br />Option to convert any input format to the corresponding roman numeral
+    </string>
+
+    <string name="help_CIPHER">Option: Image Encryption of Input
+        \n<br /> Type - Only Output
+        \n<br />Upon pressing the button Cipher Input, the input entered will be encrypted by images.
+        \n<BR />Encryption will be done according to the options selected in settings.
+    </string>
 </resources>
