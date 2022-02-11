@@ -30,20 +30,34 @@ public class CipherSettingsFragment extends Fragment {
         Painter painter = new Painter(500, 500, Bitmap.Config.ARGB_8888);
 
         painter
-                .drawBorderedCircle(200, 10, Color.RED)
-                .drawBorderedCircle(100, 5, Color.GREEN)
-                .drawBorderedRectangle(100f, 150f, 400f,350f, 5, Color.YELLOW)
-        .drawBorderedArc(100f,150f, 400f, 350f, 0, 180,false,5, Color.MAGENTA)
-        .drawBorderedArc(100, 150, 400, 350, 180, 360,false,5,Color.MAGENTA)
-        .drawLine(250,150,250,350,5,Color.BLUE)
-        .drawLine(100,260,250,445,5,Color.CYAN)//left-bottom
-        .drawLine(400,260,250,445,5,Color.CYAN)//right-bottom
-        .drawLine(250,55,400,260,5,Color.CYAN)//right-top
-        .drawLine(250,55,100,260,5,Color.CYAN)//left-top
+                .drawBorderedCircle(200, 10, Color.RED)//outer-circle
 
-        ;
-        painter.scale(2f,2f);
-        imageView.setImageBitmap(painter.getBitmap());
+                .drawBorderedCircle(100, 5, Color.GREEN)//inner-circle
+
+                .drawBorderedRectangle(100f, 150f, 400f,350f, 5, Color.YELLOW)//horizontal-rectangle
+
+                .drawBorderedArc(100f,150f, 400f, 350f, 0, 180,false,5, Color.MAGENTA)//lower-arc-of-ellipse
+                .drawBorderedArc(100, 150, 400, 350, 180, 360,false,5,Color.MAGENTA)//upper-arc-of-ellipse
+
+                .drawLine(250,150,250,350,5,Color.BLUE)//center-vertical-line
+
+                .drawLine(100,260,250,445,5,Color.CYAN)//left-bottom
+                .drawLine(400,260,250,445,5,Color.CYAN)//right-bottom
+                .drawLine(250,55,400,260,5,Color.CYAN)//right-top
+                .drawLine(250,55,100,260,5,Color.CYAN)//left-top
+
+                .drawLine(250,150,100,260,5,Color.DKGRAY)//left-top
+                .drawLine(100,260,250,350,5,Color.DKGRAY)//left-bottom
+                .drawLine(400,260,250,350,5,Color.DKGRAY)//right-bottom
+                .drawLine(250,150,400,260,5,Color.DKGRAY)//right-top
+
+                .
+
+
+
+                ;
+                painter.scale(2f,2f);
+                imageView.setImageBitmap(painter.getBitmap());
 
         return view;
     }
