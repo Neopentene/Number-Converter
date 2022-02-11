@@ -51,7 +51,7 @@ public class CipherSettingsFragment extends Fragment {
                 .drawLine(400,260,250,350,5,Color.DKGRAY)//right-bottom
                 .drawLine(250,150,400,260,5,Color.DKGRAY)//right-top
 
-                .
+
 
 
 
