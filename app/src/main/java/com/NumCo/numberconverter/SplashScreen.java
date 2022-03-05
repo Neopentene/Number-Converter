@@ -42,4 +42,4 @@ public class SplashScreen extends AppCompatActivity {
             finish();
         }, 2000);
     }
-}
+}//boris's
