@@ -30,7 +30,7 @@ public class CipherSettingsFragment extends Fragment {
         Painter painter = new Painter(500, 500, Bitmap.Config.ARGB_8888);
 
         painter
-                .drawBorderedCircle(200, 10, Color.RED)//outer-circle
+                /*.drawBorderedCircle(200, 5, Color.RED)//outer-circle
 
                 .drawBorderedCircle(100, 5, Color.GREEN)//inner-circle
 
@@ -49,7 +49,13 @@ public class CipherSettingsFragment extends Fragment {
                 .drawLine(250,150,100,260,5,Color.DKGRAY)//left-top
                 .drawLine(100,260,250,350,5,Color.DKGRAY)//left-bottom
                 .drawLine(400,260,250,350,5,Color.DKGRAY)//right-bottom
-                .drawLine(250,150,400,260,5,Color.DKGRAY)//right-top
+                .drawLine(250,150,400,260,5,Color.DKGRAY)//right-top */
+
+                .drawLine(99f,147f,417f,366f,7,Color.BLUE) //backslash line coordinates hourglass
+                .drawLine(91f,374f,415f,155f,7,Color.BLUE) //forwardslash line coordinates hourglass
+                //.drawBorderedArc(80f,215f,420f,445f,18,146,false,5,Color.BLUE)
+                .drawBorderedArc(91f,345f,420f,395f,207,324,false,5,Color.BLUE) //lower-ellipse hourglass
+                .drawBorderedArc(100f,125f,420f,175f,185,324,false,5,Color.BLUE) //upper-ellipse hourglass
 
 
 
