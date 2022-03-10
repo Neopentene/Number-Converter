@@ -20,10 +20,10 @@ import java.util.ArrayList;
 
 public class CipherHelpFragment extends Fragment {
     private final ConversionList conversionList = new ConversionList();
-    private final CipherObjectBitmaps cipherObjectBitmaps;
+    private final CipherConstantObjectBitmaps cipherConstantObjectBitmaps;
 
-    public CipherHelpFragment(CipherObjectBitmaps cipherObjectBitmaps) {
-        this.cipherObjectBitmaps = cipherObjectBitmaps;
+    public CipherHelpFragment(CipherConstantObjectBitmaps cipherConstantObjectBitmaps) {
+        this.cipherConstantObjectBitmaps = cipherConstantObjectBitmaps;
     }
 
     @Override
@@ -40,20 +40,20 @@ public class CipherHelpFragment extends Fragment {
         ArrayList<BitmapObject> objects = new ArrayList<>();
 
         if (!selectedInput.equals(selectedOutput)) {
-            objects.add(cipherObjectBitmaps.constantObjects.get(selectedInput));
+            objects.add(cipherConstantObjectBitmaps.constantObjects.get(selectedInput));
             objects.get(0).setBitmapStatus(ObjectBitmapStatus.ACTIVE_INPUT);
 
-            objects.add(cipherObjectBitmaps.constantObjects.get(selectedOutput));
+            objects.add(cipherConstantObjectBitmaps.constantObjects.get(selectedOutput));
             objects.get(1).setBitmapStatus(ObjectBitmapStatus.ACTIVE_OUTPUT);
 
         } else {
-            objects.add(cipherObjectBitmaps.constantObjects.get(selectedOutput));
+            objects.add(cipherConstantObjectBitmaps.constantObjects.get(selectedOutput));
             objects.get(0).setBitmapStatus(ObjectBitmapStatus.ERROR);
         }
 
         for (String string : conversionList.allConversionOptions) {
             if (!string.equals(selectedOutput) && !string.equals(selectedInput))
-                objects.add(cipherObjectBitmaps.constantObjects.get(string));
+                objects.add(cipherConstantObjectBitmaps.constantObjects.get(string));
         }
 
         listView.setAdapter(new ConstantObjectAdapter(requireActivity(), objects));

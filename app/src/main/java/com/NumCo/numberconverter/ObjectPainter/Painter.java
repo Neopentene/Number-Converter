@@ -9,6 +9,8 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.Typeface;
 
+import java.util.Iterator;
+
 public class Painter {
     private Bitmap bitmap;
     private Canvas canvas;
@@ -19,11 +21,16 @@ public class Painter {
     private final Paint.Style defaultStyle = Paint.Style.FILL;
     private float bitmapCenterX, bitmapCenterY;
     private final Typeface defaultTypeface = Typeface.create(Typeface.SANS_SERIF, Typeface.NORMAL);
+    public final static int FONT_NORMAL = 0;
+    public final static int FONT_BOLD = 1;
+    public final static int FONT_ITALIC = 2;
+    public final static int FONT_BOLD_ITALIC = 3;
+
     public final Bitmap.Config defaultConfig = Bitmap.Config.ARGB_8888;
-    public final Paint.Align CENTER = Paint.Align.CENTER;
-    public final Paint.Align DEFAULT = Paint.Align.LEFT;
-    public final Paint.Align RIGHT = Paint.Align.RIGHT;
-    public final Paint.Align LEFT = Paint.Align.LEFT;
+    public final static Paint.Align CENTER = Paint.Align.CENTER;
+    public final static Paint.Align DEFAULT = Paint.Align.LEFT;
+    public final static Paint.Align RIGHT = Paint.Align.RIGHT;
+    public final static Paint.Align LEFT = Paint.Align.LEFT;
     public int width, height;
 
     /**
@@ -47,6 +54,18 @@ public class Painter {
 
     public Painter(int width, int height) {
         this(Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888));
+    }
+
+    /**
+     * Create a Painter object that takes a bitmap as it's parameter. Use this class to draw bitmaps using the various
+     * methods and functions provided.
+     *
+     * @param width  Width of the bitmap
+     * @param height Height of the bitmap
+     */
+
+    public Painter(float width, float height) {
+        this(Bitmap.createBitmap((int) Math.ceil((double) width), (int) Math.ceil((double) height), Bitmap.Config.ARGB_8888));
     }
 
     /**
@@ -84,6 +103,7 @@ public class Painter {
      * @param radius Radius of the circle
      * @param color  Color used to draw the circle
      * @return Self
+     * @implNote Abbreviated command - dC|radius|color
      */
 
     public Painter drawCircle(int radius, int color) {
@@ -100,6 +120,7 @@ public class Painter {
      * @param thickness Thickness of the border
      * @param color     Color used to draw the circle
      * @return Self
+     * @implNote Abbreviated command - dBC|radius|thickness|color
      */
 
     public Painter drawBorderedCircle(int radius, int thickness, int color) {
@@ -117,6 +138,7 @@ public class Painter {
      * @param radius Radius of the circle
      * @param color  Color used to draw the circle
      * @return Self
+     * @implNote Abbreviated command: dC|cx|cy|radius|color
      */
     public Painter drawCircle(float cx, float cy, int radius, int color) {
         setColor(color);
@@ -134,6 +156,7 @@ public class Painter {
      * @param radius    Radius of the circle
      * @param color     Color used to draw the circle
      * @return Self
+     * @implNote Abbreviated command: dBC|cx|cy|radius|thickness|color
      */
 
     public Painter drawBorderedCircle(float cx, float cy, int radius, int thickness, int color) {
@@ -148,7 +171,7 @@ public class Painter {
      * Below is an example of rectangle (20, 20) and (180, 180)
      * <pre>
      * <code style="font-weight: bold; color: orange">
-     * <br />
+     *
      *  (0, 0)  (20, 0)    (180, 0)
      *      *   *          *
      *
@@ -171,6 +194,7 @@ public class Painter {
      * @param bottom bottom right corner's x Co-ordinate
      * @param color  Color used to draw the circle
      * @return Self
+     * @implNote Abbreviated command: dR|left|top|right|bottom|color
      */
 
     public Painter drawRectangle(float left, float top, float right, float bottom, int color) {
@@ -185,7 +209,7 @@ public class Painter {
      * Below is an example of rectangle (20, 20) and (180, 180)
      * <pre>
      * <code style="font-weight: bold; color: orange">
-     * <br />
+     *
      *  (0, 0)  (20, 0)    (180, 0)
      *      *   *          *
      *
@@ -209,6 +233,7 @@ public class Painter {
      * @param thickness Thickness of the border
      * @param color     Color used to draw the circle
      * @return Self
+     * @implNote Abbreviated command: dBR|left|top|right|bottom|thickness|color
      */
 
     public Painter drawBorderedRectangle(float left, float top, float right, float bottom, int thickness, int color) {
@@ -224,7 +249,7 @@ public class Painter {
      * Below is an example of rectangle (20, 20) and (180, 180)
      * <pre>
      * <code style="font-weight: bold; color: orange">
-     * <br />
+     *
      *  (0, 0)  (20, 0)    (180, 0)
      *      *   *          *
      *
@@ -249,6 +274,7 @@ public class Painter {
      * @param ry     y inclination of the rounded corner
      * @param color  Color used to draw the circle
      * @return Self
+     * @implNote Abbreviated command: dRR|left|top|right|bottom|rx|ry|color
      */
 
     public Painter drawRoundedRectangle(float left, float top, float right, float bottom, float rx, float ry, int color) {
@@ -263,7 +289,46 @@ public class Painter {
      * Below is an example of rectangle (20, 20) and (180, 180)
      * <pre>
      * <code style="font-weight: bold; color: orange">
-     * <br />
+     *
+     *  (0, 0)  (20, 0)    (180, 0)
+     *      *   *          *
+     *
+     *   (20, 20)          (180, 20)
+     *  20 top  * -------- * 180 right
+     *          |          |
+     *          |          |
+     *          |          |
+     *  20 left * -------- * 180 bottom
+     *  (20, 180)          (180, 180)
+     *
+     *      *   *          *
+     * (0, 200)(20, 200)  (180, 200)
+     * </code>
+     * </pre>
+     *
+     * @param left   top left corner's x Co-ordinate
+     * @param top    top left corner's y Co-ordinate
+     * @param right  bottom right corner's x Co-ordinate
+     * @param bottom bottom right corner's x Co-ordinate
+     * @param r      set equal x and y inclination of the rounded corners
+     * @param color  Color used to draw the circle
+     * @return Self
+     * @implNote Abbreviated command: dRR|left|top|right|bottom|r|color
+     */
+
+    public Painter drawRoundedRectangle(float left, float top, float right, float bottom, float r, int color) {
+        setColor(color);
+        canvas.drawRoundRect(new RectF(left, top, right, bottom), r, r, paint);
+        resetColor();
+        return this;
+    }
+
+    /**
+     * Draw a rectangle at (left, top) with dimensions (right - top, bottom - top) of your choosing.
+     * Below is an example of rectangle (20, 20) and (180, 180)
+     * <pre>
+     * <code style="font-weight: bold; color: orange">
+     *
      *  (0, 0)  (20, 0)    (180, 0)
      *      *   *          *
      *
@@ -289,6 +354,7 @@ public class Painter {
      * @param thickness Thickness of the border
      * @param color     Color used to draw the circle
      * @return Self
+     * @implNote Abbreviated command: dBRR|left|top|right|bottom|rx|ry|thickness|color
      */
 
     public Painter drawBorderedRoundedRectangle(float left, float top, float right, float bottom, float rx, float ry, int thickness, int color) {
@@ -304,7 +370,7 @@ public class Painter {
      * Below is an example of rectangle (20, 20) and (180, 180)
      * <pre>
      * <code style="font-weight: bold; color: orange">
-     * <br />
+     *
      *  (0, 0)  (20, 0)    (180, 0)
      *      *   *          *
      *
@@ -328,6 +394,7 @@ public class Painter {
      * @param r      set equal x and y inclination of the rounded corners
      * @param color  Color used to draw the circle
      * @return Self
+     * @implNote Abbreviated command: dBRR|left|top|right|bottom|r|thickness|color
      */
     public Painter drawBorderedRoundedRectangle(float left, float top, float right, float bottom, float r, int thickness, int color) {
         setPaintParameters(color, Paint.Style.STROKE, thickness, defaultTypeface, defaultTextSize);
@@ -348,6 +415,7 @@ public class Painter {
      * @param textSize  The size of the text
      * @param color     Color used to draw text
      * @return Self
+     * @implNote Abbreviated command: dT|text|x|y|(Font-Family)_(Font Style)|alignment|textSize|color
      */
 
     public Painter drawText(String text, float x, float y, Typeface typeface, Paint.Align alignment, int textSize, int color) {
@@ -369,6 +437,7 @@ public class Painter {
      * @param textSize The size of the text
      * @param color    Color used to draw text
      * @return Self
+     * @implNote Abbreviated command: dT|text|x|y|(Font-Family)_(Font Style)|textSize|color
      */
 
     public Painter drawText(String text, float x, float y, Typeface typeface, int textSize, int color) {
@@ -387,6 +456,7 @@ public class Painter {
      * @param textSize The size of the text
      * @param color    Color used to draw text
      * @return Self
+     * @implNote Abbreviated command: dT|text|x|y|textSize|color
      */
 
     public Painter drawText(String text, float x, float y, int textSize, int color) {
@@ -404,6 +474,7 @@ public class Painter {
      * @param textSize The size of the text
      * @param color    Color used to draw text
      * @return Self
+     * @implNote Abbreviated command: dTC|text|(Font-Family)_(Font Style)|textSize|color
      */
 
     public Painter drawTextAtCenter(String text, Typeface typeface, int textSize, int color) {
@@ -423,6 +494,7 @@ public class Painter {
      * @param textSize The size of the text
      * @param color    Color used to draw text
      * @return Self
+     * @implNote Abbreviated command: dTC|text|textSize|color
      */
 
     public Painter drawTextAtCenter(String text, int textSize, int color) {
@@ -466,6 +538,7 @@ public class Painter {
      * @param useCenter  include the usage of center while rendering
      * @param color      Color used to draw arc
      * @return Self
+     * @implNote Abbreviated command: dA|left|top|right|bottom|startAngle|sweepAngle|useCenter|strokeWidth|color
      */
 
     public Painter drawArc(float left, float top, float right, float bottom, float startAngle, float sweepAngle, boolean useCenter, int color) {
@@ -507,6 +580,7 @@ public class Painter {
      * @param strokeWidth thickness of the border
      * @param color       Color used to draw arc
      * @return Self
+     * @implNote Abbreviated command: dBA|left|top|right|bottom|startAngle|sweepAngle|useCenter|strokeWidth|color
      */
 
     public Painter drawBorderedArc(float left, float top, float right, float bottom, float startAngle, float sweepAngle, boolean useCenter, int strokeWidth, int color) {
@@ -536,6 +610,7 @@ public class Painter {
      * @param thickness thickness of the line
      * @param color     Color used to draw line
      * @return Self
+     * @implNote Abbreviated command: dL|X_1|Y_1|X_2|Y_2|thickness|color
      */
 
     public Painter drawLine(float X_1, float Y_1, float X_2, float Y_2, int thickness, int color) {
@@ -546,11 +621,93 @@ public class Painter {
     }
 
     /**
+     * Draw an Oval
+     * Below is an example of how an oval works with the following parameters (20, 20) and (180, 180)
+     * <pre>
+     * <code style="font-weight: bold; color: black">
+     * <br />
+     *  (0, 0)  (20, 0)    (180, 0)
+     *      *   *          *
+     *
+     *   (20, 20)          (180, 20)
+     *  20 top  * -------- * 180 right
+     *          |          |
+     *          |(Oval--in)|
+     *          |          |
+     *  20 left * -------- * 180 bottom
+     *  (20, 180)          (180, 180)
+     *
+     *      *   *          *
+     * (0, 200)(20, 200)  (180, 200)
+     * </code>
+     * </pre>
+     *
+     * @param left   top left corner's x Co-ordinate
+     * @param top    top left corner's y Co-ordinate
+     * @param right  bottom right corner's x Co-ordinate
+     * @param bottom bottom right corner's x Co-ordinate
+     * @param color  Color used to draw arc
+     * @return Self
+     * @implNote Abbreviated command: dO|left|top|right|bottom|color
+     */
+
+    public Painter drawOval(float left, float top, float right, float bottom, int color) {
+        setColor(color);
+        canvas.drawOval(new RectF(left, top, right, bottom), paint);
+        resetColor();
+        return this;
+    }
+
+    /**
+     * Draw an Oval
+     * Below is an example of how an oval works with the following parameters (20, 20) and (180, 180)
+     * <pre>
+     * <code style="font-weight: bold; color: black">
+     * <br />
+     *  (0, 0)  (20, 0)    (180, 0)
+     *      *   *          *
+     *
+     *   (20, 20)          (180, 20)
+     *  20 top  * -------- * 180 right
+     *          |          |
+     *          |(Oval--in)|
+     *          |          |
+     *  20 left * -------- * 180 bottom
+     *  (20, 180)          (180, 180)
+     *
+     *      *   *          *
+     * (0, 200)(20, 200)  (180, 200)
+     * </code>
+     * </pre>
+     *
+     * @param left      top left corner's x Co-ordinate
+     * @param top       top left corner's y Co-ordinate
+     * @param right     bottom right corner's x Co-ordinate
+     * @param bottom    bottom right corner's x Co-ordinate
+     * @param thickness thickness of the border
+     * @param color     Color used to draw arc
+     * @return Self
+     * @implNote Abbreviated command: dBO|left|top|right|bottom|thickness|color
+     */
+
+    public Painter drawBorderedOval(float left, float top, float right, float bottom, int thickness, int color) {
+        setPaintParameters(color, Paint.Style.STROKE, thickness, defaultTypeface, defaultTextSize);
+        float halfThickness = (float) thickness / 2;
+        canvas.drawOval(new RectF((float) Math.ceil((double) left + halfThickness)
+                , (float) Math.ceil((double) top + halfThickness)
+                , (float) Math.ceil((double) right - halfThickness)
+                , (float) Math.ceil((double) bottom - halfThickness)), paint);
+        resetPaintParameters();
+        return this;
+    }
+
+    /**
      * Draw a border around the bitmap
      *
      * @param thickness thickness of the border
      * @param color     Color used to draw border
      * @return Self
+     * @implNote Abbreviated command: dBAB|thickness|color
      */
 
     public Painter drawBorderAroundBitmap(int thickness, int color) {
@@ -566,6 +723,7 @@ public class Painter {
      * @param thickness thickness of the border
      * @param color     Color used to draw border
      * @return Self
+     * @implNote Abbreviated command: dRBAB|rx|ry|thickness|color
      */
 
     public Painter drawRoundedBorderAroundBitmap(float rx, float ry, int thickness, int color) {
@@ -580,6 +738,7 @@ public class Painter {
      * @param thickness thickness of the border
      * @param color     Color used to draw border
      * @return Self
+     * @implNote Abbreviated command: dRBAB|r|thickness|color
      */
 
     public Painter drawRoundedBorderAroundBitmap(float r, int thickness, int color) {
@@ -626,7 +785,7 @@ public class Painter {
     }
 
     /**
-     * Save the canvas layer
+     * Save the canvas dimensions
      *
      * @return Self
      */
@@ -637,7 +796,7 @@ public class Painter {
     }
 
     /**
-     * Restore the last saved canvas layer
+     * Restore the last saved canvas dimensions
      *
      * @return Self
      */
@@ -796,5 +955,412 @@ public class Painter {
 
     public void setBitmapCenterY(float bitmapCenterY) {
         this.bitmapCenterY = bitmapCenterY;
+    }
+
+    public Painter getSelf() {
+        return this;
+    }
+
+    public class Parser {
+        public String[] parserCommands;
+
+        public Parser(String[] parserCommands) {
+            this.parserCommands = parserCommands;
+        }
+
+        public Parser(Iterable<String> iterable) {
+            int size = 0;
+            Iterator<String> iterator = iterable.iterator();
+            while (iterable.iterator().hasNext()) {
+                size++;
+            }
+            parserCommands = new String[size];
+
+            for (int index = 0; index < size; index++) {
+                parserCommands[index] = iterator.next();
+            }
+        }
+
+        public boolean parse() {
+            boolean successful = false;
+            save();
+            for (String command : parserCommands) {
+                try {
+                    String[] args = command.split("\\|");
+                    switch (args[0]) {
+                        case "dC":
+                            successful = dC(args);
+                            break;
+                        case "dBC":
+                            successful = dBC(args);
+                            break;
+                        case "dR":
+                            successful = dR(args);
+                            break;
+                        case "dBR":
+                            successful = dBR(args);
+                            break;
+                        case "dRR":
+                            successful = dRR(args);
+                            break;
+                        case "dBRR":
+                            successful = dBRR(args);
+                            break;
+                        case "dT":
+                            successful = dT(args);
+                            break;
+                        case "dTC":
+                            successful = dTC(args);
+                            break;
+                        case "dA":
+                            successful = dA(args);
+                            break;
+                        case "dBA":
+                            successful = dBA(args);
+                            break;
+                        case "dO":
+                            successful = dO(args);
+                            break;
+                        case "dBO":
+                            successful = dBO(args);
+                            break;
+                        case "dL":
+                            successful = dL(args);
+                            break;
+                        case "dBAB":
+                            successful = dBAB(args);
+                            break;
+                        case "dRBAB":
+                            successful = dRBAB(args);
+                            break;
+                    }
+                    if (!successful)
+                        throw new Exception();
+
+                } catch (Exception e) {
+                    return false;
+                }
+            }
+            restore();
+            return successful;
+        }
+
+        private boolean dC(String[] args) {
+            try {
+                switch (args.length) {
+                    case 3: {
+                        drawCircle(Integer.parseInt(args[1]), Integer.parseInt(args[2]));
+                    }
+                    break;
+                    case 5: {
+                        drawCircle(Integer.parseInt(args[1]),
+                                Integer.parseInt(args[2]),
+                                Integer.parseInt(args[3]),
+                                Integer.parseInt(args[4]));
+                    }
+                    break;
+                }
+                return true;
+            } catch (Exception e) {
+                return false;
+            }
+        }
+
+        private boolean dBC(String[] args) {
+            try {
+                switch (args.length) {
+                    case 4: {
+                        drawBorderedCircle(Integer.parseInt(args[1]),
+                                Integer.parseInt(args[2]),
+                                Integer.parseInt(args[3]));
+                    }
+                    break;
+                    case 6: {
+                        drawBorderedCircle(Float.parseFloat(args[1]),
+                                Float.parseFloat(args[2]),
+                                Integer.parseInt(args[3]),
+                                Integer.parseInt(args[4]),
+                                Integer.parseInt(args[5]));
+                    }
+                    break;
+                }
+                return true;
+            } catch (Exception e) {
+                return false;
+            }
+        }
+
+        private boolean dR(String[] args) {
+            try {
+                drawRectangle(Float.parseFloat(args[1]),
+                        Float.parseFloat(args[2]),
+                        Float.parseFloat(args[3]),
+                        Float.parseFloat(args[4]),
+                        Integer.parseInt(args[5]));
+                return true;
+            } catch (Exception e) {
+                return false;
+            }
+        }
+
+        private boolean dBR(String[] args) {
+            try {
+                drawBorderedRectangle(Float.parseFloat(args[1]),
+                        Float.parseFloat(args[2]),
+                        Float.parseFloat(args[3]),
+                        Float.parseFloat(args[4]),
+                        Integer.parseInt(args[5]),
+                        Integer.parseInt(args[6]));
+                return true;
+            } catch (Exception e) {
+                return false;
+            }
+        }
+
+        private boolean dRR(String[] args) {
+            try {
+                switch (args.length) {
+                    case 7: {
+                        drawRoundedRectangle(Float.parseFloat(args[1]),
+                                Float.parseFloat(args[2]),
+                                Float.parseFloat(args[3]),
+                                Float.parseFloat(args[4]),
+                                Float.parseFloat(args[5]),
+                                Integer.parseInt(args[6]));
+                    }
+                    break;
+                    case 8: {
+                        drawRoundedRectangle(Float.parseFloat(args[1]),
+                                Float.parseFloat(args[2]),
+                                Float.parseFloat(args[3]),
+                                Float.parseFloat(args[4]),
+                                Float.parseFloat(args[5]),
+                                Float.parseFloat(args[6]),
+                                Integer.parseInt(args[7]));
+                    }
+                    break;
+                }
+                return true;
+            } catch (Exception e) {
+                return false;
+            }
+        }
+
+        private boolean dBRR(String[] args) {
+            try {
+                switch (args.length) {
+                    case 8: {
+                        drawBorderedRoundedRectangle(Float.parseFloat(args[1]),
+                                Float.parseFloat(args[2]),
+                                Float.parseFloat(args[3]),
+                                Float.parseFloat(args[4]),
+                                Float.parseFloat(args[5]),
+                                Integer.parseInt(args[6]),
+                                Integer.parseInt(args[7]));
+                    }
+                    break;
+                    case 9: {
+                        drawBorderedRoundedRectangle(Float.parseFloat(args[1]),
+                                Float.parseFloat(args[2]),
+                                Float.parseFloat(args[3]),
+                                Float.parseFloat(args[4]),
+                                Float.parseFloat(args[5]),
+                                Float.parseFloat(args[6]),
+                                Integer.parseInt(args[7]),
+                                Integer.parseInt(args[8]));
+                    }
+                    break;
+                }
+                return true;
+            } catch (Exception e) {
+                return false;
+            }
+        }
+
+        private boolean dT(String[] args) {
+            try {
+                switch (args.length) {
+                    case 6: {
+                        drawText(args[1],
+                                Float.parseFloat(args[2]),
+                                Float.parseFloat(args[3]),
+                                Integer.parseInt(args[4]),
+                                Integer.parseInt(args[5]));
+                    }
+                    break;
+                    case 7: {
+                        String[] typefaceParams = args[4].split("_");
+                        Typeface typeface = Typeface.create(typefaceParams[0],
+                                Integer.parseInt(typefaceParams[1]));
+                        drawText(args[1],
+                                Float.parseFloat(args[2]),
+                                Float.parseFloat(args[3]),
+                                typeface,
+                                Integer.parseInt(args[5]),
+                                Integer.parseInt(args[6])
+                        );
+                    }
+                    break;
+                    case 8: {
+                        String[] typefaceParams = args[4].split("_");
+                        Typeface typeface = Typeface.create(typefaceParams[0],
+                                Integer.parseInt(typefaceParams[1]));
+                        Paint.Align align = Paint.Align.CENTER;
+                        switch (args[5].toLowerCase()) {
+                            case "left":
+                                align = Paint.Align.LEFT;
+                                break;
+                            case "right":
+                                align = Paint.Align.RIGHT;
+                                break;
+                        }
+                        drawText(args[1],
+                                Float.parseFloat(args[2]),
+                                Float.parseFloat(args[3]),
+                                typeface,
+                                align,
+                                Integer.parseInt(args[6]),
+                                Integer.parseInt(args[7]));
+                    }
+                    break;
+                }
+                return true;
+            } catch (Exception e) {
+                return false;
+            }
+        }
+
+        private boolean dTC(String[] args) {
+            try {
+                switch (args.length) {
+                    case 4: {
+                        drawTextAtCenter(args[1],
+                                Integer.parseInt(args[2]),
+                                Integer.parseInt(args[3]));
+                    }
+                    break;
+                    case 5: {
+                        String[] typefaceParams = args[4].split("_");
+                        Typeface typeface = Typeface.create(typefaceParams[0],
+                                Integer.parseInt(typefaceParams[1]));
+                        drawTextAtCenter(args[1],
+                                typeface,
+                                Integer.parseInt(args[2]),
+                                Integer.parseInt(args[3]));
+                    }
+                    break;
+                }
+                return true;
+            } catch (Exception e) {
+                return false;
+            }
+        }
+
+        private boolean dA(String[] args) {
+            try {
+                drawArc(Float.parseFloat(args[1]),
+                        Float.parseFloat(args[2]),
+                        Float.parseFloat(args[3]),
+                        Float.parseFloat(args[4]),
+                        Float.parseFloat(args[5]),
+                        Float.parseFloat(args[6]),
+                        Boolean.parseBoolean(args[7]),
+                        Integer.parseInt(args[8]));
+                return true;
+            } catch (Exception e) {
+                return false;
+            }
+        }
+
+        private boolean dBA(String[] args) {
+            try {
+                drawBorderedArc(Float.parseFloat(args[1]),
+                        Float.parseFloat(args[2]),
+                        Float.parseFloat(args[3]),
+                        Float.parseFloat(args[4]),
+                        Float.parseFloat(args[5]),
+                        Float.parseFloat(args[6]),
+                        Boolean.parseBoolean(args[7]),
+                        Integer.parseInt(args[8]),
+                        Integer.parseInt(args[9]));
+                return true;
+            } catch (Exception e) {
+                return false;
+            }
+        }
+
+        private boolean dO(String[] args) {
+            try {
+                drawOval(Float.parseFloat(args[1]),
+                        Float.parseFloat(args[2]),
+                        Float.parseFloat(args[3]),
+                        Float.parseFloat(args[4]),
+                        Integer.parseInt(args[5]));
+                return true;
+            } catch (Exception e) {
+                return false;
+            }
+        }
+
+        private boolean dBO(String[] args) {
+            try {
+                drawBorderedOval(Float.parseFloat(args[1]),
+                        Float.parseFloat(args[2]),
+                        Float.parseFloat(args[3]),
+                        Float.parseFloat(args[4]),
+                        Integer.parseInt(args[5]),
+                        Integer.parseInt(args[6]));
+                return true;
+            } catch (Exception e) {
+                return false;
+            }
+        }
+
+        private boolean dL(String[] args) {
+            try {
+                drawLine(Float.parseFloat(args[1]),
+                        Float.parseFloat(args[2]),
+                        Float.parseFloat(args[3]),
+                        Float.parseFloat(args[4]),
+                        Integer.parseInt(args[5]),
+                        Integer.parseInt(args[6]));
+                return true;
+            } catch (Exception e) {
+                return false;
+            }
+        }
+
+        private boolean dBAB(String[] args) {
+            try {
+                drawBorderAroundBitmap(Integer.parseInt(args[1]),
+                        Integer.parseInt(args[2]));
+                return true;
+            } catch (Exception e) {
+                return false;
+            }
+        }
+
+        private boolean dRBAB(String[] args) {
+            try {
+                switch (args.length) {
+                    case 4: {
+                        drawRoundedBorderAroundBitmap(Float.parseFloat(args[1]),
+                                Integer.parseInt(args[2]),
+                                Integer.parseInt(args[3]));
+                    }
+                    break;
+                    case 5: {
+                        drawRoundedBorderAroundBitmap(Float.parseFloat(args[1]),
+                                Float.parseFloat(args[2]),
+                                Integer.parseInt(args[3]),
+                                Integer.parseInt(args[4]));
+                    }
+                    break;
+                }
+                return true;
+            } catch (Exception e) {
+                return false;
+            }
+        }
     }
 }

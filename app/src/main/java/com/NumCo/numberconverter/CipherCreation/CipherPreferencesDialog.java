@@ -1,10 +1,8 @@
 package com.NumCo.numberconverter.CipherCreation;
 
 import android.animation.ObjectAnimator;
-import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
@@ -19,7 +17,6 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class CipherPreferencesDialog extends Dialog {
     private TabLayout tabLayout;
@@ -29,13 +26,15 @@ public class CipherPreferencesDialog extends Dialog {
     private volatile boolean isFirst = true;
 
     protected CipherObjectBitmaps cipherObjectBitmaps;
+    protected CipherConstantObjectBitmaps cipherConstantObjectBitmaps;
 
     private final FragmentManager fragmentManager;
     private final Lifecycle lifecycle;
 
-    public CipherPreferencesDialog(CipherObjectBitmaps cipherObjectBitmaps, Context context, FragmentManager fragmentManager, Lifecycle lifecycle) {
+    public CipherPreferencesDialog(CipherObjectBitmaps cipherObjectBitmaps, CipherConstantObjectBitmaps cipherConstantObjectBitmaps, Context context, FragmentManager fragmentManager, Lifecycle lifecycle) {
         super(context);
         this.cipherObjectBitmaps = cipherObjectBitmaps;
+        this.cipherConstantObjectBitmaps = cipherConstantObjectBitmaps;
         this.fragmentManager = fragmentManager;
         this.lifecycle = lifecycle;
     }
@@ -58,10 +57,11 @@ public class CipherPreferencesDialog extends Dialog {
         saveButton = findViewById(R.id.saveButton);
         saveButton.setText(R.string.save);
 
-        cipherDialogFragmentAdapter.addCipherDialogFragment(new CipherHelpFragment(cipherObjectBitmaps));
-        cipherDialogFragmentAdapter.addCipherDialogFragment(new CipherSettingsFragment());
+        cipherDialogFragmentAdapter.addCipherDialogFragment(new CipherHelpFragment(cipherConstantObjectBitmaps));
+        cipherDialogFragmentAdapter.addCipherDialogFragment(new CipherSettingsFragment(cipherObjectBitmaps));
 
         viewPager.setAdapter(cipherDialogFragmentAdapter);
+        viewPager.setOffscreenPageLimit(cipherDialogFragmentAdapter.getItemCount());
 
         getWindow().setBackgroundDrawableResource(R.drawable.transparent_dialog_inset_10_30);
 
@@ -74,6 +74,9 @@ public class CipherPreferencesDialog extends Dialog {
             getWindow().getDecorView().setAlpha(0f);
 
         backButton.setOnClickListener(v -> dismiss());
+
+        setTabOnSelectedListener();
+        registerPagerOnPageChangeCallback();
     }
 
     public void setTabOnSelectedListener() {
@@ -139,8 +142,5 @@ public class CipherPreferencesDialog extends Dialog {
     @Override
     protected void onStart() {
         super.onStart();
-
-        setTabOnSelectedListener();
-        registerPagerOnPageChangeCallback();
     }
 }
