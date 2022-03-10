@@ -899,6 +899,14 @@ public class Painter {
         return bitmap;
     }
 
+    /**
+     * Set the internal bitmap
+     * @param width width of your bitmap
+     * @param height height of your bitmap
+     * @param config configuration of the bitmap
+     * @implNote Abbreviated command: sb|width|height|config
+     * @return Bitmap
+     */
     public Painter setBitmap(int width, int height, Bitmap.Config config) {
         bitmap = Bitmap.createBitmap(width, height, config);
         bitmapCenterX = (float) Math.ceil((double) bitmap.getWidth() / 2);
@@ -988,6 +996,9 @@ public class Painter {
                 try {
                     String[] args = command.split("\\|");
                     switch (args[0]) {
+                        case "sB":
+                            successful = dC(args);
+                            break;
                         case "dC":
                             successful = dC(args);
                             break;
@@ -1043,6 +1054,18 @@ public class Painter {
             }
             restore();
             return successful;
+        }
+
+        private boolean sB(String[] args) {
+            try {
+                Bitmap.Config config = Bitmap.Config.valueOf(args[3]);
+                setBitmap(Integer.parseInt(args[1]),
+                        Integer.parseInt(args[2]),
+                        config);
+                return true;
+            } catch (Exception e) {
+                return false;
+            }
         }
 
         private boolean dC(String[] args) {
