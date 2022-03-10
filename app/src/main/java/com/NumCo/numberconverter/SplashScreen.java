@@ -12,6 +12,8 @@ import android.os.Looper;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.NumCo.numberconverter.CipherCreation.CipherConstantObjectBitmaps;
+import com.NumCo.numberconverter.CipherCreation.CipherObjectBitmaps;
 import com.example.numberconverter.R;
 
 @SuppressLint("CustomSplashScreen")
@@ -30,13 +32,16 @@ public class SplashScreen extends AppCompatActivity {
         launchConverter();
     }
 
-    private void launchConverter(){
+    private void launchConverter() {
         Handler handler = new Handler(Looper.getMainLooper());
 
         ObjectAnimator.ofFloat(icon, View.ALPHA, 0f, 1f).setDuration(1500).start();
 
+        CipherObjectBitmaps cipherObjectBitmaps = new CipherObjectBitmaps();
+        CipherConstantObjectBitmaps cipherConstantObjectBitmaps = new CipherConstantObjectBitmaps();
+
+        Intent intent = new Intent(context, Converter.class);
         handler.postDelayed(() -> {
-            Intent intent = new Intent(context, Converter.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
             finish();

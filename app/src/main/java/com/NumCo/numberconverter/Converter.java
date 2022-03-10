@@ -12,6 +12,7 @@ import android.os.Looper;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -21,6 +22,9 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.NumCo.numberconverter.CipherCreation.CipherConstantObjectBitmaps;
+import com.NumCo.numberconverter.CipherCreation.CipherImageCreator;
+import com.NumCo.numberconverter.CipherCreation.CipherImageDialog;
 import com.NumCo.numberconverter.CipherCreation.CipherObjectBitmaps;
 import com.NumCo.numberconverter.CipherCreation.CipherPreferencesDialog;
 import com.NumCo.numberconverter.Numerals.Binary;
@@ -36,6 +40,8 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Converter extends AppCompatActivity {
 
@@ -47,8 +53,8 @@ public class Converter extends AppCompatActivity {
     private static String outputOption = "";
 
     private static Numeral numeral;
-    TextInputLayout displayOutput;
-    TextInputLayout displayInput;
+    private TextInputLayout displayOutput;
+    private TextInputLayout displayInput;
     private AutoCompleteTextView inputConversionAutoText = null;
     private TextInputLayout inputConversionLayout = null;
     private TextInputLayout outputConversionLayout = null;
@@ -57,8 +63,12 @@ public class Converter extends AppCompatActivity {
     private SharedPreferences sharedPreferences;
 
     private Context context;
-    private short cipherPreferencesDialogCounter = 0;
+    private short cipherPreferencesDialogCounter = 0, cipherImageDialogCounter = 0;
     private CipherPreferencesDialog cipherPreferencesDialog;
+    private CipherImageDialog cipherImageDialog;
+
+    private CipherObjectBitmaps cipherObjectBitmaps;
+    private CipherConstantObjectBitmaps cipherConstantObjectBitmaps;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) throws NullPointerException {
@@ -66,6 +76,9 @@ public class Converter extends AppCompatActivity {
         setContentView(R.layout.activity_converter);
 
         context = this;
+
+        cipherObjectBitmaps = new CipherObjectBitmaps();
+        cipherConstantObjectBitmaps = new CipherConstantObjectBitmaps();
 
         inputConversionLayout = findViewById(R.id.InputConversion);
         inputConversionAutoText = findViewById(R.id.InputConversionDropdown);
@@ -306,9 +319,47 @@ public class Converter extends AppCompatActivity {
         if (++cipherPreferencesDialogCounter == 1) {
             Handler handler = new Handler(Looper.getMainLooper());
             handler.post(() -> {
-                cipherPreferencesDialog = new CipherPreferencesDialog(new CipherObjectBitmaps(Color.GRAY), this, getSupportFragmentManager(), getLifecycle());
+                cipherPreferencesDialog = new CipherPreferencesDialog(cipherObjectBitmaps,
+                        cipherConstantObjectBitmaps, this,
+                        getSupportFragmentManager(), getLifecycle());
                 cipherPreferencesDialog.setOnDismissListener(dialog -> cipherPreferencesDialogCounter = 0);
                 cipherPreferencesDialog.show();
+            });
+        }
+    }
+
+    public void cipherImageDialog(View v) {
+        if (++cipherImageDialogCounter == 1) {
+
+            setNumeralObject(Objects.requireNonNull(displayInput.getEditText()).getText().toString().trim());
+            if (inputOption.equals(outputOption))
+                throw new IllegalStateException();
+
+            Handler handler = new Handler(Looper.getMainLooper());
+            handler.post(() -> {
+                try {
+                    String zeroes = "";
+                    Matcher matcher = Pattern.compile("^(0*)(\\w*)$", Pattern.MULTILINE)
+                            .matcher(Objects.requireNonNull(displayInput.getEditText()).getText()
+                                    .toString().trim());
+                    if (matcher.find()) {
+                        if (matcher.group(1) != null)
+                            zeroes = matcher.group(1);
+                        numeral.setValue(matcher.group(2));
+                    }
+                    CipherImageCreator cipherImageCreator = new CipherImageCreator(zeroes + numeral.toDec(), new CipherObjectBitmaps(), this);
+                    cipherImageDialog = new CipherImageDialog(this, cipherImageCreator.generate());
+                    cipherImageDialog.setOnDismissListener(dialog -> cipherImageDialogCounter = 0);
+                    cipherImageDialog.show();
+                } catch (Exception e) {
+                    if (inputOption.equals(outputOption))
+                        makeSnackBar("Invalid Output Selection", ObjectBitmapStatus.ERROR.color);
+                    else if (Objects.requireNonNull(displayInput.getEditText()).getText().toString().trim().equals(""))
+                        makeSnackBar("Input Empty", ObjectBitmapStatus.ERROR.color);
+                    else
+                        makeSnackBar("Invalid Input", ObjectBitmapStatus.ERROR.color);
+                }
+                cipherImageDialogCounter = 0;
             });
         }
     }
