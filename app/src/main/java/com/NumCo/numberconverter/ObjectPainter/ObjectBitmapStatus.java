@@ -11,7 +11,7 @@ public enum ObjectBitmapStatus {
     THEME(Color.argb(255, 0, 0, 77)),
     NULL(Color.TRANSPARENT);
 
-    public int color;
+    public final int color;
 
     ObjectBitmapStatus(int color) {
         this.color = color;

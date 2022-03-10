@@ -3,6 +3,8 @@ package com.NumCo.numberconverter.Database;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.NumCo.numberconverter.ObjectPainter.ObjectBitmapStatus;
+
 public class Settings {
     private final SharedPreferences cipherNumbers;
     private final SharedPreferences cipherColors;
@@ -21,28 +23,43 @@ public class Settings {
         editorOtherSettings = otherSettings.edit();
     }
 
-    public int getCipherNumberFromId(String id) {
-        return cipherNumbers.getInt(id, Integer.parseInt(String.valueOf(id.charAt(id.length() - 1))));
+    public String getCipherNumberFromId(String number) {
+        return cipherNumbers.getString(number, "ID" + number);
     }
 
     public void setCipherNumberFromId(String id, int number) {
-        editorCipherNumbers.putInt(id, number).apply();
+        editorCipherNumbers.putString(String.valueOf(number), id).apply();
     }
 
-    public int getCipherColors(String id) {
-        return cipherColors.getInt(id, Integer.parseInt(String.valueOf(id.charAt(id.length() - 1))));
+    public int getCipherColor(String id) {
+        return cipherColors.getInt(id, ObjectBitmapStatus.THEME.color);
     }
 
-    public void setCipherColors(String id, int color) {
+    public void setCipherColor(String id, int color) {
         editorCipherColors.putInt(id, color).apply();
     }
 
     public int getOtherSettings(String id) {
-        if (id.equals("RES"))
-            return otherSettings.getInt(id, 500);
-        if (id.equals("COL"))
-            return otherSettings.getInt(id, 5);
-        return otherSettings.getInt(id, 0);
+        return otherSettings.getInt(id, 2);
+    }
 
+    public int getImageColumns() {
+        return otherSettings.getInt("COL", 4);
+    }
+
+    public float getShapeResolution() {
+        return otherSettings.getFloat("RES", 0.7f);
+    }
+
+    public void setOtherSettings(String id, int value) {
+        editorOtherSettings.putInt(id, value).apply();
+    }
+
+    public void setShapeResolution(float value) {
+        editorOtherSettings.putFloat("RES", value).apply();
+    }
+
+    public void setImageColumns(int value) {
+        editorOtherSettings.putInt("COL", value).apply();
     }
 }

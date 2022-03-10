@@ -200,11 +200,11 @@
                 android:text="@string/convert" />
 
             <Button
-                android:id="@+id/cipherInput"
+                android:id="@+id/cipherImageButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="6dp"
-                android:onClick="convert"
+                android:onClick="cipherImageDialog"
                 android:text="@string/cipher_input" />
 
         </LinearLayout>
