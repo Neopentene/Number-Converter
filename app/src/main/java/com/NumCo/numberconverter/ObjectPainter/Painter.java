@@ -997,7 +997,7 @@ public class Painter {
                     String[] args = command.split("\\|");
                     switch (args[0]) {
                         case "sB":
-                            successful = dC(args);
+                            successful = sB(args);
                             break;
                         case "dC":
                             successful = dC(args);
