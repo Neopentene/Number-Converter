@@ -60,26 +60,4 @@ public class Queries {
         }
         return arrayOfHistories;
     }
-
-    public void deleteAllHistories(Context context) {
-        schemas = new Schemas(context);
-        history = new Schemas.History();
-
-        db = schemas.getWritableDatabase();
-        String Clause = "1";
-        String args[] = new String[0];
-
-        long deleteAllHistory = db.delete(history.TABLE_NAME, Clause, args);
-    }
-
-    public void deleteHistory(HISTORY historyObject, Context context) {
-        schemas = new Schemas(context);
-        history = new Schemas.History();
-
-        db = schemas.getWritableDatabase();
-        String Clause = history.ID_COLUMN + " == " + "?";
-        String args[] = {String.valueOf(historyObject.ID)};
-
-        long deleteHistory = db.delete(history.TABLE_NAME, Clause, args);
-    }
 }
