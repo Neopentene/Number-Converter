@@ -14,6 +14,7 @@ import java.util.Map;
 
 public class CipherObjectBitmaps implements Parcelable {
     public HashMap<String, BitmapObject> objects = new HashMap<>();
+    // public HashMap<String, String[]> newObjects = new HashMap<>();
     public String[] keyArray = {"ID0", "ID1", "ID2", "ID3", "ID4", "ID5", "ID6", "ID7", "ID8", "ID9"};
 
     public CipherObjectBitmaps() {
@@ -42,6 +43,15 @@ public class CipherObjectBitmaps implements Parcelable {
      * , ObjectBitmapStatus.NORMAL));
      * </code>
      */
+
+    /*
+    private void addNewObjects() {
+        newObjects.put(keyArray[0], new String[] {
+                "dA|80|80|420|420|30|120|true|" + Color.GREEN,
+                "dL|X_1|Y_1|X_2|Y_2|thickness|color"
+        });
+    }
+    */
 
     private void addObjects() {
         objects.put("ID0", new BitmapObject("ID0", new Painter(500)

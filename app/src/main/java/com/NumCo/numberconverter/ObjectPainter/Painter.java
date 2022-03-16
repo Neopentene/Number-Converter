@@ -33,13 +33,18 @@ public class Painter {
     public final static Paint.Align LEFT = Paint.Align.LEFT;
     public int width, height;
 
+
+
+    public Painter() {
+
+    }
+
     /**
      * Create a Painter object that takes a bitmap as it's parameter. Use this class to draw bitmaps using the various
      * methods and functions provided.
      *
      * @param side Length of side of a Square
      */
-
     public Painter(int side) {
         this(Bitmap.createBitmap(side, side, Bitmap.Config.ARGB_8888));
     }
@@ -538,7 +543,7 @@ public class Painter {
      * @param useCenter  include the usage of center while rendering
      * @param color      Color used to draw arc
      * @return Self
-     * @implNote Abbreviated command: dA|left|top|right|bottom|startAngle|sweepAngle|useCenter|strokeWidth|color
+     * @implNote Abbreviated command: dA|left|top|right|bottom|startAngle|sweepAngle|useCenter|color
      */
 
     public Painter drawArc(float left, float top, float right, float bottom, float startAngle, float sweepAngle, boolean useCenter, int color) {
@@ -901,11 +906,12 @@ public class Painter {
 
     /**
      * Set the internal bitmap
-     * @param width width of your bitmap
+     *
+     * @param width  width of your bitmap
      * @param height height of your bitmap
      * @param config configuration of the bitmap
-     * @implNote Abbreviated command: sb|width|height|config
      * @return Bitmap
+     * @implNote Abbreviated command: sb|width|height|config
      */
     public Painter setBitmap(int width, int height, Bitmap.Config config) {
         bitmap = Bitmap.createBitmap(width, height, config);
@@ -997,7 +1003,7 @@ public class Painter {
                     String[] args = command.split("\\|");
                     switch (args[0]) {
                         case "sB":
-                            successful = dC(args);
+                            successful = sB(args);
                             break;
                         case "dC":
                             successful = dC(args);
