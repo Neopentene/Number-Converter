@@ -1,6 +1,5 @@
 package com.NumCo.numberconverter.Objects;
 
-
 public class HISTORY {
     public String INPUT_TYPE, INPUT, OUTPUT_TYPE, OUTPUT;
     public long ID;
