@@ -1,4 +1,4 @@
-package com.NumCo.numberconverter.CipherCreation.CipherDialogs;
+package com.NumCo.numberconverter.Cipher.CipherDialogs;
 
 import android.Manifest;
 import android.app.Activity;

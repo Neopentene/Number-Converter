@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.NumCo.numberconverter.CipherCreation.CipherFragments.HelpFragment">
+    tools:context="com.NumCo.numberconverter.Cipher.CipherFragments.HelpFragment">
 
     <ScrollView
         android:id="@+id/cipherSettingsScrollView"

@@ -22,11 +22,11 @@ import androidx.annotation.StringRes;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.NumCo.numberconverter.CipherCreation.CipherConstantObjectBitmaps;
-import com.NumCo.numberconverter.CipherCreation.ImageCreator;
-import com.NumCo.numberconverter.CipherCreation.CipherDialogs.ImageDialog;
-import com.NumCo.numberconverter.CipherCreation.CipherObjectBitmaps;
-import com.NumCo.numberconverter.CipherCreation.CipherDialogs.PreferencesDialog;
+import com.NumCo.numberconverter.Cipher.CipherConstantObjectBitmaps;
+import com.NumCo.numberconverter.Cipher.ImageCreator;
+import com.NumCo.numberconverter.Cipher.CipherDialogs.ImageDialog;
+import com.NumCo.numberconverter.Cipher.CipherObjectBitmaps;
+import com.NumCo.numberconverter.Cipher.CipherDialogs.PreferencesDialog;
 import com.NumCo.numberconverter.Numerals.Binary;
 import com.NumCo.numberconverter.Numerals.Decimal;
 import com.NumCo.numberconverter.Numerals.Hexadecimal;
@@ -331,12 +331,14 @@ public class Converter extends AppCompatActivity implements Notify {
         if (++cipherImageDialogCounter == 1) {
 
             setNumeralObject(Objects.requireNonNull(displayInput.getEditText()).getText().toString().trim());
-            if (inputOption.equals(outputOption))
-                throw new IllegalStateException();
 
             Handler handler = new Handler(Looper.getMainLooper());
             handler.post(() -> {
                 try {
+
+                    if (inputOption.equals(outputOption))
+                        throw new IllegalStateException();
+
                     String zeroes = "";
                     Matcher matcher = Pattern.compile("^(0*)(\\w*)$", Pattern.MULTILINE)
                             .matcher(Objects.requireNonNull(displayInput.getEditText()).getText()
