@@ -33,7 +33,7 @@ import com.NumCo.numberconverter.Numerals.Hexadecimal;
 import com.NumCo.numberconverter.Numerals.Numeral;
 import com.NumCo.numberconverter.Numerals.Octal;
 import com.NumCo.numberconverter.Numerals.RomanNumeral;
-import com.NumCo.numberconverter.ObjectPainter.ObjectBitmapStatus;
+import com.NumCo.numberconverter.ObjectPainter.Status;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
@@ -182,7 +182,7 @@ public class Converter extends AppCompatActivity implements Notify {
         });
 
         outputConversionAutoText.setOnKeyListener((v, keyCode, event) -> {
-            Snackbar.make(parentLayout, event.getAction() + ", " + keyCode, Snackbar.LENGTH_SHORT).setBackgroundTint(ObjectBitmapStatus.ERROR.color).show();
+            Snackbar.make(parentLayout, event.getAction() + ", " + keyCode, Snackbar.LENGTH_SHORT).setBackgroundTint(Status.ERROR.color).show();
 
             if (keyCode == 66) {
                 Objects.requireNonNull(displayInput.getEditText()).requestFocus();
@@ -237,7 +237,7 @@ public class Converter extends AppCompatActivity implements Notify {
             outputConversionAutoText.setText(temp, false);
             inputConversionAutoText.setText(inputOption, false);
         } else
-            makeSnackBar("Cannot Interchange Options", ObjectBitmapStatus.ACTIVE_OUTPUT.color);
+            makeSnackBar("Cannot Interchange Options", Status.OUTPUT.color);
     }
 
     public void convert(View v) {
@@ -269,11 +269,11 @@ public class Converter extends AppCompatActivity implements Notify {
             }
         } catch (Exception e) {
             if (inputOption.equals(outputOption))
-                makeSnackBar("Invalid Output Selection", ObjectBitmapStatus.ERROR.color);
+                makeSnackBar("Invalid Output Selection", Status.ERROR.color);
             else if (displayInput.getEditText().getText().toString().trim().equals(""))
-                makeSnackBar("Input Empty", ObjectBitmapStatus.ERROR.color);
+                makeSnackBar("Input Empty", Status.ERROR.color);
             else
-                makeSnackBar("Invalid Input", ObjectBitmapStatus.ERROR.color);
+                makeSnackBar("Invalid Input", Status.ERROR.color);
         }
     }
 
@@ -285,9 +285,9 @@ public class Converter extends AppCompatActivity implements Notify {
             ClipboardManager clipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
             ClipData clipData = ClipData.newPlainText(outputOption, output);
             clipboardManager.setPrimaryClip(clipData);
-            makeSnackBar("Output Copied to Clipboard", ObjectBitmapStatus.THEME.color);
+            makeSnackBar("Output Copied to Clipboard", Status.NORMAL.color);
         } else
-            makeSnackBar("Output is Empty", ObjectBitmapStatus.ACTIVE_INPUT.color);
+            makeSnackBar("Output is Empty", Status.INPUT.color);
     }
 
     public void aboutUsDialog(View v) {
@@ -354,11 +354,11 @@ public class Converter extends AppCompatActivity implements Notify {
                     cipherImageDialog.show();
                 } catch (Exception e) {
                     if (inputOption.equals(outputOption))
-                        makeSnackBar("Invalid Output Selection", ObjectBitmapStatus.ERROR.color);
+                        makeSnackBar("Invalid Output Selection", Status.ERROR.color);
                     else if (Objects.requireNonNull(displayInput.getEditText()).getText().toString().trim().equals(""))
-                        makeSnackBar("Input Empty", ObjectBitmapStatus.ERROR.color);
+                        makeSnackBar("Input Empty", Status.ERROR.color);
                     else
-                        makeSnackBar("Invalid Input", ObjectBitmapStatus.ERROR.color);
+                        makeSnackBar("Invalid Input", Status.ERROR.color);
                 }
                 cipherImageDialogCounter = 0;
             });
