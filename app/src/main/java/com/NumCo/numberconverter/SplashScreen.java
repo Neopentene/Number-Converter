@@ -14,7 +14,7 @@ import android.widget.ImageView;
 
 import com.NumCo.numberconverter.CipherCreation.CipherConstantObjectBitmaps;
 import com.NumCo.numberconverter.CipherCreation.CipherObjectBitmaps;
-import com.example.numberconverter.R;
+import com.NumCo.numberconverter.R;
 
 @SuppressLint("CustomSplashScreen")
 public class SplashScreen extends AppCompatActivity {

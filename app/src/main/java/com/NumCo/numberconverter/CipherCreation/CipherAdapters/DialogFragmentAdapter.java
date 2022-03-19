@@ -1,25 +1,24 @@
-package com.NumCo.numberconverter.CipherCreation;
+package com.NumCo.numberconverter.CipherCreation.CipherAdapters;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.lifecycle.Lifecycle;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import java.util.ArrayList;
 
-public class CipherDialogFragmentAdapter extends FragmentStateAdapter {
+public class DialogFragmentAdapter extends FragmentStateAdapter {
 
     private ArrayList<Fragment> cipherDialogFragments;
 
-    public CipherDialogFragmentAdapter(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle, ArrayList<Fragment> cipherDialogFragments) {
+    public DialogFragmentAdapter(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle, ArrayList<Fragment> cipherDialogFragments) {
         super(fragmentManager, lifecycle);
         this.cipherDialogFragments = cipherDialogFragments;
     }
 
-    public CipherDialogFragmentAdapter(@NonNull FragmentActivity fragmentActivity, ArrayList<Fragment> cipherDialogFragments) {
+    public DialogFragmentAdapter(@NonNull FragmentActivity fragmentActivity, ArrayList<Fragment> cipherDialogFragments) {
         super(fragmentActivity);
         this.cipherDialogFragments = cipherDialogFragments;
     }
