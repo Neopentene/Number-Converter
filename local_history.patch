@@ -1,0 +1,277 @@
+Index: app/src/main/java/com/NumCo/numberconverter/CipherCreation/CipherObjectBitmaps.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/NumCo/numberconverter/CipherCreation/CipherObjectBitmaps.java b/app/src/main/java/com/NumCo/numberconverter/CipherCreation/CipherObjectBitmaps.java
+--- a/app/src/main/java/com/NumCo/numberconverter/CipherCreation/CipherObjectBitmaps.java	(date 1647667947808)
++++ b/app/src/main/java/com/NumCo/numberconverter/CipherCreation/CipherObjectBitmaps.java	(date 1647667947808)
+@@ -2,84 +2,78 @@
+ 
+ import android.graphics.Bitmap;
+ import android.graphics.Color;
+-import android.graphics.Typeface;
+ 
+-import com.NumCo.numberconverter.ObjectPainter.BitmapObject;
+-import com.NumCo.numberconverter.ObjectPainter.ObjectBitmapStatus;
++import com.NumCo.numberconverter.ObjectPainter.ImageData;
+ import com.NumCo.numberconverter.ObjectPainter.Painter;
++import com.NumCo.numberconverter.ObjectPainter.Status;
+ 
+-import java.util.ArrayList;
+ import java.util.HashMap;
+ 
++@Deprecated
+ public class CipherObjectBitmaps {
+-    public ArrayList<BitmapObject> objects = new ArrayList<>();
+-    public HashMap<String, BitmapObject> constantObjects = new HashMap<>();
+-    public short columns = 0;
++    public HashMap<String, ImageData> objects = new HashMap<>();
++    // public HashMap<String, String[]> newObjects = new HashMap<>();
++    public String[] keyArray = {"ID0", "ID1", "ID2", "ID3", "ID4", "ID5", "ID6", "ID7", "ID8", "ID9"};
+ 
+-    public CipherObjectBitmaps(Integer color) {
+-        addConstantObjects(color);
+-    }
+-
+-    public CipherObjectBitmaps(Short columns) {
+-        this.columns = columns;
++    public CipherObjectBitmaps() {
+         addObjects();
+     }
+ 
+-    public BitmapObject getBitmapById(String id) {
+-        int objectIndex = 0;
+-        while (!objects.get(objectIndex).getId().equals(id))
+-            objectIndex++;
+-
+-        return objects.get(objectIndex);
+-    }
+-
+     /**
+      * Usage example
+      * <code>
+      * objects.add(new BitmapObject("Something",
+-     *                 new Painter(500, 500, Bitmap.Config.ARGB_8888)
+-     *                 .drawBorderedRoundedRectangle(20 * 3, 20 * 3, 180 * 3, 180 * 3, 10 * 3, 10 * 3, 5 * 3, Color.BLUE)
+-     *                 .drawArc(40 * 3, 40 * 3, 160 * 3, 160 * 3, 30, 120, true, Color.GREEN)
+-     *                 .drawBorderedArc(40 * 3, 40 * 3, 160 * 3, 160 * 3, -30, -120, false, 5 * 3, Color.GREEN)
+-     *                 .drawBorderedCircle(100 * 3, 100 * 3, 25 * 3, 5 * 3, Color.MAGENTA)
+-     *                 .getBitmap()
+-     *         , ObjectBitmapStatus.NORMAL));
++     * new Painter(500, 500, Bitmap.Config.ARGB_8888)
++     * .drawBorderedRoundedRectangle(20 * 3, 20 * 3, 180 * 3, 180 * 3, 10 * 3, 10 * 3, 5 * 3, Color.BLUE)
++     * .drawArc(40 * 3, 40 * 3, 160 * 3, 160 * 3, 30, 120, true, Color.GREEN)
++     * .drawBorderedArc(40 * 3, 40 * 3, 160 * 3, 160 * 3, -30, -120, false, 5 * 3, Color.GREEN)
++     * .drawBorderedCircle(100 * 3, 100 * 3, 25 * 3, 5 * 3, Color.MAGENTA)
++     * .getBitmap()
++     * , ObjectBitmapStatus.NORMAL));
+      * </code>
+      */
+ 
++    /*
++    private void addNewObjects() {
++        newObjects.put(keyArray[0], new String[] {
++                "dA|80|80|420|420|30|120|true|" + Color.GREEN,
++                "dL|X_1|Y_1|X_2|Y_2|thickness|color"
++        });
++    }
++    */
+     private void addObjects() {
+-<<<<<<< HEAD
+-        objects.add(new BitmapObject("Something", new Painter(500, 500, Bitmap.Config.ARGB_8888)
+-                                 .drawBorderedRoundedRectangle(20 * 3, 20 * 3, 180 * 3, 180 * 3, 10 * 3, 10 * 3, 5 * 3, Color.BLUE)
+-                                 .drawArc(40 * 3, 40 * 3, 160 * 3, 160 * 3, 30, 120, true, Color.GREEN)
+-                                 .drawBorderedArc(40 * 3, 40 * 3, 160 * 3, 160 * 3, -30, -120, false, 5 * 3, Color.GREEN)
+-                                 .drawBorderedCircle(100 * 3, 100 * 3, 25 * 3, 5 * 3, Color.MAGENTA)
+-                                 .getBitmap()
+-                         , ObjectBitmapStatus.NORMAL));
+-=======
+-        objects.add(new BitmapObject("ID1", new Painter(500, 500, Bitmap.Config.ARGB_8888)
++        objects.put("ID0", new ImageData("ID0", new Painter(500)
++                .drawArc(80, 80, 420, 420, 30, 120, true, Color.GREEN)
++                .drawLine(85, 250, 415, 250, 15, Color.BLACK)
++                .drawBorderedArc(80, 80, 420, 420, 30, -240, false, 15, Color.GREEN)
++                .drawBorderedCircle(65, 15, Color.MAGENTA)
++                .drawBorderedCircle(30, 10, Color.MAGENTA)
++                .getBitmap()
++                , Status.NORMAL));
++
++        objects.put("ID1", new ImageData("ID1", new Painter(500, 500, Bitmap.Config.ARGB_8888)
+ 
+                 .drawBorderedCircle(200, 10, Color.RED)
+ 
+                 .drawBorderedCircle(100, 5, Color.GREEN)
+ 
+-                .getBitmap(), ObjectBitmapStatus.NORMAL));
+-        objects.add(new BitmapObject("ID2", new Painter(500, 500, Bitmap.Config.ARGB_8888)
++                .getBitmap(), Status.NORMAL));
++        objects.put("ID2", new ImageData("ID2", new Painter(500, 500, Bitmap.Config.ARGB_8888)
+ 
+                 .drawBorderedCircle(200, 10, Color.RED)
+ 
+                 .drawBorderedRectangle(100f, 150f, 400f, 350f, 5, Color.YELLOW)
+ 
+-                .getBitmap(), ObjectBitmapStatus.NORMAL));
+-        objects.add(new BitmapObject("ID3", new Painter(500, 500, Bitmap.Config.ARGB_8888)
++                .getBitmap(), Status.NORMAL));
++        objects.put("ID3", new ImageData("ID3", new Painter(500, 500, Bitmap.Config.ARGB_8888)
+ 
+                 .drawBorderedRectangle(100f, 150f, 400f, 350f, 5, Color.YELLOW)
+ 
+                 .drawBorderedArc(100f, 150f, 400f, 350f, 0, 180, false, 5, Color.MAGENTA)
+                 .drawBorderedArc(100, 150, 400, 350, 180, 360, false, 5, Color.MAGENTA)
+ 
+-                .getBitmap(), ObjectBitmapStatus.NORMAL));
+-        objects.add(new BitmapObject("ID4", new Painter(500, 500, Bitmap.Config.ARGB_8888)
++                .getBitmap(), Status.NORMAL));
++        objects.put("ID4", new ImageData("ID4", new Painter(500, 500, Bitmap.Config.ARGB_8888)
+ 
+                 .drawBorderedArc(100f, 150f, 400f, 350f, 0, 180, false, 5, Color.MAGENTA)
+                 .drawBorderedArc(100, 150, 400, 350, 180, 360, false, 5, Color.MAGENTA)
+@@ -88,108 +82,64 @@
+ 
+                 .drawBorderedRectangle(100f, 150f, 400f, 350f, 5, Color.YELLOW)
+ 
+-                .getBitmap(), ObjectBitmapStatus.NORMAL));
+-        objects.add(new BitmapObject("ID5", new Painter(500,500,Bitmap.Config.ARGB_8888)
++                .getBitmap(), Status.NORMAL));
++        objects.put("ID5", new ImageData("ID5", new Painter(500, 500, Bitmap.Config.ARGB_8888)
+ 
+                 .drawBorderedCircle(200, 10, Color.RED)
+ 
+-                .drawLine(100,260,250,445,5,Color.CYAN)//left-bottom
+-                .drawLine(400,260,250,445,5,Color.CYAN)//right-bottom
+-                .drawLine(250,55,400,260,5,Color.CYAN)//right-top
+-                .drawLine(250,55,100,260,5,Color.CYAN)//left-top
++                .drawLine(100, 260, 250, 445, 5, Color.CYAN)//left-bottom
++                .drawLine(400, 260, 250, 445, 5, Color.CYAN)//right-bottom
++                .drawLine(250, 55, 400, 260, 5, Color.CYAN)//right-top
++                .drawLine(250, 55, 100, 260, 5, Color.CYAN)//left-top
+ 
+-                .getBitmap(), ObjectBitmapStatus.NORMAL ));
+-        objects.add(new BitmapObject("ID6", new Painter(500,500,Bitmap.Config.ARGB_8888)
++                .getBitmap(), Status.NORMAL));
++        objects.put("ID6", new ImageData("ID6", new Painter(500, 500, Bitmap.Config.ARGB_8888)
+ 
+-                .drawBorderedArc(100f,150f, 400f, 350f, 0, 180,false,5, Color.MAGENTA)//lower-arc-of-ellipse
+-                .drawBorderedArc(100, 150, 400, 350, 180, 360,false,5,Color.MAGENTA)//upper-arc-of-ellipse
++                .drawBorderedArc(100f, 150f, 400f, 350f, 0, 180, false, 5, Color.MAGENTA)//lower-arc-of-ellipse
++                .drawBorderedArc(100, 150, 400, 350, 180, 360, false, 5, Color.MAGENTA)//upper-arc-of-ellipse
+ 
+-                .drawLine(250,150,100,260,5,Color.DKGRAY)//left-top
+-                .drawLine(100,260,250,350,5,Color.DKGRAY)//left-bottom
+-                .drawLine(400,260,250,350,5,Color.DKGRAY)//right-bottom
+-                .drawLine(250,150,400,260,5,Color.DKGRAY)//right-top
++                .drawLine(250, 150, 100, 260, 5, Color.DKGRAY)//left-top
++                .drawLine(100, 260, 250, 350, 5, Color.DKGRAY)//left-bottom
++                .drawLine(400, 260, 250, 350, 5, Color.DKGRAY)//right-bottom
++                .drawLine(250, 150, 400, 260, 5, Color.DKGRAY)//right-top
+ 
+-                .getBitmap(), ObjectBitmapStatus.NORMAL ));
+-        objects.add(new BitmapObject("ID7", new Painter(500,500,Bitmap.Config.ARGB_8888)
++                .getBitmap(), Status.NORMAL));
++        objects.put("ID7", new ImageData("ID7", new Painter(500, 500, Bitmap.Config.ARGB_8888)
+ 
+-                .drawLine(100,260,250,445,5,Color.CYAN)//left-bottom
+-                .drawLine(400,260,250,445,5,Color.CYAN)//right-bottom
+-                .drawLine(250,55,400,260,5,Color.CYAN)//right-top
+-                .drawLine(250,55,100,260,5,Color.CYAN)//left-top
++                .drawLine(100, 260, 250, 445, 5, Color.CYAN)//left-bottom
++                .drawLine(400, 260, 250, 445, 5, Color.CYAN)//right-bottom
++                .drawLine(250, 55, 400, 260, 5, Color.CYAN)//right-top
++                .drawLine(250, 55, 100, 260, 5, Color.CYAN)//left-top
+ 
+-                .drawLine(250,150,100,260,5,Color.DKGRAY)//left-top
+-                .drawLine(100,260,250,350,5,Color.DKGRAY)//left-bottom
+-                .drawLine(400,260,250,350,5,Color.DKGRAY)//right-bottom
+-                .drawLine(250,150,400,260,5,Color.DKGRAY)//right-top
++                .drawLine(250, 150, 100, 260, 5, Color.DKGRAY)//left-top
++                .drawLine(100, 260, 250, 350, 5, Color.DKGRAY)//left-bottom
++                .drawLine(400, 260, 250, 350, 5, Color.DKGRAY)//right-bottom
++                .drawLine(250, 150, 400, 260, 5, Color.DKGRAY)//right-top
+ 
+-                .getBitmap(), ObjectBitmapStatus.NORMAL ));
+-        objects.add(new BitmapObject("ID8", new Painter(500,500,Bitmap.Config.ARGB_8888)
++                .getBitmap(), Status.NORMAL));
++        objects.put("ID8", new ImageData("ID8", new Painter(500, 500, Bitmap.Config.ARGB_8888)
+ 
+                 .drawBorderedArc(100f, 150f, 400f, 350f, 0, 180, false, 5, Color.MAGENTA)
+                 .drawBorderedArc(100, 150, 400, 350, 180, 360, false, 5, Color.MAGENTA)
+ 
+-                .drawLine(250,150,100,260,5,Color.DKGRAY)//left-top
+-                .drawLine(100,260,250,350,5,Color.DKGRAY)//left-bottom
+-                .drawLine(400,260,250,350,5,Color.DKGRAY)//right-bottom
+-                .drawLine(250,150,400,260,5,Color.DKGRAY)//right-top
++                .drawLine(250, 150, 100, 260, 5, Color.DKGRAY)//left-top
++                .drawLine(100, 260, 250, 350, 5, Color.DKGRAY)//left-bottom
++                .drawLine(400, 260, 250, 350, 5, Color.DKGRAY)//right-bottom
++                .drawLine(250, 150, 400, 260, 5, Color.DKGRAY)//right-top
+ 
+                 .drawBorderedRectangle(100f, 150f, 400f, 350f, 5, Color.YELLOW)
+ 
+-                .getBitmap(), ObjectBitmapStatus.NORMAL ));
++                .getBitmap(), Status.NORMAL));
+ 
+-        objects.add(new BitmapObject("ID9", new Painter(500,500,Bitmap.Config.ARGB_8888)
++        objects.put("ID9", new ImageData("ID9", new Painter(500, 500, Bitmap.Config.ARGB_8888)
+ 
+                 .drawBorderedCircle(200, 10, Color.RED)
+ 
+-                .drawLine(250,150,100,260,5,Color.DKGRAY)//left-top
+-                .drawLine(100,260,250,350,5,Color.DKGRAY)//left-bottom
+-                .drawLine(400,260,250,350,5,Color.DKGRAY)//right-bottom
+-                .drawLine(250,150,400,260,5,Color.DKGRAY)//right-top
++                .drawLine(250, 150, 100, 260, 5, Color.DKGRAY)//left-top
++                .drawLine(100, 260, 250, 350, 5, Color.DKGRAY)//left-bottom
++                .drawLine(400, 260, 250, 350, 5, Color.DKGRAY)//right-bottom
++                .drawLine(250, 150, 400, 260, 5, Color.DKGRAY)//right-top
+ 
+-                .getBitmap(), ObjectBitmapStatus.NORMAL ));
+-
+-        objects.add(new BitmapObject("ID10", new Painter(500,500,Bitmap.Config.ARGB_8888)
+-
+-                .drawLine(99f,147f,417f,366f,7,Color.BLUE) //backslash line coordinates hourglass
+-                .drawLine(91f,374f,415f,155f,7,Color.BLUE) //forwardslash line coordinates hourglass
+-                .drawBorderedArc(91f,345f,420f,395f,207,324,false,5,Color.BLUE) //lower-ellipse hourglass
+-                .drawBorderedArc(100f,125f,420f,175f,185,324,false,5,Color.BLUE) //upper-ellipse hourglass
+-
+-                .getBitmap(), ObjectBitmapStatus.NORMAL ));
+-
+-        objects.add(new BitmapObject("ID11", new Painter(500,500,Bitmap.Config.ARGB_8888)
+-
+-
+-
+-                .getBitmap(), ObjectBitmapStatus.NORMAL ));
+-
+->>>>>>> 9472fdb7c7a2c88da6938c00b1a50a0a7659b462
+-    }
+-
+-    private void addConstantObjects(int color) {
+-        constantObjects.put("DEC", new BitmapObject("DEC", new Painter(200, 150, Bitmap.Config.ARGB_8888)
+-                .drawRoundedBorderAroundBitmap(30, 10, color)
+-                .drawTextAtCenter("DEC", Typeface.create(Typeface.SERIF, Typeface.BOLD), 65, color)
+-                .getBitmap(), ObjectBitmapStatus.DISABLED));
+-
+-        constantObjects.put("ROM", new BitmapObject("ROM", new Painter(200, 150, Bitmap.Config.ARGB_8888)
+-                .drawRoundedBorderAroundBitmap(30, 10, color)
+-                .drawTextAtCenter("ROM", Typeface.create(Typeface.SERIF, Typeface.BOLD), 65, color)
+-                .getBitmap(), ObjectBitmapStatus.DISABLED));
+-
+-        constantObjects.put("HEX", new BitmapObject("HEX", new Painter(200, 150, Bitmap.Config.ARGB_8888)
+-                .drawRoundedBorderAroundBitmap(30, 10, color)
+-                .drawTextAtCenter("HEX", Typeface.create(Typeface.SERIF, Typeface.BOLD), 65, color)
+-                .getBitmap(),ObjectBitmapStatus.DISABLED));
+-
+-        constantObjects.put("OCT", new BitmapObject("OCT", new Painter(200, 150, Bitmap.Config.ARGB_8888)
+-                .drawRoundedBorderAroundBitmap(30, 10, color)
+-                .drawTextAtCenter("OCT", Typeface.create(Typeface.SERIF, Typeface.BOLD), 65, color)
+-                .getBitmap(), ObjectBitmapStatus.DISABLED));
+-
+-        constantObjects.put("BIN", new BitmapObject("BIN", new Painter(200, 150, Bitmap.Config.ARGB_8888)
+-                .drawRoundedBorderAroundBitmap(30, 10, color)
+-                .drawTextAtCenter("BIN", Typeface.create(Typeface.SERIF, Typeface.BOLD), 65, color)
+-                .getBitmap(), ObjectBitmapStatus.DISABLED));
++                .getBitmap(), Status.NORMAL));
+     }
+ }
