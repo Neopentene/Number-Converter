@@ -1,7 +1,5 @@
 package com.NumCo.numberconverter.Objects;
 
-import android.database.sqlite.SQLiteDatabase;
-
 public class HISTORY {
     public String INPUT_TYPE, INPUT, OUTPUT_TYPE, OUTPUT;
     public long ID;
