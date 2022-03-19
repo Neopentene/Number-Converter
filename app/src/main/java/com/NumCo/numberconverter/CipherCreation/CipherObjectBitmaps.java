@@ -2,32 +2,21 @@ package com.NumCo.numberconverter.CipherCreation;
 
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.os.Parcel;
-import android.os.Parcelable;
 
-import com.NumCo.numberconverter.ObjectPainter.BitmapObject;
-import com.NumCo.numberconverter.ObjectPainter.ObjectBitmapStatus;
+import com.NumCo.numberconverter.ObjectPainter.ImageData;
 import com.NumCo.numberconverter.ObjectPainter.Painter;
+import com.NumCo.numberconverter.ObjectPainter.Status;
 
 import java.util.HashMap;
-import java.util.Map;
 
-public class CipherObjectBitmaps implements Parcelable {
-    public HashMap<String, BitmapObject> objects = new HashMap<>();
+@Deprecated
+public class CipherObjectBitmaps {
+    public HashMap<String, ImageData> objects = new HashMap<>();
     // public HashMap<String, String[]> newObjects = new HashMap<>();
     public String[] keyArray = {"ID0", "ID1", "ID2", "ID3", "ID4", "ID5", "ID6", "ID7", "ID8", "ID9"};
 
     public CipherObjectBitmaps() {
         addObjects();
-    }
-
-    public CipherObjectBitmaps(Parcel source) {
-        int size = source.readInt();
-        while (size > 0) {
-            objects.put(source.readString(),
-                    (BitmapObject) source.readParcelable(BitmapObject.class.getClassLoader()));
-            size--;
-        }
     }
 
     /**
@@ -52,40 +41,39 @@ public class CipherObjectBitmaps implements Parcelable {
         });
     }
     */
-
     private void addObjects() {
-        objects.put("ID0", new BitmapObject("ID0", new Painter(500)
+        objects.put("ID0", new ImageData("ID0", new Painter(500)
                 .drawArc(80, 80, 420, 420, 30, 120, true, Color.GREEN)
                 .drawLine(85, 250, 415, 250, 15, Color.BLACK)
                 .drawBorderedArc(80, 80, 420, 420, 30, -240, false, 15, Color.GREEN)
                 .drawBorderedCircle(65, 15, Color.MAGENTA)
                 .drawBorderedCircle(30, 10, Color.MAGENTA)
                 .getBitmap()
-                , ObjectBitmapStatus.NORMAL));
+                , Status.NORMAL));
 
-        objects.put("ID1", new BitmapObject("ID1", new Painter(500, 500, Bitmap.Config.ARGB_8888)
+        objects.put("ID1", new ImageData("ID1", new Painter(500, 500, Bitmap.Config.ARGB_8888)
 
                 .drawBorderedCircle(200, 10, Color.RED)
 
                 .drawBorderedCircle(100, 5, Color.GREEN)
 
-                .getBitmap(), ObjectBitmapStatus.NORMAL));
-        objects.put("ID2", new BitmapObject("ID2", new Painter(500, 500, Bitmap.Config.ARGB_8888)
+                .getBitmap(), Status.NORMAL));
+        objects.put("ID2", new ImageData("ID2", new Painter(500, 500, Bitmap.Config.ARGB_8888)
 
                 .drawBorderedCircle(200, 10, Color.RED)
 
                 .drawBorderedRectangle(100f, 150f, 400f, 350f, 5, Color.YELLOW)
 
-                .getBitmap(), ObjectBitmapStatus.NORMAL));
-        objects.put("ID3", new BitmapObject("ID3", new Painter(500, 500, Bitmap.Config.ARGB_8888)
+                .getBitmap(), Status.NORMAL));
+        objects.put("ID3", new ImageData("ID3", new Painter(500, 500, Bitmap.Config.ARGB_8888)
 
                 .drawBorderedRectangle(100f, 150f, 400f, 350f, 5, Color.YELLOW)
 
                 .drawBorderedArc(100f, 150f, 400f, 350f, 0, 180, false, 5, Color.MAGENTA)
                 .drawBorderedArc(100, 150, 400, 350, 180, 360, false, 5, Color.MAGENTA)
 
-                .getBitmap(), ObjectBitmapStatus.NORMAL));
-        objects.put("ID4", new BitmapObject("ID4", new Painter(500, 500, Bitmap.Config.ARGB_8888)
+                .getBitmap(), Status.NORMAL));
+        objects.put("ID4", new ImageData("ID4", new Painter(500, 500, Bitmap.Config.ARGB_8888)
 
                 .drawBorderedArc(100f, 150f, 400f, 350f, 0, 180, false, 5, Color.MAGENTA)
                 .drawBorderedArc(100, 150, 400, 350, 180, 360, false, 5, Color.MAGENTA)
@@ -94,8 +82,8 @@ public class CipherObjectBitmaps implements Parcelable {
 
                 .drawBorderedRectangle(100f, 150f, 400f, 350f, 5, Color.YELLOW)
 
-                .getBitmap(), ObjectBitmapStatus.NORMAL));
-        objects.put("ID5", new BitmapObject("ID5", new Painter(500, 500, Bitmap.Config.ARGB_8888)
+                .getBitmap(), Status.NORMAL));
+        objects.put("ID5", new ImageData("ID5", new Painter(500, 500, Bitmap.Config.ARGB_8888)
 
                 .drawBorderedCircle(200, 10, Color.RED)
 
@@ -104,8 +92,8 @@ public class CipherObjectBitmaps implements Parcelable {
                 .drawLine(250, 55, 400, 260, 5, Color.CYAN)//right-top
                 .drawLine(250, 55, 100, 260, 5, Color.CYAN)//left-top
 
-                .getBitmap(), ObjectBitmapStatus.NORMAL));
-        objects.put("ID6", new BitmapObject("ID6", new Painter(500, 500, Bitmap.Config.ARGB_8888)
+                .getBitmap(), Status.NORMAL));
+        objects.put("ID6", new ImageData("ID6", new Painter(500, 500, Bitmap.Config.ARGB_8888)
 
                 .drawBorderedArc(100f, 150f, 400f, 350f, 0, 180, false, 5, Color.MAGENTA)//lower-arc-of-ellipse
                 .drawBorderedArc(100, 150, 400, 350, 180, 360, false, 5, Color.MAGENTA)//upper-arc-of-ellipse
@@ -115,8 +103,8 @@ public class CipherObjectBitmaps implements Parcelable {
                 .drawLine(400, 260, 250, 350, 5, Color.DKGRAY)//right-bottom
                 .drawLine(250, 150, 400, 260, 5, Color.DKGRAY)//right-top
 
-                .getBitmap(), ObjectBitmapStatus.NORMAL));
-        objects.put("ID7", new BitmapObject("ID7", new Painter(500, 500, Bitmap.Config.ARGB_8888)
+                .getBitmap(), Status.NORMAL));
+        objects.put("ID7", new ImageData("ID7", new Painter(500, 500, Bitmap.Config.ARGB_8888)
 
                 .drawLine(100, 260, 250, 445, 5, Color.CYAN)//left-bottom
                 .drawLine(400, 260, 250, 445, 5, Color.CYAN)//right-bottom
@@ -128,8 +116,8 @@ public class CipherObjectBitmaps implements Parcelable {
                 .drawLine(400, 260, 250, 350, 5, Color.DKGRAY)//right-bottom
                 .drawLine(250, 150, 400, 260, 5, Color.DKGRAY)//right-top
 
-                .getBitmap(), ObjectBitmapStatus.NORMAL));
-        objects.put("ID8", new BitmapObject("ID8", new Painter(500, 500, Bitmap.Config.ARGB_8888)
+                .getBitmap(), Status.NORMAL));
+        objects.put("ID8", new ImageData("ID8", new Painter(500, 500, Bitmap.Config.ARGB_8888)
 
                 .drawBorderedArc(100f, 150f, 400f, 350f, 0, 180, false, 5, Color.MAGENTA)
                 .drawBorderedArc(100, 150, 400, 350, 180, 360, false, 5, Color.MAGENTA)
@@ -141,9 +129,9 @@ public class CipherObjectBitmaps implements Parcelable {
 
                 .drawBorderedRectangle(100f, 150f, 400f, 350f, 5, Color.YELLOW)
 
-                .getBitmap(), ObjectBitmapStatus.NORMAL));
+                .getBitmap(), Status.NORMAL));
 
-        objects.put("ID9", new BitmapObject("ID9", new Painter(500, 500, Bitmap.Config.ARGB_8888)
+        objects.put("ID9", new ImageData("ID9", new Painter(500, 500, Bitmap.Config.ARGB_8888)
 
                 .drawBorderedCircle(200, 10, Color.RED)
 
@@ -152,32 +140,15 @@ public class CipherObjectBitmaps implements Parcelable {
                 .drawLine(400, 260, 250, 350, 5, Color.DKGRAY)//right-bottom
                 .drawLine(250, 150, 400, 260, 5, Color.DKGRAY)//right-top
 
-                .getBitmap(), ObjectBitmapStatus.NORMAL));
-    }
+                .getBitmap(), Status.NORMAL));
 
-    public static final Creator<CipherObjectBitmaps> CREATOR = new Creator<CipherObjectBitmaps>() {
-        @Override
-        public CipherObjectBitmaps createFromParcel(Parcel in) {
-            return new CipherObjectBitmaps(in);
-        }
+        objects.put("ID10", new ImageData("ID10", new Painter(500, 500, Bitmap.Config.ARGB_8888)
 
-        @Override
-        public CipherObjectBitmaps[] newArray(int size) {
-            return new CipherObjectBitmaps[size];
-        }
-    };
+                .drawLine(99f, 147f, 417f, 366f, 7, Color.BLUE) //backslash line coordinates hourglass
+                .drawLine(91f, 374f, 415f, 155f, 7, Color.BLUE) //forwardslash line coordinates hourglass
+                .drawBorderedArc(91f, 345f, 420f, 395f, 207, 324, false, 5, Color.BLUE) //lower-ellipse hourglass
+                .drawBorderedArc(100f, 125f, 420f, 175f, 185, 324, false, 5, Color.BLUE) //upper-ellipse hourglass
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(objects.size());
-        for (Map.Entry<String, BitmapObject> entries : objects.entrySet()) {
-            dest.writeString(entries.getKey());
-            dest.writeParcelable(entries.getValue(), flags);
-        }
+                .getBitmap(), Status.NORMAL));
     }
 }

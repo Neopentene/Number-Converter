@@ -1,4 +1,4 @@
-package com.NumCo.numberconverter.CipherCreation;
+package com.NumCo.numberconverter.CipherCreation.CipherDialogs;
 
 import android.animation.ObjectAnimator;
 import android.app.Dialog;
@@ -12,17 +12,22 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.example.numberconverter.R;
+import com.NumCo.numberconverter.CipherCreation.CipherAdapters.DialogFragmentAdapter;
+import com.NumCo.numberconverter.CipherCreation.CipherConstantObjectBitmaps;
+import com.NumCo.numberconverter.CipherCreation.CipherFragments.HelpFragment;
+import com.NumCo.numberconverter.CipherCreation.CipherFragments.SettingsFragment;
+import com.NumCo.numberconverter.CipherCreation.CipherObjectBitmaps;
+import com.NumCo.numberconverter.R;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 
-public class CipherPreferencesDialog extends Dialog {
+public class PreferencesDialog extends Dialog {
     private TabLayout tabLayout;
     private ViewPager2 viewPager;
     private MaterialButton saveButton;
-    private CipherDialogFragmentAdapter cipherDialogFragmentAdapter;
+    private DialogFragmentAdapter cipherDialogFragmentAdapter;
     private volatile boolean isFirst = true;
 
     protected CipherObjectBitmaps cipherObjectBitmaps;
@@ -31,7 +36,7 @@ public class CipherPreferencesDialog extends Dialog {
     private final FragmentManager fragmentManager;
     private final Lifecycle lifecycle;
 
-    public CipherPreferencesDialog(CipherObjectBitmaps cipherObjectBitmaps, CipherConstantObjectBitmaps cipherConstantObjectBitmaps, Context context, FragmentManager fragmentManager, Lifecycle lifecycle) {
+    public PreferencesDialog(CipherObjectBitmaps cipherObjectBitmaps, CipherConstantObjectBitmaps cipherConstantObjectBitmaps, Context context, FragmentManager fragmentManager, Lifecycle lifecycle) {
         super(context);
         this.cipherObjectBitmaps = cipherObjectBitmaps;
         this.cipherConstantObjectBitmaps = cipherConstantObjectBitmaps;
@@ -43,7 +48,7 @@ public class CipherPreferencesDialog extends Dialog {
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.cipher_dialog_layout);
 
-        cipherDialogFragmentAdapter = new CipherDialogFragmentAdapter(fragmentManager, lifecycle, new ArrayList<>());
+        cipherDialogFragmentAdapter = new DialogFragmentAdapter(fragmentManager, lifecycle, new ArrayList<>());
 
         tabLayout = findViewById(R.id.tabLayout);
         viewPager = findViewById(R.id.viewPager);
@@ -57,8 +62,8 @@ public class CipherPreferencesDialog extends Dialog {
         saveButton = findViewById(R.id.saveButton);
         saveButton.setText(R.string.save);
 
-        cipherDialogFragmentAdapter.addCipherDialogFragment(new CipherHelpFragment(cipherConstantObjectBitmaps));
-        cipherDialogFragmentAdapter.addCipherDialogFragment(new CipherSettingsFragment(cipherObjectBitmaps));
+        cipherDialogFragmentAdapter.addCipherDialogFragment(new HelpFragment());
+        cipherDialogFragmentAdapter.addCipherDialogFragment(new SettingsFragment());
 
         viewPager.setAdapter(cipherDialogFragmentAdapter);
         viewPager.setOffscreenPageLimit(cipherDialogFragmentAdapter.getItemCount());

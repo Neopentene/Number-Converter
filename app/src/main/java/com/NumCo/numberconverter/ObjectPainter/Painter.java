@@ -8,6 +8,7 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.Typeface;
+import android.util.Log;
 
 import java.util.Iterator;
 
@@ -32,7 +33,6 @@ public class Painter {
     public final static Paint.Align RIGHT = Paint.Align.RIGHT;
     public final static Paint.Align LEFT = Paint.Align.LEFT;
     public int width, height;
-
 
 
     public Painter() {
@@ -895,6 +895,13 @@ public class Painter {
         paint.setTextSize(defaultTextSize);
     }
 
+    public void setBackground(int color) {
+        Bitmap oldBitmap = bitmap;
+        setBitmap(Bitmap.createBitmap(oldBitmap.getWidth(), oldBitmap.getHeight(), oldBitmap.getConfig()));
+        canvas.drawColor(color);
+        drawBitmap(0, 0, oldBitmap, null);
+    }
+
     /**
      * Get the internal bitmap
      *
@@ -915,21 +922,29 @@ public class Painter {
      */
     public Painter setBitmap(int width, int height, Bitmap.Config config) {
         bitmap = Bitmap.createBitmap(width, height, config);
+
         bitmapCenterX = (float) Math.ceil((double) bitmap.getWidth() / 2);
         bitmapCenterY = (float) Math.ceil((double) bitmap.getHeight() / 2);
+
         canvas = new Canvas(bitmap);
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        width = bitmap.getWidth();
-        height = bitmap.getHeight();
+
+        this.width = bitmap.getWidth();
+        this.height = bitmap.getHeight();
+
         return this;
     }
 
     public Painter setBitmap(Bitmap bitmap) {
         this.bitmap = bitmap;
+
         bitmapCenterX = (float) Math.ceil((double) bitmap.getWidth() / 2);
         bitmapCenterY = (float) Math.ceil((double) bitmap.getHeight() / 2);
+
         canvas = new Canvas(bitmap);
+
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+
         width = bitmap.getWidth();
         height = bitmap.getHeight();
         return this;
@@ -997,7 +1012,6 @@ public class Painter {
 
         public boolean parse() {
             boolean successful = false;
-            save();
             for (String command : parserCommands) {
                 try {
                     String[] args = command.split("\\|");
@@ -1050,6 +1064,12 @@ public class Painter {
                         case "dRBAB":
                             successful = dRBAB(args);
                             break;
+                        case "save":
+                            save();
+                            break;
+                        case "restore":
+                            restore();
+                            break;
                     }
                     if (!successful)
                         throw new Exception();
@@ -1058,13 +1078,29 @@ public class Painter {
                     return false;
                 }
             }
-            restore();
             return successful;
+        }
+
+        public Bitmap getParsedBitmap() {
+            return getBitmap();
         }
 
         private boolean sB(String[] args) {
             try {
-                Bitmap.Config config = Bitmap.Config.valueOf(args[3]);
+                Bitmap.Config config = Bitmap.Config.ARGB_8888;
+
+                switch (args[3]) {
+                    case "ALPHA_8":
+                        config = Bitmap.Config.ALPHA_8;
+                        break;
+                    case "RGB_565":
+                        config = Bitmap.Config.RGB_565;
+                        break;
+                    case "ARGB_4444":
+                        config = Bitmap.Config.ARGB_4444;
+                        break;
+                }
+
                 setBitmap(Integer.parseInt(args[1]),
                         Integer.parseInt(args[2]),
                         config);
@@ -1210,6 +1246,7 @@ public class Painter {
             try {
                 switch (args.length) {
                     case 6: {
+
                         drawText(args[1],
                                 Float.parseFloat(args[2]),
                                 Float.parseFloat(args[3]),
@@ -1219,8 +1256,21 @@ public class Painter {
                     break;
                     case 7: {
                         String[] typefaceParams = args[4].split("_");
-                        Typeface typeface = Typeface.create(typefaceParams[0],
+
+                        Typeface typeface = Typeface.create(Typeface.SERIF,
                                 Integer.parseInt(typefaceParams[1]));
+
+                        switch (typefaceParams[0]) {
+                            case "SANS-SERIF":
+                                typeface = Typeface.create(Typeface.SANS_SERIF,
+                                        Integer.parseInt(typefaceParams[1]));
+                                break;
+                            case "MONOSPACE":
+                                typeface = Typeface.create(Typeface.MONOSPACE,
+                                        Integer.parseInt(typefaceParams[1]));
+                                break;
+                        }
+
                         drawText(args[1],
                                 Float.parseFloat(args[2]),
                                 Float.parseFloat(args[3]),
@@ -1232,9 +1282,23 @@ public class Painter {
                     break;
                     case 8: {
                         String[] typefaceParams = args[4].split("_");
-                        Typeface typeface = Typeface.create(typefaceParams[0],
+
+                        Typeface typeface = Typeface.create(Typeface.SERIF,
                                 Integer.parseInt(typefaceParams[1]));
+
+                        switch (typefaceParams[0]) {
+                            case "SANS-SERIF":
+                                typeface = Typeface.create(Typeface.SANS_SERIF,
+                                        Integer.parseInt(typefaceParams[1]));
+                                break;
+                            case "MONOSPACE":
+                                typeface = Typeface.create(Typeface.MONOSPACE,
+                                        Integer.parseInt(typefaceParams[1]));
+                                break;
+                        }
+
                         Paint.Align align = Paint.Align.CENTER;
+
                         switch (args[5].toLowerCase()) {
                             case "left":
                                 align = Paint.Align.LEFT;
@@ -1243,6 +1307,7 @@ public class Painter {
                                 align = Paint.Align.RIGHT;
                                 break;
                         }
+
                         drawText(args[1],
                                 Float.parseFloat(args[2]),
                                 Float.parseFloat(args[3]),
@@ -1269,13 +1334,26 @@ public class Painter {
                     }
                     break;
                     case 5: {
-                        String[] typefaceParams = args[4].split("_");
-                        Typeface typeface = Typeface.create(typefaceParams[0],
+                        String[] typefaceParams = args[2].split("_");
+
+                        Typeface typeface = Typeface.create(Typeface.SERIF,
                                 Integer.parseInt(typefaceParams[1]));
+
+                        switch (typefaceParams[0]) {
+                            case "SANS-SERIF":
+                                typeface = Typeface.create(Typeface.SANS_SERIF,
+                                        Integer.parseInt(typefaceParams[1]));
+                                break;
+                            case "MONOSPACE":
+                                typeface = Typeface.create(Typeface.MONOSPACE,
+                                        Integer.parseInt(typefaceParams[1]));
+                                break;
+                        }
+
                         drawTextAtCenter(args[1],
                                 typeface,
-                                Integer.parseInt(args[2]),
-                                Integer.parseInt(args[3]));
+                                Integer.parseInt(args[3]),
+                                Integer.parseInt(args[4]));
                     }
                     break;
                 }

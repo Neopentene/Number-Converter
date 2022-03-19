@@ -2,6 +2,7 @@ package com.NumCo.numberconverter.ObjectPainter;
 
 import android.graphics.Color;
 
+@Deprecated
 public enum ObjectBitmapStatus {
     ERROR(Color.RED),
     NORMAL(Color.BLACK),

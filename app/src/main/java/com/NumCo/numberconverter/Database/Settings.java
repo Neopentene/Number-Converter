@@ -2,8 +2,9 @@ package com.NumCo.numberconverter.Database;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 
-import com.NumCo.numberconverter.ObjectPainter.ObjectBitmapStatus;
+import com.NumCo.numberconverter.ObjectPainter.Status;
 
 public class Settings {
     private final SharedPreferences cipherNumbers;
@@ -32,7 +33,7 @@ public class Settings {
     }
 
     public int getCipherColor(String id) {
-        return cipherColors.getInt(id, ObjectBitmapStatus.THEME.color);
+        return cipherColors.getInt(id, Status.NORMAL.color);
     }
 
     public void setCipherColor(String id, int color) {
@@ -43,8 +44,12 @@ public class Settings {
         return otherSettings.getInt(id, 2);
     }
 
+    public int getBackgroundColor() {
+        return otherSettings.getInt("background", Color.WHITE);
+    }
+
     public int getImageColumns() {
-        return otherSettings.getInt("COL", 4);
+        return otherSettings.getInt("COL", 3);
     }
 
     public float getShapeResolution() {
@@ -53,6 +58,10 @@ public class Settings {
 
     public void setOtherSettings(String id, int value) {
         editorOtherSettings.putInt(id, value).apply();
+    }
+
+    public void setBackgroundColor(int color) {
+        editorOtherSettings.putInt("background", color).apply();
     }
 
     public void setShapeResolution(float value) {
