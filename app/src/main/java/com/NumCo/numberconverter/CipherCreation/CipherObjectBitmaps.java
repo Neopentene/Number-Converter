@@ -141,5 +141,14 @@ public class CipherObjectBitmaps {
                 .drawLine(250, 150, 400, 260, 5, Color.DKGRAY)//right-top
 
                 .getBitmap(), Status.NORMAL));
+
+        objects.put("ID10", new ImageData("ID10", new Painter(500, 500, Bitmap.Config.ARGB_8888)
+
+                .drawLine(99f, 147f, 417f, 366f, 7, Color.BLUE) //backslash line coordinates hourglass
+                .drawLine(91f, 374f, 415f, 155f, 7, Color.BLUE) //forwardslash line coordinates hourglass
+                .drawBorderedArc(91f, 345f, 420f, 395f, 207, 324, false, 5, Color.BLUE) //lower-ellipse hourglass
+                .drawBorderedArc(100f, 125f, 420f, 175f, 185, 324, false, 5, Color.BLUE) //upper-ellipse hourglass
+
+                .getBitmap(), Status.NORMAL));
     }
 }
