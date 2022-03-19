@@ -61,7 +61,7 @@ public class Queries {
         return arrayOfHistories;
     }
 
-    public void deleteAllHistory(Context context) {
+    public void deleteAllHistories(Context context) {
         schemas = new Schemas(context);
         history = new Schemas.History();
 
@@ -70,7 +70,6 @@ public class Queries {
         String args[] = new String[0];
 
         long deleteAllHistory = db.delete(history.TABLE_NAME, Clause, args);
-
     }
 
     public void deleteHistory(HISTORY historyObject, Context context) {
@@ -82,6 +81,5 @@ public class Queries {
         String args[] = {String.valueOf(historyObject.ID)};
 
         long deleteHistory = db.delete(history.TABLE_NAME, Clause, args);
-
     }
 }

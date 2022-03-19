@@ -1,7 +1,5 @@
 package com.NumCo.numberconverter;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -12,7 +10,7 @@ import android.os.Looper;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.example.numberconverter.R;
+import androidx.appcompat.app.AppCompatActivity;
 
 @SuppressLint("CustomSplashScreen")
 public class SplashScreen extends AppCompatActivity {
@@ -30,7 +28,7 @@ public class SplashScreen extends AppCompatActivity {
         launchConverter();
     }
 
-    private void launchConverter(){
+    private void launchConverter() {
         Handler handler = new Handler(Looper.getMainLooper());
 
         ObjectAnimator.ofFloat(icon, View.ALPHA, 0f, 1f).setDuration(1500).start();
@@ -42,4 +40,4 @@ public class SplashScreen extends AppCompatActivity {
             finish();
         }, 2000);
     }
-}//elkana sampath
+}
