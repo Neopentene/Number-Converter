@@ -12,21 +12,21 @@ import android.os.Looper;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import androidx.annotation.StringRes;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.NumCo.numberconverter.CipherCreation.CipherConstantObjectBitmaps;
-import com.NumCo.numberconverter.CipherCreation.CipherImageCreator;
-import com.NumCo.numberconverter.CipherCreation.CipherImageDialog;
+import com.NumCo.numberconverter.CipherCreation.ImageCreator;
+import com.NumCo.numberconverter.CipherCreation.CipherDialogs.ImageDialog;
 import com.NumCo.numberconverter.CipherCreation.CipherObjectBitmaps;
-import com.NumCo.numberconverter.CipherCreation.CipherPreferencesDialog;
+import com.NumCo.numberconverter.CipherCreation.CipherDialogs.PreferencesDialog;
 import com.NumCo.numberconverter.Numerals.Binary;
 import com.NumCo.numberconverter.Numerals.Decimal;
 import com.NumCo.numberconverter.Numerals.Hexadecimal;
@@ -34,7 +34,6 @@ import com.NumCo.numberconverter.Numerals.Numeral;
 import com.NumCo.numberconverter.Numerals.Octal;
 import com.NumCo.numberconverter.Numerals.RomanNumeral;
 import com.NumCo.numberconverter.ObjectPainter.ObjectBitmapStatus;
-import com.example.numberconverter.R;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
@@ -43,7 +42,7 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Converter extends AppCompatActivity {
+public class Converter extends AppCompatActivity implements Notify {
 
     private static final ConversionList conversionList = new ConversionList();
     private static final String[] inputConversionList = conversionList.inputConversionList;
@@ -64,8 +63,8 @@ public class Converter extends AppCompatActivity {
 
     private Context context;
     private short cipherPreferencesDialogCounter = 0, cipherImageDialogCounter = 0;
-    private CipherPreferencesDialog cipherPreferencesDialog;
-    private CipherImageDialog cipherImageDialog;
+    private PreferencesDialog cipherPreferencesDialog;
+    private ImageDialog cipherImageDialog;
 
     private CipherObjectBitmaps cipherObjectBitmaps;
     private CipherConstantObjectBitmaps cipherConstantObjectBitmaps;
@@ -319,7 +318,7 @@ public class Converter extends AppCompatActivity {
         if (++cipherPreferencesDialogCounter == 1) {
             Handler handler = new Handler(Looper.getMainLooper());
             handler.post(() -> {
-                cipherPreferencesDialog = new CipherPreferencesDialog(cipherObjectBitmaps,
+                cipherPreferencesDialog = new PreferencesDialog(cipherObjectBitmaps,
                         cipherConstantObjectBitmaps, this,
                         getSupportFragmentManager(), getLifecycle());
                 cipherPreferencesDialog.setOnDismissListener(dialog -> cipherPreferencesDialogCounter = 0);
@@ -347,8 +346,8 @@ public class Converter extends AppCompatActivity {
                             zeroes = matcher.group(1);
                         numeral.setValue(matcher.group(2));
                     }
-                    CipherImageCreator cipherImageCreator = new CipherImageCreator(zeroes + numeral.toDec(), new CipherObjectBitmaps(), this);
-                    cipherImageDialog = new CipherImageDialog(this, cipherImageCreator.generate());
+                    ImageCreator cipherImageCreator = new ImageCreator(zeroes + numeral.toDec(), new CipherObjectBitmaps(), this);
+                    cipherImageDialog = new ImageDialog(this, cipherImageCreator.generate(), this);
                     cipherImageDialog.setOnDismissListener(dialog -> cipherImageDialogCounter = 0);
                     cipherImageDialog.show();
                 } catch (Exception e) {
@@ -385,8 +384,14 @@ public class Converter extends AppCompatActivity {
         return list;
     }
 
-    private void makeSnackBar(String msg, int color) {
+    public void makeSnackBar(String msg, int color) {
         final Snackbar snackbar = Snackbar.make(parentLayout, msg, Snackbar.LENGTH_SHORT).setBackgroundTint(color);
         snackbar.setAction(R.string.close, v -> snackbar.dismiss()).setActionTextColor(Color.WHITE).show();
+    }
+
+    @Override
+    public void makeSnackBar(String msg, int color, @StringRes int resId, Runnable runnable) {
+        final Snackbar snackbar = Snackbar.make(parentLayout, msg, Snackbar.LENGTH_SHORT).setBackgroundTint(color);
+        snackbar.setAction(resId, v -> runnable.run()).setActionTextColor(Color.WHITE).show();
     }
 }

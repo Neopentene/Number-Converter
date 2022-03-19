@@ -8,18 +8,17 @@ import android.graphics.PorterDuffColorFilter;
 import android.util.Log;
 
 import com.NumCo.numberconverter.Database.Settings;
-import com.NumCo.numberconverter.ObjectPainter.BitmapObject;
 import com.NumCo.numberconverter.ObjectPainter.Painter;
 
 import java.util.Objects;
 
-public class CipherImageCreator {
+public class ImageCreator {
     private String decimal;
     private Settings settings;
     private CipherObjectBitmaps cipherObjectBitmaps;
     private Painter painter;
 
-    public CipherImageCreator(String decimal, CipherObjectBitmaps cipherObjectBitmaps, Context context) {
+    public ImageCreator(String decimal, CipherObjectBitmaps cipherObjectBitmaps, Context context) {
         this.decimal = decimal;
         this.settings = new Settings(context);
         this.cipherObjectBitmaps = cipherObjectBitmaps;
@@ -33,7 +32,7 @@ public class CipherImageCreator {
 
         Bitmap[] bitmaps = new Bitmap[decimal.length()];
 
-        for(char character: decimal.toCharArray()){
+        for (char character : decimal.toCharArray()) {
             painter = new Painter(500, 500);
             ColorFilter colorFilter = new PorterDuffColorFilter(
                     settings.getCipherColor("ID" + character),
@@ -53,10 +52,10 @@ public class CipherImageCreator {
                 (500 * resolution) * (int) Math.ceil((double) decimal.length() / columns));
         count = 0;
 
-        for(int row = 0; row < rows; row++){
-            for(int col = 0; col < columns; col++){
+        for (int row = 0; row < rows; row++) {
+            for (int col = 0; col < columns; col++) {
 
-                if(count >= bitmaps.length)
+                if (count >= bitmaps.length)
                     break;
 
                 painter.drawBitmap((float) painter.width / columns * col,
@@ -65,8 +64,7 @@ public class CipherImageCreator {
                 count++;
             }
         }
-
-        Log.e("Count:", count + ", " + bitmaps.length);
+        painter.setBackground(settings.getBackgroundColor());
 
         return painter.getBitmap();
     }

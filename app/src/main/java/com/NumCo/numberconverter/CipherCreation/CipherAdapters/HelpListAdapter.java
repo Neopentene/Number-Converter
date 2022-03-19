@@ -1,9 +1,6 @@
-package com.NumCo.numberconverter.CipherCreation;
+package com.NumCo.numberconverter.CipherCreation.CipherAdapters;
 
 import android.annotation.SuppressLint;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,22 +13,22 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentActivity;
 
-import com.NumCo.numberconverter.ObjectPainter.BitmapObject;
-import com.NumCo.numberconverter.ObjectPainter.ObjectBitmapStatus;
-import com.NumCo.numberconverter.ObjectPainter.Painter;
-import com.example.numberconverter.R;
+import com.NumCo.numberconverter.CipherCreation.Store;
+import com.NumCo.numberconverter.ObjectPainter.Generator;
+import com.NumCo.numberconverter.ObjectPainter.Status;
+import com.NumCo.numberconverter.R;
 
 import java.util.ArrayList;
 
-public class ConstantObjectAdapter extends ArrayAdapter<BitmapObject> {
+public class HelpListAdapter extends ArrayAdapter<Store.ImageGenerator> {
 
     private final FragmentActivity mContext;
-    private final ArrayList<BitmapObject> constantObjects;
+    private final ArrayList<Store.ImageGenerator> imageData;
 
-    public ConstantObjectAdapter(@NonNull FragmentActivity context, @NonNull ArrayList<BitmapObject> objects) {
-        super(context, R.layout.help_input_output_layout, objects);
+    public HelpListAdapter(@NonNull FragmentActivity context, @NonNull ArrayList<Store.ImageGenerator> imageData) {
+        super(context, R.layout.help_input_output_layout, imageData);
         mContext = context;
-        constantObjects = objects;
+        this.imageData = imageData;
     }
 
     @SuppressLint("SetTextI18n")
@@ -45,30 +42,28 @@ public class ConstantObjectAdapter extends ArrayAdapter<BitmapObject> {
         TextView textView = view.findViewById(R.id.helpInputOutputDescription);
         View divider = view.findViewById(R.id.helpInputOutputDescriptionDivider);
 
-        imageView.setImageBitmap(constantObjects.get(position).getBitmap());
-        textView.setText(mContext.getResources().getIdentifier("help_" + constantObjects.get(position).getId(), "string", mContext.getPackageName()));
+        imageView.setImageBitmap(Generator.generate(imageData.get(position).commands));
+        textView.setText(mContext.getResources().getIdentifier("help_" + imageData.get(position).id, "string", mContext.getPackageName()));
 
-        ObjectBitmapStatus status = constantObjects.get(position).getBitmapStatus();
+        Status status = imageData.get(position).status;
 
-        if (status != ObjectBitmapStatus.DISABLED) {
+        if (status != Status.DISABLED) {
 
             TextView statusTextView = new TextView(mContext);
             statusTextView.setTextColor(status.color);
             statusTextView.setGravity(Gravity.CENTER);
 
-            imageView.setColorFilter(new PorterDuffColorFilter(status.color,
-                    PorterDuff.Mode.SRC_IN));
-
             switch (status) {
+
                 case ERROR:
                     statusTextView.setText("Input and Output");
                     linearLayout.addView(statusTextView, 0);
                     break;
-                case ACTIVE_INPUT:
+                case INPUT:
                     statusTextView.setText("Selected Input");
                     linearLayout.addView(statusTextView, 0);
                     break;
-                case ACTIVE_OUTPUT:
+                case OUTPUT:
                     statusTextView.setText("Selected Output");
                     linearLayout.addView(statusTextView, 0);
                     break;
@@ -81,7 +76,7 @@ public class ConstantObjectAdapter extends ArrayAdapter<BitmapObject> {
                         0);
         }
 
-        if (position == constantObjects.size() - 1)
+        if (position == imageData.size() - 1)
             divider.setVisibility(View.INVISIBLE);
 
         return view;

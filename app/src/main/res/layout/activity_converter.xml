@@ -193,19 +193,24 @@
 
             <Button
                 android:id="@+id/convertInput"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="6dp"
+
                 android:onClick="convert"
-                android:text="@string/convert" />
+                android:text="@string/convert"
+                app:strokeColor="@color/dark_blue" />
 
             <Button
                 android:id="@+id/cipherImageButton"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="6dp"
                 android:onClick="cipherImageDialog"
-                android:text="@string/cipher_input" />
+                android:text="@string/cipher_input"
+                app:strokeColor="@color/dark_blue" />
 
         </LinearLayout>
 
