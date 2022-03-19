@@ -1,4 +1,4 @@
-package com.NumCo.numberconverter.CipherCreation.CipherAdapters;
+package com.NumCo.numberconverter.Cipher.CipherAdapters;
 
 import android.annotation.SuppressLint;
 import android.view.Gravity;
@@ -13,7 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentActivity;
 
-import com.NumCo.numberconverter.CipherCreation.Store;
+import com.NumCo.numberconverter.Cipher.Store;
 import com.NumCo.numberconverter.ObjectPainter.Generator;
 import com.NumCo.numberconverter.ObjectPainter.Status;
 import com.NumCo.numberconverter.R;

@@ -1,4 +1,4 @@
-package com.NumCo.numberconverter.CipherCreation.CipherDialogs;
+package com.NumCo.numberconverter.Cipher.CipherDialogs;
 
 import android.animation.ObjectAnimator;
 import android.app.Dialog;
@@ -12,11 +12,9 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.NumCo.numberconverter.CipherCreation.CipherAdapters.DialogFragmentAdapter;
-import com.NumCo.numberconverter.CipherCreation.CipherConstantObjectBitmaps;
-import com.NumCo.numberconverter.CipherCreation.CipherFragments.HelpFragment;
-import com.NumCo.numberconverter.CipherCreation.CipherFragments.SettingsFragment;
-import com.NumCo.numberconverter.CipherCreation.CipherObjectBitmaps;
+import com.NumCo.numberconverter.Cipher.CipherAdapters.DialogFragmentAdapter;
+import com.NumCo.numberconverter.Cipher.CipherFragments.HelpFragment;
+import com.NumCo.numberconverter.Cipher.CipherFragments.SettingsFragment;
 import com.NumCo.numberconverter.R;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.tabs.TabLayout;
@@ -30,16 +28,11 @@ public class PreferencesDialog extends Dialog {
     private DialogFragmentAdapter cipherDialogFragmentAdapter;
     private volatile boolean isFirst = true;
 
-    protected CipherObjectBitmaps cipherObjectBitmaps;
-    protected CipherConstantObjectBitmaps cipherConstantObjectBitmaps;
-
     private final FragmentManager fragmentManager;
     private final Lifecycle lifecycle;
 
-    public PreferencesDialog(CipherObjectBitmaps cipherObjectBitmaps, CipherConstantObjectBitmaps cipherConstantObjectBitmaps, Context context, FragmentManager fragmentManager, Lifecycle lifecycle) {
+    public PreferencesDialog(Context context, FragmentManager fragmentManager, Lifecycle lifecycle) {
         super(context);
-        this.cipherObjectBitmaps = cipherObjectBitmaps;
-        this.cipherConstantObjectBitmaps = cipherConstantObjectBitmaps;
         this.fragmentManager = fragmentManager;
         this.lifecycle = lifecycle;
     }

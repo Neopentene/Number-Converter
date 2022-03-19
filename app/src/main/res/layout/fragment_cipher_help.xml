@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.NumCo.numberconverter.CipherCreation.CipherFragments.HelpFragment">
+    tools:context="com.NumCo.numberconverter.Cipher.CipherFragments.HelpFragment">
 
     <LinearLayout
         android:id="@+id/cipherHelpLinearLayout"
@@ -18,8 +18,8 @@
             android:descendantFocusability="beforeDescendants"
             android:divider="@android:color/transparent"
             android:focusable="false"
-            android:scrollbarThumbVertical="@color/teal"
             android:scrollbarSize="4dp"
+            android:scrollbarThumbVertical="@color/teal"
             android:smoothScrollbar="true" />
     </LinearLayout>
 </LinearLayout>

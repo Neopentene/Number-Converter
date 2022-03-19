@@ -22,18 +22,20 @@ import androidx.annotation.StringRes;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.NumCo.numberconverter.CipherCreation.CipherConstantObjectBitmaps;
-import com.NumCo.numberconverter.CipherCreation.ImageCreator;
-import com.NumCo.numberconverter.CipherCreation.CipherDialogs.ImageDialog;
-import com.NumCo.numberconverter.CipherCreation.CipherObjectBitmaps;
-import com.NumCo.numberconverter.CipherCreation.CipherDialogs.PreferencesDialog;
+import com.NumCo.numberconverter.Cipher.CipherDialogs.ImageDialog;
+import com.NumCo.numberconverter.Cipher.CipherDialogs.PreferencesDialog;
+import com.NumCo.numberconverter.Cipher.ImageCreator;
+import com.NumCo.numberconverter.Database.Queries;
+import com.NumCo.numberconverter.History.HistoryCommands;
+import com.NumCo.numberconverter.History.HistoryDialog;
 import com.NumCo.numberconverter.Numerals.Binary;
 import com.NumCo.numberconverter.Numerals.Decimal;
 import com.NumCo.numberconverter.Numerals.Hexadecimal;
 import com.NumCo.numberconverter.Numerals.Numeral;
 import com.NumCo.numberconverter.Numerals.Octal;
 import com.NumCo.numberconverter.Numerals.RomanNumeral;
-import com.NumCo.numberconverter.ObjectPainter.ObjectBitmapStatus;
+import com.NumCo.numberconverter.ObjectPainter.Status;
+import com.NumCo.numberconverter.Objects.HISTORY;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
@@ -42,7 +44,7 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Converter extends AppCompatActivity implements Notify {
+public class Converter extends AppCompatActivity implements Notify, HistoryCommands {
 
     private static final ConversionList conversionList = new ConversionList();
     private static final String[] inputConversionList = conversionList.inputConversionList;
@@ -55,19 +57,15 @@ public class Converter extends AppCompatActivity implements Notify {
     private TextInputLayout displayOutput;
     private TextInputLayout displayInput;
     private AutoCompleteTextView inputConversionAutoText = null;
-    private TextInputLayout inputConversionLayout = null;
     private TextInputLayout outputConversionLayout = null;
     private AutoCompleteTextView outputConversionAutoText = null;
     private ScrollView parentLayout = null;
     private SharedPreferences sharedPreferences;
 
     private Context context;
-    private short cipherPreferencesDialogCounter = 0, cipherImageDialogCounter = 0;
+    private short cipherPreferencesDialogCounter = 0, cipherImageDialogCounter = 0, viewHistoryCounter = 0;
     private PreferencesDialog cipherPreferencesDialog;
     private ImageDialog cipherImageDialog;
-
-    private CipherObjectBitmaps cipherObjectBitmaps;
-    private CipherConstantObjectBitmaps cipherConstantObjectBitmaps;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) throws NullPointerException {
@@ -76,10 +74,6 @@ public class Converter extends AppCompatActivity implements Notify {
 
         context = this;
 
-        cipherObjectBitmaps = new CipherObjectBitmaps();
-        cipherConstantObjectBitmaps = new CipherConstantObjectBitmaps();
-
-        inputConversionLayout = findViewById(R.id.InputConversion);
         inputConversionAutoText = findViewById(R.id.InputConversionDropdown);
         outputConversionLayout = findViewById(R.id.OutputConversion);
         outputConversionAutoText = findViewById(R.id.OutputConversionDropdown);
@@ -182,7 +176,7 @@ public class Converter extends AppCompatActivity implements Notify {
         });
 
         outputConversionAutoText.setOnKeyListener((v, keyCode, event) -> {
-            Snackbar.make(parentLayout, event.getAction() + ", " + keyCode, Snackbar.LENGTH_SHORT).setBackgroundTint(ObjectBitmapStatus.ERROR.color).show();
+            Snackbar.make(parentLayout, event.getAction() + ", " + keyCode, Snackbar.LENGTH_SHORT).setBackgroundTint(Status.ERROR.color).show();
 
             if (keyCode == 66) {
                 Objects.requireNonNull(displayInput.getEditText()).requestFocus();
@@ -237,7 +231,7 @@ public class Converter extends AppCompatActivity implements Notify {
             outputConversionAutoText.setText(temp, false);
             inputConversionAutoText.setText(inputOption, false);
         } else
-            makeSnackBar("Cannot Interchange Options", ObjectBitmapStatus.ACTIVE_OUTPUT.color);
+            makeSnackBar("Cannot Interchange Options", Status.OUTPUT.color);
     }
 
     public void convert(View v) {
@@ -267,13 +261,19 @@ public class Converter extends AppCompatActivity implements Notify {
                     Objects.requireNonNull(displayOutput.getEditText()).setText(numeral.toBin().toUpperCase());
                     break;
             }
+
+            new Queries().addHistory(new HISTORY(inputOption,
+                    numeral.value,
+                    outputOption,
+                    Objects.requireNonNull(displayOutput.getEditText()).getText().toString()), this);
+
         } catch (Exception e) {
             if (inputOption.equals(outputOption))
-                makeSnackBar("Invalid Output Selection", ObjectBitmapStatus.ERROR.color);
+                makeSnackBar("Invalid Output Selection", Status.ERROR.color);
             else if (displayInput.getEditText().getText().toString().trim().equals(""))
-                makeSnackBar("Input Empty", ObjectBitmapStatus.ERROR.color);
+                makeSnackBar("Input Empty", Status.ERROR.color);
             else
-                makeSnackBar("Invalid Input", ObjectBitmapStatus.ERROR.color);
+                makeSnackBar("Invalid Input", Status.ERROR.color);
         }
     }
 
@@ -285,9 +285,9 @@ public class Converter extends AppCompatActivity implements Notify {
             ClipboardManager clipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
             ClipData clipData = ClipData.newPlainText(outputOption, output);
             clipboardManager.setPrimaryClip(clipData);
-            makeSnackBar("Output Copied to Clipboard", ObjectBitmapStatus.THEME.color);
+            makeSnackBar("Output Copied to Clipboard", Status.NORMAL.color);
         } else
-            makeSnackBar("Output is Empty", ObjectBitmapStatus.ACTIVE_INPUT.color);
+            makeSnackBar("Output is Empty", Status.INPUT.color);
     }
 
     public void aboutUsDialog(View v) {
@@ -318,9 +318,7 @@ public class Converter extends AppCompatActivity implements Notify {
         if (++cipherPreferencesDialogCounter == 1) {
             Handler handler = new Handler(Looper.getMainLooper());
             handler.post(() -> {
-                cipherPreferencesDialog = new PreferencesDialog(cipherObjectBitmaps,
-                        cipherConstantObjectBitmaps, this,
-                        getSupportFragmentManager(), getLifecycle());
+                cipherPreferencesDialog = new PreferencesDialog(this, getSupportFragmentManager(), getLifecycle());
                 cipherPreferencesDialog.setOnDismissListener(dialog -> cipherPreferencesDialogCounter = 0);
                 cipherPreferencesDialog.show();
             });
@@ -331,12 +329,14 @@ public class Converter extends AppCompatActivity implements Notify {
         if (++cipherImageDialogCounter == 1) {
 
             setNumeralObject(Objects.requireNonNull(displayInput.getEditText()).getText().toString().trim());
-            if (inputOption.equals(outputOption))
-                throw new IllegalStateException();
 
             Handler handler = new Handler(Looper.getMainLooper());
             handler.post(() -> {
                 try {
+
+                    if (inputOption.equals(outputOption))
+                        throw new IllegalStateException();
+
                     String zeroes = "";
                     Matcher matcher = Pattern.compile("^(0*)(\\w*)$", Pattern.MULTILINE)
                             .matcher(Objects.requireNonNull(displayInput.getEditText()).getText()
@@ -346,20 +346,31 @@ public class Converter extends AppCompatActivity implements Notify {
                             zeroes = matcher.group(1);
                         numeral.setValue(matcher.group(2));
                     }
-                    ImageCreator cipherImageCreator = new ImageCreator(zeroes + numeral.toDec(), new CipherObjectBitmaps(), this);
+
+                    ImageCreator cipherImageCreator = new ImageCreator(zeroes + numeral.toDec(), this);
+
                     cipherImageDialog = new ImageDialog(this, cipherImageCreator.generate(), this);
                     cipherImageDialog.setOnDismissListener(dialog -> cipherImageDialogCounter = 0);
                     cipherImageDialog.show();
+
                 } catch (Exception e) {
                     if (inputOption.equals(outputOption))
-                        makeSnackBar("Invalid Output Selection", ObjectBitmapStatus.ERROR.color);
+                        makeSnackBar("Invalid Output Selection", Status.ERROR.color);
                     else if (Objects.requireNonNull(displayInput.getEditText()).getText().toString().trim().equals(""))
-                        makeSnackBar("Input Empty", ObjectBitmapStatus.ERROR.color);
+                        makeSnackBar("Input Empty", Status.ERROR.color);
                     else
-                        makeSnackBar("Invalid Input", ObjectBitmapStatus.ERROR.color);
+                        makeSnackBar("Invalid Input", Status.ERROR.color);
                 }
                 cipherImageDialogCounter = 0;
             });
+        }
+    }
+
+    public void viewHistoryDialog(View view) {
+        if (++viewHistoryCounter == 1) {
+            HistoryDialog historyDialog = new HistoryDialog(this, this);
+            historyDialog.setOnDismissListener(dialog -> viewHistoryCounter = 0);
+            historyDialog.show();
         }
     }
 
@@ -392,6 +403,23 @@ public class Converter extends AppCompatActivity implements Notify {
     @Override
     public void makeSnackBar(String msg, int color, @StringRes int resId, Runnable runnable) {
         final Snackbar snackbar = Snackbar.make(parentLayout, msg, Snackbar.LENGTH_SHORT).setBackgroundTint(color);
-        snackbar.setAction(resId, v -> runnable.run()).setActionTextColor(Color.WHITE).show();
+        snackbar.setAction(resId, v -> {
+            if (runnable != null) {
+                runnable.run();
+            } else {
+                snackbar.dismiss();
+            }
+        }).setActionTextColor(Color.WHITE).show();
+    }
+
+    @Override
+    public void setHistoryValue(HISTORY history) {
+        inputConversionAutoText.setText(history.INPUT_TYPE, false);
+        outputConversionAutoText.setText(history.OUTPUT_TYPE, false);
+
+        Objects.requireNonNull(displayInput.getEditText()).setText(history.INPUT);
+        Objects.requireNonNull(displayOutput.getEditText()).setText(history.OUTPUT);
+
+        makeSnackBar("History Copied", Status.PLACEHOLDER.color);
     }
 }

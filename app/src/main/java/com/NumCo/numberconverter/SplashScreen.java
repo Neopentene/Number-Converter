@@ -1,7 +1,5 @@
 package com.NumCo.numberconverter;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -11,6 +9,8 @@ import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
 import android.widget.ImageView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 @SuppressLint("CustomSplashScreen")
 public class SplashScreen extends AppCompatActivity {
@@ -33,11 +33,11 @@ public class SplashScreen extends AppCompatActivity {
 
         ObjectAnimator.ofFloat(icon, View.ALPHA, 0f, 1f).setDuration(1500).start();
 
-        Intent intent = new Intent(context, Converter.class);
         handler.postDelayed(() -> {
+            Intent intent = new Intent(context, Converter.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
             finish();
         }, 2000);
     }
-}
+}//elkana sampath
