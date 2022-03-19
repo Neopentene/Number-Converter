@@ -1,11 +1,10 @@
-package com.NumCo.numberconverter.CipherCreation;
+package com.NumCo.numberconverter.Cipher;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.ColorFilter;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
-import android.util.Log;
 
 import com.NumCo.numberconverter.Database.Settings;
 import com.NumCo.numberconverter.ObjectPainter.Painter;

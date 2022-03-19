@@ -1,4 +1,4 @@
-package com.NumCo.numberconverter.CipherCreation;
+package com.NumCo.numberconverter.Cipher;
 
 import com.NumCo.numberconverter.ObjectPainter.Status;
 

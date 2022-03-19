@@ -1,9 +1,7 @@
-package com.NumCo.numberconverter.CipherCreation;
+package com.NumCo.numberconverter.Cipher;
 
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
-import android.os.Parcel;
-import android.os.Parcelable;
 
 import com.NumCo.numberconverter.ObjectPainter.ImageData;
 import com.NumCo.numberconverter.ObjectPainter.ObjectBitmapStatus;
@@ -11,7 +9,6 @@ import com.NumCo.numberconverter.ObjectPainter.Painter;
 import com.NumCo.numberconverter.ObjectPainter.Status;
 
 import java.util.HashMap;
-import java.util.Map;
 
 @Deprecated
 public class CipherConstantObjectBitmaps {

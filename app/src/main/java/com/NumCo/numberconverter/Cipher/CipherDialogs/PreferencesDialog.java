@@ -1,4 +1,4 @@
-package com.NumCo.numberconverter.CipherCreation.CipherDialogs;
+package com.NumCo.numberconverter.Cipher.CipherDialogs;
 
 import android.animation.ObjectAnimator;
 import android.app.Dialog;
@@ -12,11 +12,11 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.NumCo.numberconverter.CipherCreation.CipherAdapters.DialogFragmentAdapter;
-import com.NumCo.numberconverter.CipherCreation.CipherConstantObjectBitmaps;
-import com.NumCo.numberconverter.CipherCreation.CipherFragments.HelpFragment;
-import com.NumCo.numberconverter.CipherCreation.CipherFragments.SettingsFragment;
-import com.NumCo.numberconverter.CipherCreation.CipherObjectBitmaps;
+import com.NumCo.numberconverter.Cipher.CipherAdapters.DialogFragmentAdapter;
+import com.NumCo.numberconverter.Cipher.CipherConstantObjectBitmaps;
+import com.NumCo.numberconverter.Cipher.CipherFragments.HelpFragment;
+import com.NumCo.numberconverter.Cipher.CipherFragments.SettingsFragment;
+import com.NumCo.numberconverter.Cipher.CipherObjectBitmaps;
 import com.NumCo.numberconverter.R;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.tabs.TabLayout;

@@ -1,4 +1,4 @@
-package com.NumCo.numberconverter.CipherCreation.CipherFragments;
+package com.NumCo.numberconverter.Cipher.CipherFragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,7 +8,7 @@ import android.widget.ImageView;
 
 import androidx.fragment.app.Fragment;
 
-import com.NumCo.numberconverter.CipherCreation.Commands;
+import com.NumCo.numberconverter.Cipher.Commands;
 import com.NumCo.numberconverter.ObjectPainter.Generator;
 import com.NumCo.numberconverter.ObjectPainter.Status;
 import com.NumCo.numberconverter.R;
