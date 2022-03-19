@@ -2,53 +2,42 @@ package com.NumCo.numberconverter.Cipher;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.ColorFilter;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
 
 import com.NumCo.numberconverter.Database.Settings;
+import com.NumCo.numberconverter.ObjectPainter.Generator;
 import com.NumCo.numberconverter.ObjectPainter.Painter;
-
-import java.util.Objects;
+import com.NumCo.numberconverter.ObjectPainter.Status;
 
 public class ImageCreator {
-    private String decimal;
+    private String numeral;
     private Settings settings;
-    private CipherObjectBitmaps cipherObjectBitmaps;
     private Painter painter;
 
-    public ImageCreator(String decimal, CipherObjectBitmaps cipherObjectBitmaps, Context context) {
-        this.decimal = decimal;
+    public ImageCreator(String numeral, Context context) {
+        this.numeral = numeral;
         this.settings = new Settings(context);
-        this.cipherObjectBitmaps = cipherObjectBitmaps;
     }
 
     public Bitmap generate() {
         float resolution = settings.getShapeResolution();
         int columns = settings.getImageColumns(), count = 0;
-        int rows = (int) Math.ceil((double) decimal.length() / columns);
+        int rows = (int) Math.ceil((double) numeral.length() / columns);
 
 
-        Bitmap[] bitmaps = new Bitmap[decimal.length()];
+        Bitmap[] bitmaps = new Bitmap[numeral.length()];
 
-        for (char character : decimal.toCharArray()) {
+        for (char character : numeral.toCharArray()) {
             painter = new Painter(500, 500);
-            ColorFilter colorFilter = new PorterDuffColorFilter(
-                    settings.getCipherColor("ID" + character),
-                    PorterDuff.Mode.SRC_IN);
             bitmaps[count] = painter
-                    .drawBitmap(0, 0,
-                            Objects.requireNonNull(cipherObjectBitmaps.objects
-                                    .get("ID" + character))
-                                    .getBitmap(),
-                            colorFilter)
+                    .drawBitmap(0, 0, Generator.generate(Commands.getCipherImageCommands(
+                            "ID" + character, Status.NORMAL.color)), null)
                     .scale(resolution, resolution)
                     .getBitmap();
             count++;
         }
 
         painter = new Painter((500 * resolution) * columns,
-                (500 * resolution) * (int) Math.ceil((double) decimal.length() / columns));
+                (500 * resolution) * (int) Math.ceil((double) numeral.length() / columns));
         count = 0;
 
         for (int row = 0; row < rows; row++) {

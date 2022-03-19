@@ -11,7 +11,8 @@ public class Commands {
 
     public static String[] getID0(int color) {
         return new String[]{
-                "dA" + "|" + "80" + "|" + "80" + "|" + "420" + "|" + "420" + "|" + "30" + "|" + "120" + "|" + "false" + "|" + color,
+                "sB" + "|" + 500 + "|" + 500 + "|" + Bitmap.Config.ARGB_8888.name(),
+                "dA" + "|" + "80" + "|" + "80" + "|" + "420" + "|" + "420" + "|" + "30" + "|" + "120" + "|" + "true" + "|" + color,
                 "dL" + "|" + "85" + "|" + "250" + "|" + "415" + "|" + "250" + "|" + "15" + "|" + color,
                 "dBA" + "|" + "80" + "|" + "80" + "|" + "420" + "|" + "420" + "|" + "30" + "|" + "-240" + "|" + "false" + "|" + "15" + "|" + color,
                 "dBC" + "|" + "65" + "|" + "15" + "|" + color,
@@ -21,6 +22,7 @@ public class Commands {
 
     public static String[] getID1(int color) {
         return new String[]{
+                "sB" + "|" + 500 + "|" + 500 + "|" + Bitmap.Config.ARGB_8888.name(),
                 "dBC" + "|" + "200" + "|" + "10" + "|" + color,
                 "dBC" + "|" + "100" + "|" + "5" + "|" + color
         };
@@ -28,6 +30,7 @@ public class Commands {
 
     public static String[] getID2(int color) {
         return new String[]{
+                "sB" + "|" + 500 + "|" + 500 + "|" + Bitmap.Config.ARGB_8888.name(),
                 "dBC" + "|" + "200" + "|" + "10" + "|" + color,
                 "dBR" + "|" + "100f" + "|" + "150f" + "|" + "400f" + "|" + "350f" + "|" + "5" + "|" + color
         };
@@ -35,6 +38,7 @@ public class Commands {
 
     public static String[] getID3(int color) {
         return new String[]{
+                "sB" + "|" + 500 + "|" + 500 + "|" + Bitmap.Config.ARGB_8888.name(),
                 "dBR" + "|" + "100f" + "|" + "150f" + "|" + "400f" + "|" + "350f" + "|" + "5" + "|" + color,
                 "dBA" + "|" + "100f" + "|" + "150f" + "|" + "400f" + "|" + "350f" + "|" + "0" + "|" + "180" + "|" + "false" + "|" + "5" + "|" + color,
                 "dBA" + "|" + "100" + "|" + "150" + "|" + "400" + "|" + "350" + "|" + "180" + "|" + "360" + "|" + "false" + "|" + "5" + "|" + color
@@ -43,6 +47,7 @@ public class Commands {
 
     public static String[] getID4(int color) {
         return new String[]{
+                "sB" + "|" + 500 + "|" + 500 + "|" + Bitmap.Config.ARGB_8888.name(),
                 "dBA" + "|" + "100f" + "|" + "150f" + "|" + "400f" + "|" + "350f" + "|" + "0" + "|" + "180" + "|" + "false" + "|" + "5" + "|" + color,
                 "dBA" + "|" + "100" + "|" + "150" + "|" + "400" + "|" + "350" + "|" + "180" + "|" + "360" + "|" + "false" + "|" + "5" + "|" + color,
                 "dL" + "|" + "250" + "|" + "150" + "|" + "250" + "|" + "350" + "|" + "5" + "|" + color,
@@ -53,6 +58,7 @@ public class Commands {
 
     public static String[] getID5(int color) {
         return new String[]{
+                "sB" + "|" + 500 + "|" + 500 + "|" + Bitmap.Config.ARGB_8888.name(),
                 "dL" + "|" + "99f" + "|" + "147f" + "|" + "417f" + "|" + "366f" + "|" + "7" + "|" + color,
                 "dL" + "|" + "91f" + "|" + "374f" + "|" + "415f" + "|" + "155f" + "|" + "7" + "|" + color,
                 "dBA" + "|" + "91f" + "|" + "345f" + "|" + "420f" + "|" + "395f" + "|" + "207" + "|" + "324" + "|" + "false" + "|" + "5" + "|" + color,
@@ -62,6 +68,7 @@ public class Commands {
 
     public static String[] getID6(int color) {
         return new String[]{
+                "sB" + "|" + 500 + "|" + 500 + "|" + Bitmap.Config.ARGB_8888.name(),
                 "dBA" + "|" + "100f" + "|" + "150f" + "|" + "400f" + "|" + "350f" + "|" + "0" + "|" + "180" + "|" + "false" + "|" + "5" + "|" + color,
                 "dBA" + "|" + "100" + "|" + "150" + "|" + "400" + "|" + "350" + "|" + "180" + "|" + "360" + "|" + "false" + "|" + "5" + "|" + color,
                 "dL" + "|" + "250" + "|" + "150" + "|" + "100" + "|" + "260" + "|" + "5" + "|" + color,
@@ -73,6 +80,7 @@ public class Commands {
 
     public static String[] getID7(int color) {
         return new String[]{
+                "sB" + "|" + 500 + "|" + 500 + "|" + Bitmap.Config.ARGB_8888.name(),
                 "dL" + "|" + "100" + "|" + "260" + "|" + "250" + "|" + "445" + "|" + "5" + "|" + color,
                 "dL" + "|" + "400" + "|" + "260" + "|" + "250" + "|" + "445" + "|" + "5" + "|" + color,
                 "dL" + "|" + "250" + "|" + "55" + "|" + "400" + "|" + "260" + "|" + "5" + "|" + color,
@@ -86,6 +94,7 @@ public class Commands {
 
     public static String[] getID8(int color) {
         return new String[]{
+                "sB" + "|" + 500 + "|" + 500 + "|" + Bitmap.Config.ARGB_8888.name(),
                 "dBA" + "|" + "100f" + "|" + "150f" + "|" + "400f" + "|" + "350f" + "|" + "0" + "|" + "180" + "|" + "false" + "|" + "5" + "|" + color,
                 "dBA" + "|" + "100" + "|" + "150" + "|" + "400" + "|" + "350" + "|" + "180" + "|" + "360" + "|" + "false" + "|" + "5" + "|" + color,
                 "dL" + "|" + "250" + "|" + "150" + "|" + "100" + "|" + "260" + "|" + "5" + "|" + color,
@@ -98,6 +107,7 @@ public class Commands {
 
     public static String[] getID9(int color) {
         return new String[]{
+                "sB" + "|" + 500 + "|" + 500 + "|" + Bitmap.Config.ARGB_8888.name(),
                 "dBC" + "|" + "200" + "|" + "10" + "|" + color,
                 "dL" + "|" + "250" + "|" + "150" + "|" + "100" + "|" + "260" + "|" + "5" + "|" + color,
                 "dL" + "|" + "100" + "|" + "260" + "|" + "250" + "|" + "350" + "|" + "5" + "|" + color,

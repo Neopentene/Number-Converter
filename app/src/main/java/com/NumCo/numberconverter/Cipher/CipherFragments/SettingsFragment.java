@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 
 import com.NumCo.numberconverter.Cipher.Commands;
 import com.NumCo.numberconverter.ObjectPainter.Generator;
+import com.NumCo.numberconverter.ObjectPainter.Painter;
 import com.NumCo.numberconverter.ObjectPainter.Status;
 import com.NumCo.numberconverter.R;
 

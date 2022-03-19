@@ -10,8 +10,9 @@
     <string name="ok">OK</string>
     <string name="open">OPEN</string>
     <string name="no">NO</string>
-    <string name="cancel">CANCEL</string>
+    <string name="cancel">Cancel</string>
     <string name="clear">CLEAR</string>
+    <string name="clearALL">CLEAR ALL</string>
     <string name="close">CLOSE</string>
     <string name="back">BACK</string>
     <string name="cipher_input">Cipher Input</string>
@@ -19,7 +20,10 @@
     <string name="help">help</string>
     <string name="settings">settings</string>
     <string name="cipher_dialog_title">Cipher Image</string>
+    <string name="history">History</string>
     <string name="history_dialog_title">History</string>
+    <string name="no_history">Empty</string>
+    <string name="set">SET</string>
     <string name="save">SAVE</string>
     <string name="made_with">
         Made together with 🤡\'s and 🧠\'s by

@@ -37,13 +37,13 @@ public class Queries {
     @SuppressLint("Range")
     public ArrayList<HISTORY> getAllHistory(Context context) {
         schemas = new Schemas(context);
-        ArrayList<HISTORY> arrayOfHistories = new ArrayList<HISTORY>();
+        ArrayList<HISTORY> arrayOfHistories = new ArrayList<>();
 
         history = new Schemas.History();
 
         db = schemas.getWritableDatabase();
 
-        String columns[] = history.columns;
+        String[] columns = history.columns;
 
         String orderBy = history.ID_COLUMN + " ASC";
 
@@ -58,6 +58,8 @@ public class Queries {
                     cursor.getString(cursor.getColumnIndex(columns[4]))
             ));
         }
+        cursor.close();
+
         return arrayOfHistories;
     }
 
@@ -67,18 +69,18 @@ public class Queries {
 
         db = schemas.getWritableDatabase();
         String Clause = "1";
-        String args[] = new String[0];
+        String[] args = new String[0];
 
         long deleteAllHistory = db.delete(history.TABLE_NAME, Clause, args);
     }
 
-    public void deleteHistory(HISTORY historyObject, Context context) {
+    public void deleteHistory(long ID, Context context) {
         schemas = new Schemas(context);
         history = new Schemas.History();
 
         db = schemas.getWritableDatabase();
         String Clause = history.ID_COLUMN + " == " + "?";
-        String args[] = {String.valueOf(historyObject.ID)};
+        String[] args = {String.valueOf(ID)};
 
         long deleteHistory = db.delete(history.TABLE_NAME, Clause, args);
     }

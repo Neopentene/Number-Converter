@@ -2,27 +2,94 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:gravity="center"
     android:orientation="vertical">
 
     <TextView
         android:id="@+id/inputType"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/cipher_input"/>
+        android:paddingTop="15dp"
+        android:textColor="@color/blue"
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/input"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:lines="1"
+        android:paddingLeft="40dp"
+        android:paddingRight="40dp"
+        android:textColor="@color/blue"
+        android:textSize="14sp" />
+
+    <ImageView
+        android:id="@+id/pointer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/history"
+        android:src="@drawable/ic_baseline_keyboard_arrow_down_24" />
 
     <TextView
         android:id="@+id/outputType"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textColor="@color/blue"
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/output"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:ellipsize="middle"
+        android:lines="1"
+        android:paddingLeft="40dp"
+        android:paddingRight="40dp"
+        android:textColor="@color/blue"
+        android:textSize="14sp" />
+
+    <LinearLayout
+        android:id="@+id/buttonLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
+        android:weightSum="2">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/setHistorySelection"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="0dp"
+            android:layout_weight="1"
+            android:text="@string/set" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/clearHistory"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="0dp"
+            android:layout_weight="1"
+            android:text="@string/clear" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/historyDivider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="50dp"
+        android:background="@color/teal" />
 
 </LinearLayout>
