@@ -1,4 +1,4 @@
-package com.NumCo.numberconverter.CipherCreation;
+package com.NumCo.numberconverter.Cipher;
 
 import android.graphics.Bitmap;
 
@@ -8,6 +8,12 @@ public class Commands {
 
     public static String[] helpImageIds = {"DEC", "ROM", "HEX", "OCT", "BIN", "CIPHER"};
     public static String[] cipherImageIds = {"ID0", "ID1", "ID2", "ID3", "ID4", "ID5", "ID6", "ID7", "ID8", "ID9"};
+
+    public static String[] getID0(int color) {
+        return new String[]{
+                "dA" + "|" + "80" + "|" + "80" + "|" + "420" + "|" + "420" + "|" + "30" + "|" + "120" + "|" + "false" + "|" + color
+        };
+    }
 
     public static String[] getDEC(int color) {
         return new String[]{

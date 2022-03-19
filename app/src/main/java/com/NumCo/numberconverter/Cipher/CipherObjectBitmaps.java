@@ -1,4 +1,4 @@
-package com.NumCo.numberconverter.CipherCreation;
+package com.NumCo.numberconverter.Cipher;
 
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -85,12 +85,10 @@ public class CipherObjectBitmaps {
                 .getBitmap(), Status.NORMAL));
         objects.put("ID5", new ImageData("ID5", new Painter(500, 500, Bitmap.Config.ARGB_8888)
 
-                .drawBorderedCircle(200, 10, Color.RED)
-
-                .drawLine(100, 260, 250, 445, 5, Color.CYAN)//left-bottom
-                .drawLine(400, 260, 250, 445, 5, Color.CYAN)//right-bottom
-                .drawLine(250, 55, 400, 260, 5, Color.CYAN)//right-top
-                .drawLine(250, 55, 100, 260, 5, Color.CYAN)//left-top
+                .drawLine(99f, 147f, 417f, 366f, 7, Color.BLUE) //backslash line coordinates hourglass
+                .drawLine(91f, 374f, 415f, 155f, 7, Color.BLUE) //forwardslash line coordinates hourglass
+                .drawBorderedArc(91f, 345f, 420f, 395f, 207, 324, false, 5, Color.BLUE) //lower-ellipse hourglass
+                .drawBorderedArc(100f, 125f, 420f, 175f, 185, 324, false, 5, Color.BLUE) //upper-ellipse hourglass
 
                 .getBitmap(), Status.NORMAL));
         objects.put("ID6", new ImageData("ID6", new Painter(500, 500, Bitmap.Config.ARGB_8888)

@@ -1,4 +1,4 @@
-package com.NumCo.numberconverter.CipherCreation.CipherFragments;
+package com.NumCo.numberconverter.Cipher.CipherFragments;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -11,9 +11,9 @@ import android.widget.ListView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
-import com.NumCo.numberconverter.CipherCreation.CipherAdapters.HelpListAdapter;
-import com.NumCo.numberconverter.CipherCreation.Commands;
-import com.NumCo.numberconverter.CipherCreation.Store;
+import com.NumCo.numberconverter.Cipher.CipherAdapters.HelpListAdapter;
+import com.NumCo.numberconverter.Cipher.Commands;
+import com.NumCo.numberconverter.Cipher.Store;
 import com.NumCo.numberconverter.ObjectPainter.Status;
 import com.NumCo.numberconverter.R;
 
