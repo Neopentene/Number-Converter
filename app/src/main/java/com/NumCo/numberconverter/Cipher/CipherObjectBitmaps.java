@@ -48,8 +48,7 @@ public class CipherObjectBitmaps {
                 .drawBorderedArc(80, 80, 420, 420, 30, -240, false, 15, Color.GREEN)
                 .drawBorderedCircle(65, 15, Color.MAGENTA)
                 .drawBorderedCircle(30, 10, Color.MAGENTA)
-                .getBitmap()
-                , Status.NORMAL));
+                .getBitmap(), Status.NORMAL));
 
         objects.put("ID1", new ImageData("ID1", new Painter(500, 500, Bitmap.Config.ARGB_8888)
 
