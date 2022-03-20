@@ -30,6 +30,7 @@ public class HistoryAdapter extends ArrayAdapter<HISTORY> {
     private final HistoryDialog caller;
     private HistoryCommands historyCommands;
     private final LocalHistoryCommands localHistoryCommands;
+    private volatile int clearOnce = 0;
 
     public HistoryAdapter(@NonNull Context context, ArrayList<HISTORY> histories, HistoryDialog caller, Converter parent) {
         super(context, R.layout.history_list_item_layout, histories);
@@ -67,36 +68,40 @@ public class HistoryAdapter extends ArrayAdapter<HISTORY> {
         });
 
         clear.setOnClickListener(v -> {
-            ObjectAnimator.ofFloat(input, View.ALPHA, 1f, 0f).setDuration(1000).start();
-            ObjectAnimator.ofFloat(inputType, View.ALPHA, 1f, 0f).setDuration(1000).start();
-            ObjectAnimator.ofFloat(output, View.ALPHA, 1f, 0f).setDuration(1000).start();
-            ObjectAnimator.ofFloat(outputType, View.ALPHA, 1f, 0f).setDuration(1000).start();
-            ObjectAnimator.ofFloat(set, View.ALPHA, 1f, 0f).setDuration(1000).start();
-            ObjectAnimator.ofFloat(clear, View.ALPHA, 1f, 0f).setDuration(1000).start();
-            ObjectAnimator.ofFloat(divider, View.ALPHA, 1f, 0f).setDuration(1000).start();
-            ObjectAnimator.ofFloat(imageView, View.ALPHA, 1f, 0f).setDuration(1000).start();
+            increaseClearCount();
+            if (clearOnce == 1) {
+                ObjectAnimator.ofFloat(input, View.ALPHA, 1f, 0f).setDuration(1000).start();
+                ObjectAnimator.ofFloat(inputType, View.ALPHA, 1f, 0f).setDuration(1000).start();
+                ObjectAnimator.ofFloat(output, View.ALPHA, 1f, 0f).setDuration(1000).start();
+                ObjectAnimator.ofFloat(outputType, View.ALPHA, 1f, 0f).setDuration(1000).start();
+                ObjectAnimator.ofFloat(set, View.ALPHA, 1f, 0f).setDuration(1000).start();
+                ObjectAnimator.ofFloat(clear, View.ALPHA, 1f, 0f).setDuration(1000).start();
+                ObjectAnimator.ofFloat(divider, View.ALPHA, 1f, 0f).setDuration(1000).start();
+                ObjectAnimator.ofFloat(imageView, View.ALPHA, 1f, 0f).setDuration(1000).start();
 
 
-            Handler handler = new Handler(Looper.getMainLooper());
-            handler.postDelayed(() -> {
-                input.setVisibility(View.GONE);
-                inputType.setVisibility(View.GONE);
-                output.setVisibility(View.GONE);
-                outputType.setVisibility(View.GONE);
-                set.setVisibility(View.GONE);
-                clear.setVisibility(View.GONE);
-                divider.setVisibility(View.GONE);
-                imageView.setVisibility(View.GONE);
+                Handler handler = new Handler(Looper.getMainLooper());
+                handler.postDelayed(() -> {
+                    input.setVisibility(View.GONE);
+                    inputType.setVisibility(View.GONE);
+                    output.setVisibility(View.GONE);
+                    outputType.setVisibility(View.GONE);
+                    set.setVisibility(View.GONE);
+                    clear.setVisibility(View.GONE);
+                    divider.setVisibility(View.GONE);
+                    imageView.setVisibility(View.GONE);
 
-                Handler post = new Handler(Looper.getMainLooper());
-                post.postDelayed(() -> {
-                    histories.remove(position);
-                    notifyDataSetChanged();
-                    localHistoryCommands.clearHistoryItem(history.ID, histories.size(), position == histories.size());
-                    localHistoryCommands.makeToast("Erased", Status.PLACEHOLDER.color);
-                }, 200);
+                    Handler post = new Handler(Looper.getMainLooper());
+                    post.postDelayed(() -> {
+                        histories.remove(position);
+                        notifyDataSetChanged();
+                        localHistoryCommands.clearHistoryItem(history.ID, histories.size(), position == histories.size());
+                        localHistoryCommands.makeToast("Erased", Status.PLACEHOLDER.color);
+                        clearOnce = 0;
+                    }, 200);
 
-            }, 1000);
+                }, 1000);
+            }
         });
 
         inputType.setText("Input: " + history.INPUT_TYPE);
@@ -114,6 +119,10 @@ public class HistoryAdapter extends ArrayAdapter<HISTORY> {
         }
 
         return view;
+    }
+
+    private synchronized void increaseClearCount() {
+        clearOnce++;
     }
 
     @Override
