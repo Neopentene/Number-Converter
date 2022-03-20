@@ -25,19 +25,15 @@ import java.util.ArrayList;
 
 public class HistoryAdapter extends ArrayAdapter<HISTORY> {
     private final ArrayList<HISTORY> histories;
-    private Context context;
     private final Activity activity;
-    private final HistoryDialog caller;
-    private HistoryCommands historyCommands;
+    private final HistoryCommands historyCommands;
     private final LocalHistoryCommands localHistoryCommands;
     private volatile int clearOnce = 0;
 
     public HistoryAdapter(@NonNull Context context, ArrayList<HISTORY> histories, HistoryDialog caller, Converter parent) {
         super(context, R.layout.history_list_item_layout, histories);
         this.histories = histories;
-        this.context = context;
         this.activity = parent;
-        this.caller = caller;
         this.localHistoryCommands = caller;
         this.historyCommands = parent;
     }
